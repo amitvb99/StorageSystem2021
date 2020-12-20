@@ -1,0 +1,18 @@
+<div class="form-container " style="background-color:green;" >
+
+    <div class="login" >
+        <h1>Login</h1>
+        <form  #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+            <input type="text" [ngClass]="{'username':true , 'error' : errors['user_error']}" name="username" placeholder="Username" autocomplete="off"  required  ngModel />
+            <input type="password"  [ngClass]="{'password':true , 'error' : errors['pass_error']}" name="password" placeholder="Password"   required ngModel />
+            <button type="submit"  class="btn btn-primary btn-block btn-large">Let me in.</button>
+            <!-- [disabled]="!loginForm.valid" -->
+        </form>
+        <div *ngIf="enable_forgot_pass" class="forget-pass-container">
+            <a href="#" class="forget-pass-link"   target="_blank">Forgot your password?</a> 
+        </div>
+        
+    </div>
+    
+    </div>
+    

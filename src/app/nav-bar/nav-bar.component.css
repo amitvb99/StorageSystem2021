@@ -1,0 +1,107 @@
+
+.fixed-navbar {
+    position: sticky;
+    top:0;
+    width:100%;
+    z-index: 100;
+}
+
+.loggedin-user-icon{
+    color:#5aaa72;
+    margin-left:5px;
+}
+
+.loggedout-user-icon{
+    color:gray;
+    margin-left:5px;
+}
+
+.loggedin_sign{
+}
+
+.btn { display: inline-block;
+      padding: 4px 10px 4px;
+       margin-bottom: 4px;
+       margin-right: 4px; }
+.hidden {
+    display:none;
+}
+
+@media only screen and (min-width: 576px){
+
+    .loggedin_sign{
+            width:100%;
+            text-align: center;
+        }
+
+    .arabic-navbar {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+
+    .arabic-navbar .navbar-nav {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-left:auto ;        
+    }
+}
+
+
+
+.sign-in-button { 
+        display:inline-block;
+        margin-bottom: 4px;     
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px; 
+  
+        background-color: #4a77d4;
+        background-image: linear-gradient(to bottom, #6eb6de, #4a77d4);
+        background-repeat: repeat-x;
+        border: 1px solid #3762bc;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+        /* box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.5); */
+        color: white;
+ }
+.sign-in-button:hover { 
+        background-position: 0 -15px;
+        -webkit-transition: background-position 0.3s linear;
+        -moz-transition: background-position 0.3s linear;
+        -ms-transition: background-position 0.3s linear;
+        -o-transition: background-position 0.3s linear;
+        transition: background-position 0.3s linear;
+ }
+
+
+ .sign-in-button:active {
+       background-color: #305fc4;
+     }
+
+.sign-out-button { 
+        display:inline-block;
+        margin-bottom: 4px;     
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px; 
+        color: white;
+        background-color: #e0c31c;
+        background-image: linear-gradient(to bottom, #f8e15e, #e0c31c);
+        background-repeat: repeat-x;
+        border: 1px solid #b69e1a;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.5);
+ }
+.sign-out-button:hover { 
+        background-position: 0 -15px;
+        -webkit-transition: background-position 0.3s linear;
+        -moz-transition: background-position 0.3s linear;
+        -ms-transition: background-position 0.3s linear;
+        -o-transition: background-position 0.3s linear;
+        transition: background-position 0.3s linear;
+ }
+
+
+ .sign-out-button:active {
+       background-color: #dac552;
+     }

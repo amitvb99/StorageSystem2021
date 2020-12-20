@@ -1,0 +1,46 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 12.20.0]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npm install -g @angular/cli@10.1.1 > /dev/null
+    - run: ng build --prod
+    - name: pull new commit in deployment server 
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: cd ${{secrets.PROJECT_DEPLYMENT_PATH}}; git stash save; git pull; git stash pop; ng build --prod
+        host: ${{ secrets.HOST }}
+        username: root
+        privateKey: ${{ secrets.SSH}}
+    - run: pwd
+    - name: copy compiled files to server
+      uses: burnett01/rsync-deployments@4.1
+      with:
+        switches: -avz -v -e 'ssh'
+        path: ./dist/base-project/
+        remote_path: ${{ secrets.PROJECT_DEPLYMENT_PATH }}/dist/base-project/
+        remote_host: ${{ secrets.HOST }}
+        remote_user: root
+        remote_key: ${{ secrets.SSH }}

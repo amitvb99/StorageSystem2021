@@ -1,0 +1,37 @@
+<!-- A grey horizontal navbar that becomes vertical on small screens -->
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-navbar " >
+    <a class="navbar-brand" href="#">Logo</a>
+
+    <button class="navbar-toggler" type="button" (click)="collapse()" [attr.aria-expanded]="!is_collapsed" data-toggle="collapse" aria-controls="collapsible_navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    <!-- Links -->
+    <div  class="collapse navbar-collapse "  [ngbCollapse]="is_collapsed" id="collapsible_navbar">
+    <ul class="navbar-nav " >
+        <li [ngClass]="{'nav-item':true,'dropdown': true , 'hidden':(page.not_apage == true)}" *ngFor="let page of nav_meta_data.pages">
+            <a class="nav-link " *ngIf="page.url != undefined" href="{{page.url}}">{{page.name}}</a>
+            <!-- (page.url != undefined) is a sufficient condition for normal page  -->
+
+            <a class="nav-link dropdown-toggle" *ngIf="page.dropdown != undefined" href="#" id="navbardrop" data-toggle="dropdown">
+                {{page.name}}
+            </a>
+            <div class="dropdown-menu" *ngIf="page.dropdown != undefined">
+                <a class="dropdown-item" *ngFor="let drop_down_child of page.dropdown" href="{{drop_down_child.url}}">{{drop_down_child.name}}</a>
+            </div>
+            <!-- (page.dropdown != undefined) is a sufficient condition for dropdown list in nav bar -->
+        </li>
+
+    </ul>
+    <div [ngClass]="{'loggedin_sign': true , 'hidden':(nav_meta_data.user_loggedin_enabled != true)}"  >
+      <i [ngClass]="{'fas':true, 'fa-user':true, 'loggedin-user-icon':isloggedin(), 'loggedout-user-icon':!isloggedin()}" ></i>
+      <span class="nav-link "  style="display:inline-block;color:white;padding-left: 5px;" href="">{{get_user_firs_name()}}</span>
+    <button  [ngClass]="{'btn':true, 'sign-out-button':isloggedin() ,'sign-in-button':!isloggedin()  } " (click)="log_in_out()"   href="">{{get_button_text()}}</button>
+      
+      <!-- (page.url != undefined) is a sufficient condition for normal page  -->
+
+      
+    </div>
+</div>
+  </nav>
+
