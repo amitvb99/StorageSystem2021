@@ -6,6 +6,7 @@ const studentsRoutes = require("./routes/students.route")
 const instrumentsRoutes = require("./routes/instruments.route")
 const loansRoutes = require("./routes/loans.route")
 const adminRoutes = require("./routes/admin.route")
+const mongoose = require("mongoose");
 var bodyParser = require('body-parser')
 
 
@@ -14,7 +15,12 @@ app.use(express.static(path.join(__dirname, '../dist/base-project')))
 var cors = require('cors')
 var bodyParser = require('body-parser')
 
-
+mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority")
+  .then(()=>{
+    console.log('Connected to database!')
+  }).catch(()=>{
+    console.log('Connectino failed!')
+  });
 
 var app = express();
 
