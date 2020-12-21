@@ -58,7 +58,7 @@ router.post("/login", (req, res, next)=>{
   }
   catch(err){
     console.log(err);
-      return res.status(401).json({message: "Auth Failed"});
+      return res.status(401).json({});
   }
 
 
@@ -76,10 +76,10 @@ router.post("/register", (req, res, next)=>{
     console.log("here");
     const user = new User({name: req.body.name, username: req.body.user, password: req.body.pass});
     result = user.save();
-    res.status(201).json({message: "User Created!", result: result});
+    res.status(201).json({message: "User Created!"});
   }
   catch(err){
-    res.status(500).json({message: err});
+    res.status(500).json({});
   }
 });
 

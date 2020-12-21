@@ -6,7 +6,7 @@
     <br>
     <br>
     <br>
-    
+
     <li> <a href="#students1"> get: api/students</a></li>
     <li> <a href="#students2"> get: api/students/&lt;id&gt;</a></li>
     <li> <a href="#students3"> post: api/students/create</a></li>
@@ -16,7 +16,7 @@
     <br>
     <br>
     <br>
-    
+
     <li> <a href="#instruments1"> get: api/instruments</a></li>
     <li> <a href="#instruments2"> get: api/instruments/type/&lt;id&gt;</a></li>
     <li> <a href="#instruments3"> get: api/instruments/&lt;id&gt;</a></li>
@@ -40,7 +40,7 @@
     <br>
     <br>
     <br>
-    
+
 <div id="login1" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
     <h3>api/user/login (post)
 
@@ -51,11 +51,11 @@
         <li> backend validates user and:</li>
          <li> in case of success returns Response 200, and the JSON {{login_server_to_front}} </li>
          <li> in case of failure the server returns empty JSON and respose 401</li>
-         
+
         <li> the front end views the proper design to user </li>
-         
-        
-    </ol>   
+
+
+    </ol>
 </div>
 
 <div id="login2" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -63,35 +63,53 @@
 
     </h3>
     <p>
-    sfddgdfgfg
-    </p>   
+    Don't send anything to the server
+    </p>
 </div>
 
 <div id="login3" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
     <h3>api/user/register (post)
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>   
+    <ol>
+      <li> user types username name password</li>
+      <li> front end sends to the server the JSON {{register_front_to_server}} </li>
+      <li> backend validates username uniqueness and:</li>
+       <li> in case of success returns Response 201, and the JSON {{register_server_to_front}} </li>
+       <li> in case of failure the server returns empty JSON and respose 500</li>
+
+      <li> the front end views the proper design to user </li>
+
+
+  </ol>
 </div>
 
 <div id="students1" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
     <h3>api/students
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>   
+    <ol>
+      <li> in case of success returns Response 200, and the JSON {{students_server_to_front}} </li>
+      <li> in case of failure the server returns empty JSON and respose 500</li>
+
+      <li> the front end views the proper design to user </li>
+
+  </ol>
 </div>
 
 <div id="students2" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
     <h3>api/students/&lt;id&gt;
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>   
+    <ol>
+      <li> user types the student id</li>
+      <li> front end sends to the server the student id as a request parameter </li>
+      <li> in case of success the server returns Response 200, and the JSON {{student_server_to_front}} </li>
+      <li> in case of failure the server returns empty JSON and respose 500</li>
+
+      <li> the front end views the proper design to user </li>
+
+  </ol>
 </div>
 
 
@@ -99,9 +117,15 @@
     <h3>api/students/create (post)
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>   
+    <ol>
+    <li> user most enter stdents: first name, lastname, school, grade, class, id. and could enter (for his choise): the parents details </li>
+    <li> if the user chose to give up some of the unnecessarily details the client side most sned them as empty string </li>
+    <li> front end sends to the server the JSON {{addStudent_front_to_server}} </li>
+    <li> in case of success the server returns Response 201, and the empty JSON</li>
+    <li> in case of failure the server returns empty JSON and respose 500</li>
+
+    <li> the front end views the proper design to user </li>
+  </ol>
 </div>
 
 
@@ -109,9 +133,15 @@
     <h3>api/students/&lt;id&gt;  (delete)
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>   
+    <ol>
+      <li> user types the student id</li>
+      <li> front end sends to the server the student id as a request parameter </li>
+      <li> in case of success the server returns Response 200 with empty JSON </li>
+      <li> in case of failure the server returns empty JSON and respose 500</li>
+
+      <li> the front end views the proper design to user </li>
+
+  </ol>
 </div>
 
 
@@ -120,8 +150,10 @@
 
     </h3>
     <p>
-    sfddgdfgfg
-    </p>   
+      before this action the client side most send the server a get request to get the student
+      current details, then it most show it to the user, he makes the changes he wants.
+      the remain steps same as create
+    </p>
 </div>
 
 
@@ -131,7 +163,7 @@
     </h3>
     <p>
     sfddgdfgfg
-    </p>   
+    </p>
 </div>
 
 <div id="instruments2" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -140,7 +172,7 @@
     </h3>
     <p>
     sfddgdfgfg
-    </p>   
+    </p>
 </div>
 
 <div id="instruments3" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -149,7 +181,7 @@
     </h3>
     <p>
     sfddgdfgfg
-    </p>   
+    </p>
 </div>
 
 <div id="instruments4" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -158,7 +190,7 @@
     </h3>
     <p>
     sfddgdfgfg
-    </p>   
+    </p>
 </div>
 
 <div id="instruments5" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -167,7 +199,7 @@
     </h3>
     <p>
     sfddgdfgfg
-    </p>   
+    </p>
 </div>
 
 <div id="instruments6" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -176,7 +208,7 @@
     </h3>
     <p>
     sfddgdfgfg
-    </p>   
+    </p>
 </div>
 
 <div id="instruments7" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -185,7 +217,7 @@
     </h3>
     <p>
     sfddgdfgfg
-    </p>   
+    </p>
 </div>
 <div id="Tables">
 
@@ -215,7 +247,7 @@
             </tr>
         </table>
     </div>
-    
+
 
 </div>
 
@@ -236,4 +268,3 @@
 <br>
 <br>
 <br>
-    

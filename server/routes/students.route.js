@@ -22,18 +22,23 @@ router.post("/create", checkAuth,(req, res, next)=>{
       instruments: req.body.instruments,
     });
     result = student.save();
-    res.status(201).json({message: "User Created!", result: result});
+    res.status(201).json({});
   }catch(err){
-    res.status(500).json({message: err});
+    res.status(500).json({});
   }
 });
 
 router.get("", (req, res, next)=>{
-  const students = Student.find();
-  res.status(200).json({
-  message: "Students fetched successfully!",
-  students: students
-  });
+  try{
+    const students = Student.find();
+    res.status(200).json({
+    message: "Students fetched successfully!",
+    students: students
+    });
+  }
+  catch(err){
+    res.status(500).json({})
+  }
 });
 
 router.put("/:id", (req, res, next)=>{
@@ -68,9 +73,14 @@ router.get("/:id", (req, res, next)=>{
 });
 
 router.delete("/:id", (req, res, next)=>{
-  Student.deleteOne({ _id: req.params.id }).then(result => {
-    res.status(200).json({ message: "student deleted!" });
-  });
+  try{
+    Student.deleteOne({ _id: req.params.id }).then(result => {
+      res.status(200).json({});
+    });
+  }
+  catch(err){
+    res.status(500).json({});
+  }
 });
 
 router.get("/stuentsHistory", (req, res, next)=>{

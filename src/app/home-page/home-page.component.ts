@@ -12,6 +12,27 @@ export class HomePageComponent implements OnInit {
   userFirstName = '';
   front_to_server = JSON.stringify({"username":"[the string the user inserted]","password":"[sha256 hash for the string inserted by user ]"})
   login_server_to_front = JSON.stringify({"name":"[user Full Name]", "token":"[string from server per session]", "username":"[user username]"})
+  register_front_to_server = JSON.stringify({"name":"[the full name of the user]","username":"[the string the user inserted]","password":"[the string inserted by user ]"})
+  register_server_to_front = JSON.stringify({"message":"User Created!"})
+  students_server_to_front = JSON.stringify({"message":"Students fetched successfully!","students":"[list of json objcts contains students]"})
+  student_server_to_front = JSON.stringify({"student":"[student details]"})
+  addStudent_front_to_server = JSON.stringify({"fName":"[the string the user inserted]",
+  "lName":"[the string the user inserted]",
+  "school":"[the string inserted by user ]",
+  "grade":"[the string inserted by user ]",
+  "class":"[the string inserted by user ]",
+  "id":"[the string inserted by user ]",
+  "parent1Name":"[the string inserted by user ]",
+  "parent2Name":"[the string inserted by user ]",
+  "parent1PhoneNumber":"[the string inserted by user ]",
+  "parent2PhoneNumber":"[the string inserted by user ]",
+  "parent1Email":"[the string inserted by user ]",
+  "parent2Email":"[the string inserted by user ]",})
+
+
+
+
+
   ngOnInit(): void {
     this.userFirstName = this.accounts.get_user_firs_name()
     // this.userFirstName = JSON.parse(localStorage.getItem('user')).firstName;
