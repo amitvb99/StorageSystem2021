@@ -41,6 +41,7 @@ router.get("", (req, res, next)=>{
   }
 });
 
+//update
 router.put("/:id", (req, res, next)=>{
   const student = new Student({
     fname: req.body.fName,

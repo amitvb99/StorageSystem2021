@@ -105,7 +105,7 @@
       <li> user types the student id</li>
       <li> front end sends to the server the student id as a request parameter </li>
       <li> in case of success the server returns Response 200, and the JSON {{student_server_to_front}} </li>
-      <li> in case of failure the server returns empty JSON and respose 500</li>
+      <li> in case of failure the server returns empty JSON and respose 404</li>
 
       <li> the front end views the proper design to user </li>
 
@@ -161,9 +161,13 @@
     <h3>api/instruments
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>
+    <ol>
+      <li> in case of success returns Response 200, and the JSON {{instruments_server_to_front}} </li>
+      <li> in case of failure the server returns empty JSON and respose 500</li>
+
+      <li> the front end views the proper design to user </li>
+
+  </ol>
 </div>
 
 <div id="instruments2" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -171,35 +175,50 @@
 
     </h3>
     <p>
-    sfddgdfgfg
-    </p>
+      redundant!
+      </p>
 </div>
 
 <div id="instruments3" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
     <h3>api/instruments/&lt;id&gt;
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>
+    <ol>
+      <li> user types the instrumetn serial number</li>
+      <li> front end sends to the server the instrumetn serial numbe as a request parameter </li>
+      <li> in case of success the server returns Response 200, and the JSON {{instrument_server_to_front}} </li>
+      <li> in case of failure the server returns empty JSON and respose 404</li>
+
+      <li> the front end views the proper design to user </li>
+
+  </ol>
 </div>
 
 <div id="instruments4" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
     <h3>api/instruments/create (post)
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>
+    <ol>
+      <li> user most enter instrumetn's: general SN (serial Number), type, sub type, company, model, imprented SN, ownership, status </li>
+      <li> front end sends to the server the JSON {{addInstrument_front_to_server}} </li>
+      <li> in case of success the server returns Response 201, and the empty JSON</li>
+      <li> in case of failure the server returns empty JSON and respose 500</li>
+      <li> the front end views the proper design to user </li>
+    </ol>
 </div>
 
 <div id="instruments5" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
     <h3>api/instruments/&lt;id&gt; (delete)
 
     </h3>
-    <p>
-    sfddgdfgfg
-    </p>
+    <ol>
+      <li> user types the instrumetn SN</li>
+      <li> front end sends to the server the instrumetn SN as a request parameter </li>
+      <li> in case of success the server returns Response 200 with empty JSON </li>
+      <li> in case of failure the server returns empty JSON and respose 500</li>
+      <li> the front end views the proper design to user </li>
+
+  </ol>
 </div>
 
 <div id="instruments6" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
@@ -207,7 +226,7 @@
 
     </h3>
     <p>
-    sfddgdfgfg
+    redundant!
     </p>
 </div>
 
@@ -216,7 +235,9 @@
 
     </h3>
     <p>
-    sfddgdfgfg
+      before this action the client side most send the server a get request to get the instrument
+      current details, then it most show it to the user, he makes the changes he wants.
+      the remain steps same as create
     </p>
 </div>
 <div id="Tables">
@@ -225,7 +246,7 @@
 
         <table>
             <tr>
-                <td>Users</td> <td>a</td> <td>a</td> <td>a</td> <td>a</td> <td>a</td>
+                <td>Users</td> <td>name</td> <td>username</td> <td>password</td>
             </tr>
         </table>
     </div>
@@ -234,7 +255,7 @@
 
         <table style>
             <tr>
-                <td>Students</td> <td>a</td> <td>a</td> <td>a</td> <td>a</td> <td>a</td>
+                <td>Students</td> <td>fName</td> <td>lName</td> <td>school</td> <td>grade</td> <td>class</td> <td>id</td> <td>parent1Name</td> <td>parent2Name</td> <td>parent1PhoneNumber</td> <td>parent2PhoneNumber</td> <td>parent1Email</td> <td>parent2Email</td> <td>instruments</td>
             </tr>
         </table>
     </div>
@@ -243,7 +264,7 @@
 
         <table>
             <tr>
-                <td>Instruments</td> <td>a</td> <td>a</td> <td>a</td> <td>a</td> <td>a</td>
+                <td>Instruments</td> <td>generalSerialNumber</td> <td>type</td> <td>sub_type</td> <td>company</td> <td>model</td> <td>imprentedSerialNumber</td> <td>ownership</td> <td>status</td>
             </tr>
         </table>
     </div>

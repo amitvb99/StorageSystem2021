@@ -28,6 +28,16 @@ export class HomePageComponent implements OnInit {
   "parent2PhoneNumber":"[the string inserted by user ]",
   "parent1Email":"[the string inserted by user ]",
   "parent2Email":"[the string inserted by user ]",})
+  instruments_server_to_front = JSON.stringify({"message":"Instruments fetched successfully!","instruments":"[list of json objcts contains instruments]"})
+  instrument_server_to_front = JSON.stringify({"instrument":"[instrumetn details]"})
+  addInstrument_front_to_server = JSON.stringify({"generalSerialNumber":"[the string the user inserted]",
+  "type":"[the string the user inserted]",
+  "sub_type":"[the string inserted by user ]",
+  "company":"[the string inserted by user ]",
+  "model":"[the string inserted by user ]",
+  "imprentedSerialNumber":"[the string inserted by user ]",
+  "ownership":"[the string inserted by user ]",
+  "status":"[the string inserted by user ]"})
 
 
 

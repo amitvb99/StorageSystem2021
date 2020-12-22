@@ -45,10 +45,6 @@ router.post("/login", (req, res, next)=>{
       if(!user){
         return res.status(401).json({message: "Auth Failed"});
       }
-      // if (!bcrypt.compare(req.body.password, user.password)){
-      //   console.log('hetr');
-      //   return res.status(401).json({message: "Auth Failed"});
-      // }
 
       if(!req.body.password===user.password){
         return res.status(401).json({message: "Auth Failed"});
