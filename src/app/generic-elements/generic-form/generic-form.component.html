@@ -1,0 +1,49 @@
+<div class="form-style-3">
+    <form>
+
+
+    <fieldset *ngFor="let group of meta_data"><legend>{{group.name}}</legend>
+
+        
+        <label *ngFor="let field of group.fields" for="{{field.id}}">
+            <!-- text -->
+            <span *ngIf="field.type == 'text'" >{{field.name}} 
+                <!-- <span class="required">*</span> -->
+            </span>      
+            <input *ngIf="field.type == 'text'" type="text" class="input-field" name="{{field.id}}"  [(ngModel)]="data[field.id]"/>
+        
+            <!-- checkbox -->
+            <div  *ngIf="field.type == 'checkbox'" class="checkbox">
+                <input type="checkbox" checked id="{{field.id}}" name="" [(ngModel)]="data[field.id]">
+                <label for="{{field.id}}" ><span >{{field.name}}</span></label>
+             </div>
+
+            <!-- drop down -->
+            <span *ngIf="field.type == 'drop_down'">{{field.name}}</span>
+            <select  *ngIf="field.type == 'drop_down'" [(ngModel)]="data[field.id]" name="{{field.id}}" class="select-field">
+
+                <option  value=""></option>
+
+                <option *ngFor="let val of field.possible_values"  [ngValue]="val">{{val}}</option>
+
+            </select>
+        </label>
+    </fieldset>
+
+    <div>
+        <button (click)="close()" class="btn btn-danger" style="float:left">
+            close
+        </button>
+        
+
+        
+        <button (click)="submit()" [ngClass]="{'btn':true, 'btn-warning':!is_add, 'btn-success':is_add}" style="float:right">
+            {{is_add?'add':'edit'}}
+        </button>
+        
+    </div>
+
+ 
+    </form>
+    </div>
+

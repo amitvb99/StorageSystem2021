@@ -15,7 +15,7 @@ router.get("", (req, res, next)=>{
     .then(instruments=>{
       res.status(200).json({
         message: "instruments fetched successfully!",
-        instuments: instruments
+        instruments: instruments
         });
     })
     .catch(err => {
@@ -30,7 +30,7 @@ router.post("/create", (req, res, next)=>{
       type: req.body.type,
       sub_type: req.body.sub_type,
       company: req.body.company,
-      model_: req.body.model,
+      style: req.body.style,
       imprentedSerialNumber: req.body.imprentedSerialNumber,
       ownership: req.body.ownership,
       status: req.body.status
@@ -57,17 +57,17 @@ router.put("/:id", (req, res, next)=>{
       type: req.body.type,
       sub_type: req.body.sub_type,
       company: req.body.company,
-      model_: req.body.model,
+      style: req.body.style,
       imprentedSerialNumber: req.body.imprentedSerialNumber,
       ownership: req.body.ownership,
       status: req.body.status
     });
     Instrument.updateOne({_id: instrument._id},instrument1).then(result => {
-      res.status(200).json();
+      res.status(200).json({});
     })
     .catch(err=>{
       console.log(err);
-      res.status(500).json({err});
+      res.status(500).json();
     });
   });
 });

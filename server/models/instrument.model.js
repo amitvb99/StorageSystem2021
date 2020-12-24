@@ -8,7 +8,7 @@ const instrumentSchema = mongoose.Schema({
   type:  {type: String, required: true},
   sub_type: {type: String, required: true},
   company: {type: String, required: true},
-  model_: {type: String, required: true},
+  style: {type: String, required: true},
   imprentedSerialNumber: {type: String, required: true},
   ownership: {type: String, required: true},
   status: {type: String, required: true}

@@ -45,7 +45,7 @@ export class LoginFormComponent implements OnInit {
       this.flash_error_for('pass_error')
       err = true
     }
-
+    
     if (err) {
       return;
     }

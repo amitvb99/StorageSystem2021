@@ -1,0 +1,49 @@
+
+
+<div class="button_container"> 
+    <button (click)="functions['add'](module_variables['data_to_show'])" class="btn-link"> Add </button>
+  </div>
+  <div class="btn-toolbar filter-bar-container" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2 filter-bar" role="group" aria-label="First group">
+  
+      <select   (change)="filter_bar_changed()" *ngFor="let filter of meta_data.filter_bar_array; let i = index" [(ngModel)]="module_variables['filter_bar_values'][i]" class="btn btn-secondary filter-button">
+        <option *ngFor="let option of get_filter_options(filter)"  [ngValue]="option">
+          {{option}}
+        </option>
+      </select>
+    </div>
+    </div>
+  <table>
+      <thead >
+        <tr >
+           <th   *ngIf="meta_data.indexing_enabled"> <span>  </span> </th>
+           <th  *ngFor="let column of meta_data.columns "> <span> {{meta_data.headers[column]}} </span> </th>
+           <th  *ngIf="meta_data.actions.length > 0"> <span>  </span> </th>
+        </tr>
+      </thead>
+  
+      <tbody [@fade]="module_variables['data_to_show'].length">
+      <tr     *ngFor="let datum of module_variables['data_to_show'];index as i" >
+        <td  class="index_td" *ngIf="meta_data.indexing_enabled"> <span >{{i}} </span> </td>
+          
+        <td *ngFor="let column of meta_data.columns"> 
+            <span class="row_meta_data"> {{meta_data.headers[column]}}:</span>
+            <span class="row_data"> {{datum[column]}} </span>
+        </td>  
+  
+        <td class="action_columns">
+          <div >
+            
+              <i  (click)="functions[action](module_variables['data_to_show'],this.module_variables['data_to_show'][i])" *ngFor="let action of meta_data.actions"  [ngClass]="getClass(datum,action)"  ></i>  
+              <!-- *ngIf="!should_hide(datum,action)" -->
+            
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    
+    </table>
+  
+  
+  
+  
