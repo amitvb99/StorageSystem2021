@@ -7,6 +7,9 @@ import { LoginFormComponent } from './users/login-form/login-form.component';
 import { nav_bar_page_t } from './app-interfaes';
 import { hasClassName } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { StudentsTableComponent } from './students/students-table/students-table.component';
+import { InstrumentsTableComponent } from './instruments/instruments-table/instruments-table.component';
+import { GenericFormComponent } from './generic-elements/generic-form/generic-form.component';
 
 
 
@@ -18,6 +21,18 @@ const meta_data  = {
     url:'#/home',
     permission:'parent',
     component:HomePageComponent
+  },
+  {
+    name:'Students',
+    url:'#/students',
+    permission:'parent',
+    component:StudentsTableComponent
+  },
+  {
+    name:'Instruments',
+    url:'#/instruments',
+    permission:'parent',
+    component:InstrumentsTableComponent
   },
   {
     name:'login',

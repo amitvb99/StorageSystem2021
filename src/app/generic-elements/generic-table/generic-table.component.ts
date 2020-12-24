@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
-// import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { trigger, transition, style, animate, state, query, stagger, keyframes } from '@angular/animations';
-import { environment } from 'src/environments/environment';
+import { CrudService } from 'src/app/shared-services/crud.service';
 
 interface actions_metadata_t{
   icon: string,
   condition: Record<string,(number | string)[]>
 }
 interface meta_data_t {
+  component_name: string,
   indexing_enabled: boolean,
   columns_count: number,
   columns: string[],
@@ -20,9 +20,9 @@ interface meta_data_t {
 } 
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css'],
+  selector: 'generic-table',
+  templateUrl: './generic-table.component.html',
+  styleUrls: ['./generic-table.component.css'],
   animations:[
     // trigger('highlight',[
     //   transition("* => highlighted",[])
@@ -49,10 +49,11 @@ interface meta_data_t {
 })
 
 
-export class TableComponent implements OnInit {
+export  class TableComponent implements OnInit {
 
 
-   @Input() meta_data: meta_data_t; 
+  @Input() meta_data: meta_data_t; 
+  @Input() functions: any; 
 
   module_variables = {
     filter_bar_values:undefined,
@@ -61,18 +62,9 @@ export class TableComponent implements OnInit {
 }
 
   index = 0
-  constructor(private http:HttpClient) { }
-  add_datum(datum){
+  constructor(private crud:CrudService) { }
 
-    // let a = [this.item6,this.item7,this.item8,this.item9]
-    // this.module_variables['data_to_show'].unshift(a[this.index])
-    // this.index = (this.index + 1)%4
 
-        
-  }
-  remove_datum(i:number){
-    this.module_variables['data_to_show'].splice(i,1)
-  }
 
   should_hide(datum : any,action : any){
     let cond = this.meta_data.actions_metadata[action].condition
@@ -114,7 +106,7 @@ filter_bar_changed(){
 }
   ngOnInit(): void {
     this.module_variables.filter_bar_values = Object.assign([], this.meta_data.filter_bar_array) 
-    this.http.get(`${environment.apiUrl}/api/example-table`).subscribe(function(data){
+    this.crud.read(this.meta_data.component_name).subscribe(function(data){
       this.module_variables['local_db'].set(this.meta_data.filter_bar_array.join("_"),data);
       this.module_variables['data_to_show'] = this.module_variables['local_db'].get(this.meta_data.filter_bar_array.join("_"));
   }.bind(this)

@@ -1,4 +1,43 @@
-<app-table [meta_data]="table_1"></app-table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<generic-table [meta_data]="table_1"></generic-table>
+
+
+<button #anchor (click)="show = !show"> Click me</button>
+<kendo-popup [anchor]="anchor" (anchorViewportLeave)="show = false" *ngIf="show">
+    <div class='content'>
+      <!-- User-defined content -->
+      Popup content.
+    </div>
+  </kendo-popup>
 <br>
 <br>
 <br>

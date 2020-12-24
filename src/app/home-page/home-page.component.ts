@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountsService } from '../users/accounts.service';
+import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
+import { TableExampleComponent } from '../table-example/table-example.component';
+import { GenericFormComponent } from '../generic-elements/generic-form/generic-form.component';
+import { generic_form_meta_data_t } from '../app-interfaes';
 
 @Component({
   selector: 'app-home-page',
@@ -7,8 +11,69 @@ import { AccountsService } from '../users/accounts.service';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-
-  constructor(private accounts: AccountsService) { }
+  generic_form_meta_data : generic_form_meta_data_t = [
+    { 
+      name:'Personal',
+      fields:[
+        {
+          id: 'f1',
+          name:'Name',
+          type:'text',
+          can_edit:true
+        },
+        {
+          id: 'f2',
+          name:'School',
+          type:'text',
+          can_edit:true
+        },
+        {
+          id: 'f3',
+          name:'Level',
+          type:'text',
+          can_edit:true
+        },
+        {
+          id: 'f4',
+          name:'Level',
+          type:'checkbox',
+          can_edit:true
+        },
+        {
+          id: 'f8',
+          name:'Level',
+          type:'checkbox',
+          can_edit:true
+        },
+  ]
+    },
+    { 
+      name:'general',
+      fields:[
+        {
+          id: 'f5',
+          name:'grade',
+          type:'drop_down',
+          can_edit:true,
+          possible_values:['excellent','meduim','weak']
+        },
+        {
+          id: 'f6',
+          name:'loaning',
+          type:'text',
+          can_edit:true,
+        },
+        {
+          id: 'f7',
+          name:'parent phone nuber',
+          type:'text',
+          can_edit:true,
+        },
+      ]
+    }  ]
+  constructor(
+    private accounts: AccountsService,
+    private dialog: MatDialog) { }
   userFirstName = '';
   front_to_server = JSON.stringify({"username":"[the string the user inserted]","password":"[sha256 hash for the string inserted by user ]"})
   login_server_to_front = JSON.stringify({"name":"[user Full Name]", "token":"[string from server per session]", "username":"[user username]"})
@@ -50,6 +115,19 @@ export class HomePageComponent implements OnInit {
     //   this.userFirstName = 'Guest'
     // }
     // console.log(this.userFirstName)
+  }
+
+  open_dialog(){
+    const config = new MatDialogConfig()
+    config.autoFocus = true
+    // config.height = "100%"
+    // config.width = "600px"
+    
+    
+    let instance = this.dialog.open(GenericFormComponent,config).componentInstance;
+    instance.meta_data =  this.generic_form_meta_data;
+    instance.is_add =  true;
+    
   }
 
 }

@@ -82,15 +82,34 @@ app.use('/*',(req,res)=>
     })
 
 
-app.get('/api/example-table',(req,res)=>{
-    console.log('aaa');
+    app.get('/api/example-table',(req,res)=>{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept");
+        res.setHeader("Access-Control-Allow-Methods",
+            "GET, POST, PATCH, DELETE, OPTIONS");
+        data = [item1,item2,item3,item4,item5,item6,item7,item8,item9]
+        res.json(data)
+    })
+    
+
+    
+app.get('/api/instruments',(req,res)=>{
+    data = [
+        {'id':1,'type':'A','subtype':'A1','company':'cggg','style':'double length','serial_number':312,'owner':'me','status':'loaned'},
+        {'id':2,'type':'A','subtype':'A2','company':'cggg','style':'double length','serial_number':459,'owner':'me','status':'loaned'},
+        {'id':3,'type':'A','subtype':'A3','company':'cggg','style':'double length','serial_number':984,'owner':'me','status':'loaned'},
+        {'id':4,'type':'B','subtype':'B1','company':'cggg','style':'double length','serial_number':963,'owner':'me','status':'loaned'},
+        {'id':4,'type':'B','subtype':'B2','company':'cggg','style':'double length','serial_number':626,'owner':'me','status':'loaned'},
+        {'id':4,'type':'C','subtype':'C2','company':'cggg','style':'double length','serial_number':323,'owner':'me','status':'missing'},
+        ]
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept");
     res.setHeader("Access-Control-Allow-Methods",
         "GET, POST, PATCH, DELETE, OPTIONS");
-    data = [item1,item2,item3,item4,item5,item6,item7,item8,item9]
     res.json(data)
 })
 

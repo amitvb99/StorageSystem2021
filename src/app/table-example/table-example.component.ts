@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-table-example',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./table-example.component.css']
 })
 export class TableExampleComponent implements OnInit {
-  table_1  = {
+  show = false
+  table_1  ={
+    path: `${environment.apiUrl}/api/example-table`,
     indexing_enabled :true,
     columns_count:4,
     columns:['item','availability','qty','price'],
