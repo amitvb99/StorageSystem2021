@@ -4,10 +4,9 @@ const checkAuth= require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.post("/create", checkAuth,(req, res, next)=>{
-  try{
+router.post("/create", (req, res, next)=>{
     const student = new Student({
-      fname: req.body.fName,
+      fName: req.body.fName,
       lName: req.body.lName,
       school: req.body.school,
       grade: req.body.grade,
@@ -21,30 +20,43 @@ router.post("/create", checkAuth,(req, res, next)=>{
       parent2Email: req.body.parent2Email,
       instruments: req.body.instruments,
     });
-    result = student.save();
-    res.status(201).json({});
-  }catch(err){
-    res.status(500).json({});
-  }
+    student.save()
+    .then(result => {
+      res.status(201).json({});
+    })
+    .catch(err => {
+      res.status(500).json({});
+    });
 });
 
 router.get("", (req, res, next)=>{
-  try{
-    const students = Student.find();
-    res.status(200).json({
-    message: "Students fetched successfully!",
-    students: students
-    });
-  }
-  catch(err){
-    res.status(500).json({})
-  }
+
+    Student.find()
+      .then(students =>{
+        if(!students){
+          res.status(500).json({});
+        }
+        return students;
+      })
+      .then(students => {
+        return res.status(200).json({
+          message: "Students fetched successfully!",
+          students: students
+          });
+      })
+      .catch(err => {
+        res.status(500).json({});
+      });
 });
 
 //update
 router.put("/:id", (req, res, next)=>{
-  const student = new Student({
-    fname: req.body.fName,
+
+  student = Student.findOne({id: req.params.id}).then(student =>{
+
+  const student1 = new Student({
+    _id: student._id,  //WTF?!
+    fName: req.body.fName,
     lName: req.body.lName,
     school: req.body.school,
     grade: req.body.grade,
@@ -58,13 +70,19 @@ router.put("/:id", (req, res, next)=>{
     parent2Email: req.body.parent2Email,
     instruments: req.body.instruments,
   });
-  Student.updateOne({id: req.params.id},student).then(result => {
-    res.status.json({message: "Student Updated!"});
-  })
+
+    Student.updateOne({_id: student._id},student1).then(t => {
+      res.status(200).json({message: "Student Updated!"});
+    })
+    .catch(err=>{
+      console.log(err);
+      res.status(500).json({err});
+    });
+  });
 });
 
 router.get("/:id", (req, res, next)=>{
-  Student.findById(req.params.id).then(student => {
+  Student.findOne({id: req.params.id}).then(student => {
     if (student) {
       res.status(200).json(student);
     } else {
@@ -74,14 +92,13 @@ router.get("/:id", (req, res, next)=>{
 });
 
 router.delete("/:id", (req, res, next)=>{
-  try{
-    Student.deleteOne({ _id: req.params.id }).then(result => {
+  Student.deleteOne({ id: req.params.id }).then(result => {
       res.status(200).json({});
-    });
-  }
-  catch(err){
+    })
+  .catch(err => {
     res.status(500).json({});
-  }
+  });
+
 });
 
 router.get("/stuentsHistory", (req, res, next)=>{

@@ -7,24 +7,22 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-router.post("/login1", (req, res, next)=>{
+router.post("/login", (req, res, next)=>{
   let fetchdeUsre;
-  User.findOne({email: req.body.email}).then(user =>{
+  User.findOne({username: req.body.username}).then(user =>{
     if(!user){
       return res.status(401).json({
-        message: "Auth failed"
       });
     }
     fetchdeUsre = user;
-    return bcrypt.compare(req.body.password, user.password);
+    return req.body.password== user.password;
   })
   .then(result => {
     if(!result){
       return res.status(401).json({
-        message: "Auth Failed"
       });
     }
-    const token = jwt.sign({email: fetchdeUsre.email, userId: fetchdeUsre._id},
+    const token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
      'secret_this_should_be_longerr',
      {expiresIn: "1h"});
      res.status(200).json({
@@ -33,12 +31,11 @@ router.post("/login1", (req, res, next)=>{
   })
   .catch(err =>{
     return res.status(401).json({
-      message: "Auth Failed"
     });
   });
 });
 
-router.post("/login", (req, res, next)=>{
+router.post("/login1", (req, res, next)=>{
   try{
       let user = User.findOne({username: req.body.username});
 
@@ -68,15 +65,18 @@ router.post("/logout", (req, res, next)=>{
 
 
 router.post("/register", (req, res, next)=>{
-  try{
-    console.log("here");
     const user = new User({name: req.body.name, username: req.body.user, password: req.body.pass});
-    result = user.save();
-    res.status(201).json({message: "User Created!"});
-  }
-  catch(err){
-    res.status(500).json({});
-  }
+    user
+      .save()
+      .then(result => {
+        res.status(201).json({
+          message: "User created!",
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+        });
+      });
 });
 
 
