@@ -50,26 +50,24 @@ router.post("/create", (req, res, next)=>{
 //update
 router.put("/:id", (req, res, next)=>{
 
-  Instrument.findOne({generalSerialNumber: req.params.id}).then(instrument=>{
-  const instrument1 = new Instrument({
-      _id: instrument._id,
+  const instrument = new Instrument({
+      _id: req.body._id,
       generalSerialNumber: req.body.generalSerialNumber,
       type: req.body.type,
       sub_type: req.body.sub_type,
       company: req.body.company,
-      model_: req.body.model,
+      style: req.body.model,
       imprentedSerialNumber: req.body.imprentedSerialNumber,
       ownership: req.body.ownership,
       status: req.body.status
     });
-    Instrument.updateOne({_id: instrument._id},instrument1).then(result => {
-      res.status(200).json();
+    Instrument.updateOne({_id: req.params.id},instrument).then(result => {
+      res.status(200).json({message: "Instrument Updated!"});
     })
     .catch(err=>{
       console.log(err);
       res.status(500).json({err});
     });
-  });
 });
 
 router.get("/type/:id", (req, res, next)=>{

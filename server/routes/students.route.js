@@ -25,6 +25,7 @@ router.post("/create", (req, res, next)=>{
       res.status(201).json({});
     })
     .catch(err => {
+      console.log(err);
       res.status(500).json({});
     });
 });
@@ -49,13 +50,43 @@ router.get("", (req, res, next)=>{
       });
 });
 
+// //update
+// router.put("/:id", (req, res, next)=>{
+
+//   student = Student.findOne({id: req.params.id}).then(student =>{
+
+//   const student1 = new Student({
+//     _id: student._id,  //WTF?!
+//     fName: req.body.fName,
+//     lName: req.body.lName,
+//     school: req.body.school,
+//     grade: req.body.grade,
+//     class: req.body.class,
+//     id: req.body.id,
+//     parent1Name: req.body.parent1Name,
+//     parent2Name: req.body.parent2Name,
+//     parent1PhoneNumber: req.body.parent1PhoneNumber,
+//     parent2PhoneNumber: req.body.parent2PhoneNumber,
+//     parent1Email: req.body.parent1Email,
+//     parent2Email: req.body.parent2Email,
+//     instruments: req.body.instruments,
+//   });
+
+//     Student.updateOne({_id: student._id},student1).then(t => {
+//       res.status(200).json({message: "Student Updated!"});
+//     })
+//     .catch(err=>{
+//       console.log(err);
+//       res.status(500).json({err});
+//     });
+//   });
+// });
+
 //update
 router.put("/:id", (req, res, next)=>{
 
-  student = Student.findOne({id: req.params.id}).then(student =>{
-
-  const student1 = new Student({
-    _id: student._id,  //WTF?!
+  const student = new Student({
+    _id: req.body._id,  //WTF?!
     fName: req.body.fName,
     lName: req.body.lName,
     school: req.body.school,
@@ -71,14 +102,13 @@ router.put("/:id", (req, res, next)=>{
     instruments: req.body.instruments,
   });
 
-    Student.updateOne({_id: student._id},student1).then(t => {
+    Student.updateOne({ _id: req.params.id },student).then(t => {
       res.status(200).json({message: "Student Updated!"});
     })
     .catch(err=>{
       console.log(err);
       res.status(500).json({err});
     });
-  });
 });
 
 router.get("/:id", (req, res, next)=>{
