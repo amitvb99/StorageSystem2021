@@ -15,8 +15,7 @@ const studentSchema = mongoose.Schema({
   parent1PhoneNumber: {type: String},
   parent2PhoneNumber: {type: String},
   parent1Email: {type: String},
-  parent2Email: {type: String},
-  instruments: {type: String}
+  parent2Email: {type: String}
 });
 
 
