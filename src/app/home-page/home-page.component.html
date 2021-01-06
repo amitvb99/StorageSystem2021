@@ -1,262 +1,158 @@
 
 <ul>
-    <li> <a href="#login1"> post: api/user/login</a></li>
-    <li> <a href="#login2"> post: api/user/logout</a></li>
-    <li> <a href="#login3"> post: api/user/register</a></li>
-    <br>
-    <br>
-    <br>
+    <li> <a href="#permission"> Permisiion System</a></li>
+    <li> <a href="#loans"> Lends</a></li>
+    <li> <a href="#filter"> Filtering System</a></li>
 
-    <li> <a href="#students1"> get: api/students</a></li>
-    <li> <a href="#students2"> get: api/students/&lt;id&gt;</a></li>
-    <li> <a href="#students3"> post: api/students/create</a></li>
-    <li> <a href="#students4"> delete: api/students/&lt;id&gt;</a></li>
-    <li> <a href="#students5"> post: api/students/update</a></li>
-
-    <br>
-    <br>
-    <br>
-
-    <li> <a href="#instruments1"> get: api/instruments</a></li>
-    <li> <a href="#instruments2"> get: api/instruments/type/&lt;id&gt;</a></li>
-    <li> <a href="#instruments3"> get: api/instruments/&lt;id&gt;</a></li>
-    <li> <a href="#instruments4"> post: api/instruments/create</a></li>
-    <li> <a href="#instruments5"> delete: api/instruments/&lt;id&gt;</a></li>
-    <li> <a href="#instruments6"> delete: api/instruments/type/&lt;id&gt;</a></li>
-    <li> <a href="#instruments7"> post: api/instruments/update</a></li>
+    <li> <a href="#reports"> InfraStructure for PDF Reports</a></li>
+    <li> <a href="#imports"> Import data from Excel/CSV</a></li>
+    <li> <a href="#history"> History</a></li>
+    <li> <a href="#log"> Log</a></li>
 
     <li> <a href="#Tables"> DataBase</a></li>
 
 </ul>
+<div  class="container" id="permissions">
+    <h3>Permission System</h3>
+    three types of accesses: Admin, User, Guest
+
+    <table>
+        <tr>
+            <th>***</th> <th>Guest</th> <th>User</th> <th>Admin</th>
+        </tr>
+        <tr>
+            <th>Login Page</th> <th class="V">V</th> <th class="V">V</th> <th class="V">V</th>
+        </tr>
+        <tr>
+            <th>Instruments</th> <th class="X">X</th> <th class="V">V</th> <th class="V">V</th>
+        </tr>
+        <tr>
+            <th>Students</th> <th class="X">X</th> <th class="V">V</th> <th class="V">V</th>
+        </tr>
+        <tr>
+            <th>Lends</th> <th class="X">X</th> <th class="V">V</th> <th class="V">V</th>
+        </tr>
+        <tr>
+            <th>Reports</th> <th class="X">X</th> <th class="V">V</th> <th class="V">V</th>
+        </tr>
+        <tr>
+            <th>Users</th> <th class="X">X</th> <th class="X">X</th> <th class="V">V</th>
+        </tr>
+    </table>
+<p>
+<span>Back End: </span> the only requests from backend are for assets, requests for pages are handeled in Front End, so
+for any request to assets/data with unpriviliged user the Backend responds with response: 403
 <br>
-    <br>
-    <button (click)="open_dialog()">Click</button>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+<span>Front End: </span> Front End responsibility is to not show any widget (pages, buttuns, links) to unprivilidged user
+</p>
 
-<div id="login1" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/user/login (post)
-
-    </h3>
-    <ol>
-        <li> user types user name password</li>
-        <li> front end sends to the server the JSON : {{front_to_server}}</li>
-        <li> backend validates user and:</li>
-         <li> in case of success returns Response 200, and the JSON {{login_server_to_front}} </li>
-         <li> in case of failure the server returns empty JSON and respose 401</li>
-
-        <li> the front end views the proper design to user </li>
-
-
-    </ol>
 </div>
 
-<div id="login2" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/user/logout (post)
+<div class="container" id="loans">
+    <h3>Lends</h3>
+    Can lends be changed? <br>
+    if yes by anyone or just by admin?<br>
+     
+    <br>
+    filtering lends or searching lends is by : date / instrument info / student info / user info. <br>
+    &lt;Waiting for Amit and Meni response }
+</div>
 
-    </h3>
-    <p>
-    Don't send anything to the server
+<div class="container" id="filter">
+    <h3>Filtering System</h3>
+    <p>any request for filtered data is of the form <span>/api/user/&lt;component&gt;/filtered/&lt;filter string&gt;</span>
+        
     </p>
-</div>
 
-<div id="login3" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/user/register (post)
-
-    </h3>
-    <ol>
-      <li> user types username name password</li>
-      <li> front end sends to the server the JSON {{register_front_to_server}} </li>
-      <li> backend validates username uniqueness and:</li>
-       <li> in case of success returns Response 201, and the JSON {{register_server_to_front}} </li>
-       <li> in case of failure the server returns empty JSON and respose 500</li>
-
-      <li> the front end views the proper design to user </li>
-
-
-  </ol>
-</div>
-
-<div id="students1" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/students
-
-    </h3>
-    <ol>
-      <li> in case of success returns Response 200, and the JSON {{students_server_to_front}} </li>
-      <li> in case of failure the server returns empty JSON and respose 500</li>
-
-      <li> the front end views the proper design to user </li>
-
-  </ol>
-</div>
-
-<div id="students2" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/students/&lt;id&gt;
-
-    </h3>
-    <ol>
-      <li> user types the student id</li>
-      <li> front end sends to the server the student id as a request parameter </li>
-      <li> in case of success the server returns Response 200, and the JSON {{student_server_to_front}} </li>
-      <li> in case of failure the server returns empty JSON and respose 404</li>
-
-      <li> the front end views the proper design to user </li>
-
-  </ol>
-</div>
-
-
-<div id="students3" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/students/create (post)
-
-    </h3>
-    <ol>
-    <li> user most enter stdents: first name, lastname, school, grade, class, id. and could enter (for his choise): the parents details </li>
-    <li> if the user chose to give up some of the unnecessarily details the client side most sned them as empty string </li>
-    <li> front end sends to the server the JSON {{addStudent_front_to_server}} </li>
-    <li> in case of success the server returns Response 201, and the empty JSON</li>
-    <li> in case of failure the server returns empty JSON and respose 500</li>
-
-    <li> the front end views the proper design to user </li>
-  </ol>
-</div>
-
-
-<div id="students4" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/students/&lt;id&gt;  (delete)
-
-    </h3>
-    <ol>
-      <li> user types the student id</li>
-      <li> front end sends to the server the student id as a request parameter </li>
-      <li> in case of success the server returns Response 200 with empty JSON </li>
-      <li> in case of failure the server returns empty JSON and respose 500</li>
-
-      <li> the front end views the proper design to user </li>
-
-  </ol>
-</div>
-
-
-<div id="students5" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/students/update (post)
-
-    </h3>
     <p>
-      before this action the client side most send the server a get request to get the student
-      current details, then it most show it to the user, he makes the changes he wants.
-      the remain steps same as create
+        <span><b >Instruments:</b> the api would be /api/user/instruments/filter/&lt;filtered string&gt;</span>
+        <br>
+    <span style="display:inline-block; margin-left:30px" >where &lt;filter string&gt; is of the form: &lt;discrete fields filter&gt;-&lt;free text search&gt;</span>
+        <br>
+    <span style="display:inline-block; margin-left:30px" > where &lt;discrete fields filter&gt; is of the form: &lt;type&gt;_&lt;subtype&gt;_&lt;status&gt; </span>
+        <br>
+    <span style="display:inline-block; margin-left:50px"> if &lt;type&gt; == "type" then the request is asking for all types </span>
+    <br>
+    <span style="display:inline-block; margin-left:50px"> if &lt;subtype&gt; == "subtype" then the request is asking for all subtypes </span>
+    <br>
+    <span style="display:inline-block; margin-left:50px"> if &lt;status&gt; == "status" then the request is asking for all statuses </span>
+    <br> 
+    <span style="display:inline-block; margin-left:50px"> example for filter string : "A_A1_status" is requesting for instruments of Type A, subtype A1, for all statuses </span>
+    <br> 
+    <span style="display:inline-block; margin-left:50px"> example for filter string : "A_A1_loaned" is requesting for instruments of Type A, subtype A1, for loaned instruments </span>
+    <br> 
+    <span style="display:inline-block; margin-left:30px"> and &lt;free text search&gt;: is text describing substring of instrument serial number </span>
     </p>
-</div>
 
+    <br>
 
-<div id="instruments1" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/instruments
-
-    </h3>
-    <ol>
-      <li> in case of success returns Response 200, and the JSON {{instruments_server_to_front}} </li>
-      <li> in case of failure the server returns empty JSON and respose 500</li>
-
-      <li> the front end views the proper design to user </li>
-
-  </ol>
-</div>
-
-<div id="instruments2" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/instruments/type/&lt;id&gt;
-
-    </h3>
     <p>
-      redundant!
-      </p>
-</div>
-
-<div id="instruments3" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/instruments/&lt;id&gt;
-
-    </h3>
-    <ol>
-      <li> user types the instrumetn serial number</li>
-      <li> front end sends to the server the instrumetn serial numbe as a request parameter </li>
-      <li> in case of success the server returns Response 200, and the JSON {{instrument_server_to_front}} </li>
-      <li> in case of failure the server returns empty JSON and respose 404</li>
-
-      <li> the front end views the proper design to user </li>
-
-  </ol>
-</div>
-
-<div id="instruments4" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/instruments/create (post)
-
-    </h3>
-    <ol>
-      <li> user most enter instrumetn's: general SN (serial Number), type, sub type, company, model, imprented SN, ownership, status </li>
-      <li> front end sends to the server the JSON {{addInstrument_front_to_server}} </li>
-      <li> in case of success the server returns Response 201, and the empty JSON</li>
-      <li> in case of failure the server returns empty JSON and respose 500</li>
-      <li> the front end views the proper design to user </li>
-    </ol>
-</div>
-
-<div id="instruments5" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/instruments/&lt;id&gt; (delete)
-
-    </h3>
-    <ol>
-      <li> user types the instrumetn SN</li>
-      <li> front end sends to the server the instrumetn SN as a request parameter </li>
-      <li> in case of success the server returns Response 200 with empty JSON </li>
-      <li> in case of failure the server returns empty JSON and respose 500</li>
-      <li> the front end views the proper design to user </li>
-
-  </ol>
-</div>
-
-<div id="instruments6" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/instruments/type/&lt;id&gt; (delete)
-
-    </h3>
-    <p>
-    redundant!
+        <span><b >Students:</b> the api would be /api/user/students/filter/&lt;filtered string&gt;</span>
+        <br>
+    <span style="display:inline-block; margin-left:30px" >where &lt;filter string&gt; is of the form: &lt;discrete fields filter&gt;-&lt;free text search&gt;</span>
+        <br>
+    <span style="display:inline-block; margin-left:30px" > where &lt;discrete fields filter&gt; is of the form: &lt;class&gt;_&lt;level&gt; </span>
+        <br>
+    <span style="display:inline-block; margin-left:50px"> if &lt;class&gt; == "class" then the request is asking for all classes </span>
+    <br>
+    <span style="display:inline-block; margin-left:50px"> if &lt;level&gt; == "level" then the request is asking for all levels </span>
+    <br>
+    <span style="display:inline-block; margin-left:50px"> example for discrete fields filter : "5_3" is requesting for students of class 5, level 3 </span>
+    <br> 
+    <span style="display:inline-block; margin-left:50px"> example for discrete fields filter : "class_level" is requesting for all students</span>
+    <br> 
+    <span style="display:inline-block; margin-left:30px"> and &lt;free text search&gt;: is text describing substring of Student First Name + Last Name, parents phone numbers </span>
     </p>
-</div>
+    
 
-<div id="instruments7" style="border: 1px black solid;margin-top: 20px;margin-left:20px">
-    <h3>api/instruments/update (post)
-
-    </h3>
     <p>
-      before this action the client side most send the server a get request to get the instrument
-      current details, then it most show it to the user, he makes the changes he wants.
-      the remain steps same as create
+        <span><b >Lends:</b> the api would be /api/user/loans/filter/&lt;filtered string&gt;?from=&lt;date&gt;&to=&lt;date&gt;</span>
+        <br>
+    <span style="display:inline-block; margin-left:30px" >where &lt;filter string&gt; is of the form: &lt;discrete fields filter&gt;-&lt;free text search&gt;</span>
+        <br>
+    <span style="display:inline-block; margin-left:30px" > where &lt;discrete fields filter&gt; is of the form: &lt;type&gt;_&lt;subtype&gt;_&lt;status&gt;_&lt;class&gt;_&lt;level&gt; </span>
+    <br> 
+    <span style="display:inline-block; margin-left:30px"> and &lt;free text search&gt;: is text describing (free text search) for students and instruments </span>
+    <br>
+    <span style="display:inline-block; margin-left:30px"> and query string fields &lt;from, to&gt;: describe range of days, request with this fields ask for lends in that range of days </span>
+    <br>
+    <span style="display:inline-block; margin-left:50px"> for exampe the query string (?from=3_1_2021&to=5_1_2021) is asking for all lends between 3\1\2021 and 5\1\2021 </span>
+    
     </p>
+    
 </div>
-<div id="Tables">
+
+<div class="container" id="reports">
+    <h3>Reports</h3>
+    &lt;Waiting for Amit and Meni response&gt;
+</div>
+
+<div class="container" id="imports">
+    <h3>Import Data</h3>
+    We need a Sample of real data 
+    <br>
+    we need to support Uploading excel files in front end 
+    <br>
+    we need to support reading analyzing files and inserting data to DB in backend
+</div>
+
+<div class="container" id="history">
+    <h3>History</h3>
+    Lets make it for future iterations
+</div>
+
+<div class="container" id="log">
+    <h3>Logs and recent actions</h3>
+    &lt;not for now&gt;
+</div>
+
+<div class="container" id="Tables">
 
     <div style="margin-top:20px;">
 
         <table>
             <tr>
-                <td>Users</td> <td>name</td> <td>username</td> <td>password</td>
-            </tr>
-        </table>
-    </div>
-
-    <div style="margin-top:20px;">
-
-        <table style>
-            <tr>
-                <td>Students</td> <td>fName</td> <td>lName</td> <td>school</td> <td>grade</td> <td>class</td> <td>id</td> <td>parent1Name</td> <td>parent2Name</td> <td>parent1PhoneNumber</td> <td>parent2PhoneNumber</td> <td>parent1Email</td> <td>parent2Email</td> <td>instruments</td>
+                <td>Users</td> <td>name</td> <td>E-mail</td> <td>Phone Number</td> <td>Privilidge</td> <td>username</td> <td>password</td>
             </tr>
         </table>
     </div>
@@ -265,11 +161,11 @@
 
         <table>
             <tr>
-                <td>Instruments</td> <td>generalSerialNumber</td> <td>type</td> <td>sub_type</td> <td>company</td> <td>model_</td> <td>imprentedSerialNumber</td> <td>ownership</td> <td>status</td>
+                <td>Lends</td> <td>Id</td> <td>StudentId</td> <td>InstrumentId</td> <td>Date</td> <td>UserId</td>
             </tr>
         </table>
     </div>
-
+    
 
 </div>
 

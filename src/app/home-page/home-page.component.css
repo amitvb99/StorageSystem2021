@@ -8,3 +8,19 @@ th, td {
     border-color: yellow;
   }
 
+.container {
+  border: 3px solid blue;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  
+  min-height: 50px;
+}
+
+.X{
+  background-color: crimson;
+}
+
+.V{
+  background-color: greenyellow;
+}
