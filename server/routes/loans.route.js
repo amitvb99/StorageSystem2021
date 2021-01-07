@@ -1,11 +1,11 @@
 const express = require("express");
 const Loan = require("../models/loan.model")
 const Instrument = require("../models/instrument.model")
-
+const checkAuth= require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.post("/loanInstrument", (req, res, next)=>{
+router.post("/loanInstrument",checkAuth, (req, res, next)=>{
 
     Instrument.findOne({id: req.body.id})
     .then(result => {
@@ -42,7 +42,7 @@ router.post("/loanInstrument", (req, res, next)=>{
     })
 });
 
-router.get("", (req, res, next)=>{
+router.get("",checkAuth, (req, res, next)=>{
     Loan.find().then(loans => {
         if(loans) {
             res.status(200).json({

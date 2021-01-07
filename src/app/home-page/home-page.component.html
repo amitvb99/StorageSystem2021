@@ -41,7 +41,9 @@
     </table>
 <p>
 <span>Back End: </span> the only requests from backend are for assets, requests for pages are handeled in Front End, so
-for any request to assets/data with unpriviliged user the Backend responds with response: 403
+for any request to assets/data with unpriviliged user the Backend responds with response: 403 <br>
+** the backend expecting to get the token as an authirization header
+** done in backend
 <br>
 <span>Front End: </span> Front End responsibility is to not show any widget (pages, buttuns, links) to unprivilidged user
 </p>
@@ -52,7 +54,7 @@ for any request to assets/data with unpriviliged user the Backend responds with 
     <h3>Lends</h3>
     Can lends be changed? <br>
     if yes by anyone or just by admin?<br>
-     
+
     <br>
     filtering lends or searching lends is by : date / instrument info / student info / user info. <br>
     &lt;Waiting for Amit and Meni response }
@@ -61,7 +63,7 @@ for any request to assets/data with unpriviliged user the Backend responds with 
 <div class="container" id="filter">
     <h3>Filtering System</h3>
     <p>any request for filtered data is of the form <span>/api/user/&lt;component&gt;/filtered/&lt;filter string&gt;</span>
-        
+
     </p>
 
     <p>
@@ -76,11 +78,11 @@ for any request to assets/data with unpriviliged user the Backend responds with 
     <span style="display:inline-block; margin-left:50px"> if &lt;subtype&gt; == "subtype" then the request is asking for all subtypes </span>
     <br>
     <span style="display:inline-block; margin-left:50px"> if &lt;status&gt; == "status" then the request is asking for all statuses </span>
-    <br> 
+    <br>
     <span style="display:inline-block; margin-left:50px"> example for filter string : "A_A1_status" is requesting for instruments of Type A, subtype A1, for all statuses </span>
-    <br> 
+    <br>
     <span style="display:inline-block; margin-left:50px"> example for filter string : "A_A1_loaned" is requesting for instruments of Type A, subtype A1, for loaned instruments </span>
-    <br> 
+    <br>
     <span style="display:inline-block; margin-left:30px"> and &lt;free text search&gt;: is text describing substring of instrument serial number </span>
     </p>
 
@@ -98,12 +100,12 @@ for any request to assets/data with unpriviliged user the Backend responds with 
     <span style="display:inline-block; margin-left:50px"> if &lt;level&gt; == "level" then the request is asking for all levels </span>
     <br>
     <span style="display:inline-block; margin-left:50px"> example for discrete fields filter : "5_3" is requesting for students of class 5, level 3 </span>
-    <br> 
+    <br>
     <span style="display:inline-block; margin-left:50px"> example for discrete fields filter : "class_level" is requesting for all students</span>
-    <br> 
+    <br>
     <span style="display:inline-block; margin-left:30px"> and &lt;free text search&gt;: is text describing substring of Student First Name + Last Name, parents phone numbers </span>
     </p>
-    
+
 
     <p>
         <span><b >Lends:</b> the api would be /api/user/loans/filter/&lt;filtered string&gt;?from=&lt;date&gt;&to=&lt;date&gt;</span>
@@ -111,15 +113,15 @@ for any request to assets/data with unpriviliged user the Backend responds with 
     <span style="display:inline-block; margin-left:30px" >where &lt;filter string&gt; is of the form: &lt;discrete fields filter&gt;-&lt;free text search&gt;</span>
         <br>
     <span style="display:inline-block; margin-left:30px" > where &lt;discrete fields filter&gt; is of the form: &lt;type&gt;_&lt;subtype&gt;_&lt;status&gt;_&lt;class&gt;_&lt;level&gt; </span>
-    <br> 
+    <br>
     <span style="display:inline-block; margin-left:30px"> and &lt;free text search&gt;: is text describing (free text search) for students and instruments </span>
     <br>
     <span style="display:inline-block; margin-left:30px"> and query string fields &lt;from, to&gt;: describe range of days, request with this fields ask for lends in that range of days </span>
     <br>
     <span style="display:inline-block; margin-left:50px"> for exampe the query string (?from=3_1_2021&to=5_1_2021) is asking for all lends between 3\1\2021 and 5\1\2021 </span>
-    
+
     </p>
-    
+
 </div>
 
 <div class="container" id="reports">
@@ -129,9 +131,9 @@ for any request to assets/data with unpriviliged user the Backend responds with 
 
 <div class="container" id="imports">
     <h3>Import Data</h3>
-    We need a Sample of real data 
+    We need a Sample of real data
     <br>
-    we need to support Uploading excel files in front end 
+    we need to support Uploading excel files in front end
     <br>
     we need to support reading analyzing files and inserting data to DB in backend
 </div>
@@ -165,7 +167,7 @@ for any request to assets/data with unpriviliged user the Backend responds with 
             </tr>
         </table>
     </div>
-    
+
 
 </div>
 

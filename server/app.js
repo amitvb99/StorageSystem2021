@@ -8,14 +8,16 @@ const loansRoutes = require("./routes/loans.route")
 const adminRoutes = require("./routes/admin.route")
 const mongoose = require("mongoose");
 var bodyParser = require('body-parser')
+const multer= require("multer")
 
 
 var app = express();
 app.use(express.static(path.join(__dirname, '../dist/base-project')))
 var cors = require('cors')
-var bodyParser = require('body-parser')
 
-mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority")
+//mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority
+
+mongoose.connect("mongodb://localhost:27017/myapp")
   .then(()=>{
     console.log('Connected to database!')
   }).catch(()=>{
@@ -35,6 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+
 
 
 item1 = {'item':'Don’t Make Me Think by Steve Krug','availability':1, 'qty':1,'price':30.02}
@@ -92,9 +95,9 @@ app.use('/*',(req,res)=>
         data = [item1,item2,item3,item4,item5,item6,item7,item8,item9]
         res.json(data)
     })
-    
 
-    
+
+
 app.get('/api/instruments',(req,res)=>{
     data = [
         {'id':1,'type':'A','subtype':'A1','company':'cggg','style':'double length','serial_number':312,'owner':'me','status':'loaned'},

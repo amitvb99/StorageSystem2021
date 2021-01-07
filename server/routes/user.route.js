@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
-
+const checkAuth= require("../middleware/check-admin-auth");
 
 
 const router = express.Router();
@@ -22,9 +22,15 @@ router.post("/login", (req, res, next)=>{
       return res.status(401).json({
       });
     }
-    const token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
-     'secret_this_should_be_longerr',
-     {expiresIn: "1h"});
+    let token='';
+    fetchdeUsre.username == 'admin' ?
+    token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
+     'secret_this_should_be_longer_admin',
+     {expiresIn: "1h"}) :
+     token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
+      'secret_this_should_be_longer_user',
+      {expiresIn: "1h"});
+
      res.status(200).json({
        token: token
      });
@@ -64,7 +70,7 @@ router.post("/logout", (req, res, next)=>{
 
 
 
-router.post("/register", (req, res, next)=>{
+router.post("/register",checkAuth, (req, res, next)=>{
     const user = new User({name: req.body.name, username: req.body.user, password: req.body.pass});
     user
       .save()
@@ -94,6 +100,26 @@ router.delete("/:id", (req, res, next)=>{
   User.deleteOne({_id: req.params.id}).then(result => {
     res.status(200).json({message: "deleted"});
   });
+});
+
+router.get("/users", (req, res, next)=>{
+
+  User.find()
+    .then(users =>{
+      if(!users){
+        res.status(500).json({});
+      }
+      return users;
+    })
+    .then(users => {
+      return res.status(200).json({
+        message: "users fetched successfully!",
+        users: users
+        });
+    })
+    .catch(err => {
+      res.status(500).json({});
+    });
 });
 
 
