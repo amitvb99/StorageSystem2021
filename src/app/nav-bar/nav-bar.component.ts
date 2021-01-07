@@ -1,9 +1,10 @@
 import { Component, OnInit,Input, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Route,Routes, RouterModule } from '@angular/router';
-import { nav_bar_meta_data } from '../app-interfaes';
+import { nav_bar_meta_data, nav_bar_page_t, permission_system_t } from '../app-interfaes';
 import { AccountsService } from '../users/accounts.service';
 import { Router } from '@angular/router';
+import { PermissionSystemService } from '../generic-elements/permission-system.service';
 
 
 
@@ -21,9 +22,16 @@ export class NavBarComponent implements OnInit {
   
   is_collapsed = true
   
-  constructor(private accounts:AccountsService,private router:Router) { }
+  constructor(private accounts:AccountsService,private permission_system:PermissionSystemService,private router:Router) { }
   
   ngOnInit(): void {
+  }
+
+  cant_access(page: nav_bar_page_t){
+    if(page.permission != undefined) {
+      return !this.permission_system.have_permission(page.permission)
+    }
+    return false // means user can access
   }
 
   isloggedin(){

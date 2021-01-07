@@ -136,7 +136,7 @@ export class StudentsTableComponent implements OnInit {
 
   },
   'remove': (data_to_show,i) => {
-    this.crud.delete(this.component_name,i['id']).subscribe(res => {
+    this.crud.delete(this.component_name,i['_id']).subscribe(res => {
       if (res !== null){
         const index = data_to_show.indexOf(i, 0);
         if (index > -1) {
@@ -157,7 +157,7 @@ export class StudentsTableComponent implements OnInit {
     instance.data = i
     instance.is_add =  false;
     dialog_ref.afterClosed().subscribe(dialog_res => {
-      this.crud.update(this.component_name,dialog_res,dialog_res['id']).subscribe(res =>{
+      this.crud.update(this.component_name,dialog_res,dialog_res['_id']).subscribe(res =>{
         if (res !== null){
           for (let key in dialog_res) {
             //update ui

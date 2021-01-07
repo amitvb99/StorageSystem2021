@@ -8,7 +8,7 @@ export interface nav_bar_page_t{
     name: string,
     url?: string,    //
     not_apage?: boolean, // default is true
-    permisiion: string,
+    permission?: string,
     component: Type<any>,
     dropdown?: nav_bar_page_t[]
   }
@@ -22,8 +22,9 @@ export interface nav_bar_page_t{
   export class User {
     id: number;
     username: string;
-    firstName: string;
-    lastName: string;
+    name: string;
+    token: string;
+    permission: string;
 }
 
 
@@ -45,3 +46,14 @@ export interface generic_form_group_meta_data_t {
 }
 
 export interface generic_form_meta_data_t  extends Array<generic_form_group_meta_data_t>{}
+
+
+/*###########################################*/
+
+export interface linear_permission_system {
+  list:string[]
+}
+export interface permission_system_t{
+  type:string;
+  permissions: linear_permission_system;
+}

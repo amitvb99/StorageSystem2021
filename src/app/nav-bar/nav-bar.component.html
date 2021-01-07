@@ -9,7 +9,7 @@
     <!-- Links -->
     <div  class="collapse navbar-collapse "  [ngbCollapse]="is_collapsed" id="collapsible_navbar">
     <ul class="navbar-nav " >
-        <li [ngClass]="{'nav-item':true,'dropdown': true , 'hidden':(page.not_apage == true)}" *ngFor="let page of nav_meta_data.pages">
+        <li [ngClass]="{'nav-item':true,'dropdown': true , 'hidden': ((page.not_apage == true)  || cant_access(page))}" *ngFor="let page of nav_meta_data.pages">
             <a class="nav-link " *ngIf="page.url != undefined" href="{{page.url}}">{{page.name}}</a>
             <!-- (page.url != undefined) is a sufficient condition for normal page  -->
 
