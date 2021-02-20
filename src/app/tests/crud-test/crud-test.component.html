@@ -1,0 +1,12 @@
+<p>crud-test works!</p>
+
+<button (click)="test1()"> test1 </button>
+<div *ngFor="let test of tests">
+    <div *ngFor="let step of test">
+        <span>{{step.description}} : </span>
+        <span *ngIf="step.status == 2" style="color:green">PASSED</span>
+        <span *ngIf="step.status == 1" style="color:red">FAILED</span>
+        
+    </div>
+</div>
+

@@ -10,11 +10,7 @@ export class CrudService {
 
   constructor(private http:HttpClient) { }
 
-/**
- * 
- * component:string the component we are trying to make CRUD operation for
- * e.g.: loans, students, ...
- */
+
 
  private get_headers(){
   const headerDict = {
@@ -27,6 +23,12 @@ export class CrudService {
   };
   return requestOptions
  }
+
+ /**
+ * 
+ * component:string the component we are trying to make CRUD operation for
+ * e.g.: loans, students, ...
+ */
   private get_path(component:string,query_string:string, extension:string){
     var qs = ''
     var ex = ''
@@ -42,34 +44,28 @@ export class CrudService {
   }
   create(component:string, object_to_create, query_string:string = ''){
     const path = this.get_path(component,query_string,'create')
-    console.log(path)
     var res = this.http.post(path,object_to_create, this.get_headers())
     return res
   }
 
   delete(component:string, id:string, query_string:string = ''){
     const path = this.get_path(component, query_string,id)
-    console.log(path)
     var res = this.http.delete(path, this.get_headers())
     return res
   }
 
   update(component:string, object_to_update, id:string, query_string:string = ''){
     const path = this.get_path(component,query_string,id)
-    console.log(object_to_update)
-    console.log(path)
     var res = this.http.put(path,object_to_update, this.get_headers())
     return res
   }
 
   read(component:string,id:string = '',query_string:string = ''){
     const path = this.get_path(component,query_string,id)
-    console.log(path)
     var res = this.http.get(path, this.get_headers()).pipe(
       map(res => {
       return res[component];
   }))
-    console.log(res)
     return res
   }
 }

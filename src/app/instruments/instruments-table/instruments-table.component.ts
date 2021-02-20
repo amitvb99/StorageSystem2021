@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { generic_form_meta_data_t } from 'src/app/app-interfaes';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { CrudService } from 'src/app/shared-services/crud.service';
   styleUrls: ['./instruments-table.component.css']
 })
 export class InstrumentsTableComponent implements OnInit {
+  @Input() overrider;
   component_name = "instruments";
   instruments_meta_data  = {
     component_name: "instruments",
@@ -191,6 +192,14 @@ export class InstrumentsTableComponent implements OnInit {
 
 }
   ngOnInit(): void {
+    if (this.overrider != undefined) {
+      console.log('use custom values')
+      var new_values = this.overrider(this.functions, this.instruments_meta_data)
+      this.functions = new_values[0]
+      this.instruments_meta_data = new_values[1]
+    } else {
+      console.log('use default values')
+    }
   }
 
 }

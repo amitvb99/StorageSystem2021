@@ -11,6 +11,8 @@ import { StudentsTableComponent } from './students/students-table/students-table
 import { InstrumentsTableComponent } from './instruments/instruments-table/instruments-table.component';
 import { GenericFormComponent } from './generic-elements/generic-form/generic-form.component';
 import { PermissionSystemService } from './generic-elements/permission-system.service';
+import { LoansPageComponent } from './loans/loans-page/loans-page.component';
+import { TestsContainerComponent } from './tests/tests-container/tests-container.component';
 
 const permission_system : permission_system_t = {
   type: 'linear',
@@ -39,6 +41,12 @@ const meta_data  = {
       url:'#/students',
       permission:'user',
       component:StudentsTableComponent
+    },
+    {
+      name:'Loans',
+      url:'#/loans',
+      permission:'user',
+      component:LoansPageComponent
     },
     {
       name:'Instruments',
@@ -84,6 +92,13 @@ const meta_data  = {
           component:TableExampleComponent
         }],
       permission:'user'
+    },
+    {
+      name:'Tests',
+      url:'#/tests',
+      permission:'user',
+      not_apage:true,
+      component:TestsContainerComponent
     }
   ]}
 @Component({

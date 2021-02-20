@@ -14,7 +14,6 @@ export class AccountsService {
   }
   private userSubject: BehaviorSubject<User>;
     login(user,path){//user should be json object
-      console.log(user)
     return this.http.post<User>(`${environment.apiUrl}${path}`, user)
     .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -22,14 +21,12 @@ export class AccountsService {
         localStorage.setItem('permission', 'admin');
         localStorage.setItem('token', user.token);
         
-        console.log(user)
         this.userSubject.next(user);
         return user;
     }));
   }
   get_user_firs_name(){
     if (this.isloggedin()){
-      console.log(localStorage.getItem('user'))
       return JSON.parse(localStorage.getItem('user')).name;
     } else {
       return 'Guest';
