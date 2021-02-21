@@ -17,7 +17,8 @@ var cors = require('cors')
 
 //mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority
 
-mongoose.connect("mongodb://localhost:27017/myapp")
+// mongoose.connect("mongodb://localhost:27017/myapp")
+mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/test_database?retryWrites=true&w=majority")
   .then(()=>{
     console.log('Connected to database!')
   }).catch(()=>{
