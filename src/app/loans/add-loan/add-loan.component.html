@@ -1,0 +1,41 @@
+<div [@openClose]="add_loan_is_open ? 'opened' : 'closed'"  >
+    <div  *ngIf="add_loan_is_open" class="container" >
+            <div class="add-field-container">
+                    <div *ngIf="instrument == undefined" (click)="add_field('instrument')" class="add-field-box instrument-field"> 
+                        <i class="fas fa-guitar myfa-5x instrument-field" ></i>
+                        <span class="instrument-field"> Choose Instrument</span>
+                    </div>  
+
+                    <div *ngIf="instrument != undefined"  class="add-field-box instrument-data"> 
+                        <span class="data">{{instrument['type']}}</span>
+                        <span class="data">{{instrument['sub_type']}}</span>
+                        <span class="data">{{instrument['style']}}</span>
+                        <span class="data">{{instrument['generalSerialNumber']}}</span>
+                        <i class="fas fa-times myfa-3x instrument-field" (click)="remove_field('instrument')"></i>  
+                    </div>  
+            </div>
+
+            <div class="add-field-container">
+                    <div *ngIf="student == undefined" (click)="add_field('student')" class="add-field-box student-field"> 
+                        <i class="fas fa-user-graduate myfa-5x student-field"></i>
+                        <span class="student-field"> Choose Student</span>
+                    </div>  
+
+                    <div *ngIf="student != undefined"  class="add-field-box"> 
+                        <span class="data">{{student['fName'] + ' ' + student['lName']}}</span>
+                        <span class="data">{{student['class']}}</span>
+                        <span class="data">{{student['grade']}}</span>
+                        <span class="data">{{student['school']}}</span>   
+                        <i class="fas fa-times myfa-3x student-field" (click)="remove_field('student')"></i>                        
+                    </div>  
+
+            </div>
+            <div class="differential-tag"></div>
+            <div class="add-loan-container">
+                <i class="fas fa-handshake myfa-10x add-button" (click)="loan()"></i>
+            </div>
+    </div>
+</div>
+<div *ngIf="!add_loan_is_open" class="show-add-loan-container" >
+    <i class="fas fa-plus-circle fa-5x add-button show-add-loan" (click)="open()"></i>
+</div>

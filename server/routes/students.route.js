@@ -77,7 +77,7 @@ router.post("/insertExcel", multer(storage).single("excel"),checkAuth,(req, res,
   });
 });
 
-router.get("", (req, res, next)=>{
+router.get("", checkAuth,(req, res, next)=>{
 
     Student.find()
       .then(students =>{
@@ -122,7 +122,6 @@ router.put("/:id",checkAuth, (req, res, next)=>{
       res.status(200).json({message: "Student Updated!"});
     })
     .catch(err=>{
-      console.log(err);
       res.status(500).json({err});
     });
 });
@@ -154,8 +153,7 @@ router.get("/filter/:params", (req, res, next)=>{
   let freeText = filterString[1];
   let Class = discreteFields[0];
   let level = discreteFields[1];
-  console.log(Class);
-  console.log(level);
+
 
   if (Class == "class" && level == 'level')
     Student.find().then(students => {

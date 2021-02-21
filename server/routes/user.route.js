@@ -27,15 +27,17 @@ router.post("/login", (req, res, next)=>{
     token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
      'secret_this_should_be_longer_admin',
      {expiresIn: "1h"}) :
-     token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
-      'secret_this_should_be_longer_user',
-      {expiresIn: "1h"});
+    token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
+     'secret_this_should_be_longer_user',
+     {expiresIn: "1h"});
 
      res.status(200).json({
-       token: token
+       token: token,
+       name: fetchdeUsre.name
      });
   })
   .catch(err =>{
+    console.log(err);
     return res.status(401).json({
     });
   });
@@ -56,7 +58,6 @@ router.post("/login1", (req, res, next)=>{
       return res.status(200).json({name: user.name, token: token, username: user.username});
   }
   catch(err){
-    console.log(err);
       return res.status(401).json({});
   }
 

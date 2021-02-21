@@ -36,7 +36,6 @@ router.post("/create", checkAuth, (req, res, next)=>{
       ownership: req.body.ownership,
       status: req.body.status
     });
-    console.log(instument);
     instument.save()
     .then(result =>{
       res.status(201).json({});
@@ -62,7 +61,7 @@ router.put("/:id", checkAuth, (req, res, next)=>{
       ownership: req.body.ownership,
       status: req.body.status
     });
-    Instrument.updateOne({_id: instrument._id},instrument1).then(result => {
+    Instrument.updateOne({_id: instrument._id},instrument).then(result => {
       res.status(200).json({});
     })
     .catch(err=>{

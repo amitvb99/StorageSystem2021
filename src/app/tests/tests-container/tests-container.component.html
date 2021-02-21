@@ -1,0 +1,19 @@
+<div class="tabs-container">
+    <div class="toolbar-container">
+            <div class="btn-group mr-2"  style="width:100%" role="group" aria-label="First group">
+                <button type="button" (click)="update_tests(1)" class="btn btn-secondary">users</button>
+                <button type="button" (click)="update_tests(2)" class="btn btn-secondary">crud</button>
+                <button type="button" (click)="update_tests(3)" class="btn btn-secondary">filter</button>
+                <button type="button" (click)="update_tests(4)" class="btn btn-secondary">loans</button>
+            </div>
+    </div>
+</div>
+
+<div class="test-suite-container">
+
+    <app-users-test  *ngIf="show_users_test"></app-users-test>
+    <app-crud-test   *ngIf="show_crud_test"></app-crud-test>
+    <app-filter-test *ngIf="show_filter_test"></app-filter-test>
+    <app-loans-test  *ngIf="show_loans_test"></app-loans-test>
+
+</div>

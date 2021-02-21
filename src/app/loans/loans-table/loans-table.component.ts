@@ -1,16 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { generic_form_meta_data_t } from 'src/app/app-interfaes';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CrudService } from 'src/app/shared-services/crud.service';
 import { GenericFormComponent } from 'src/app/generic-elements/generic-form/generic-form.component';
 
 @Component({
-  selector: 'app-students-table',
-  templateUrl: './students-table.component.html',
-  styleUrls: ['./students-table.component.css']
+  selector: 'app-loans-table',
+  templateUrl: './loans-table.component.html',
+  styleUrls: ['./loans-table.component.css']
 })
-export class StudentsTableComponent implements OnInit {
-  @Input() overrider;
+export class LoansTableComponent implements OnInit {
   component_name = "students";
   students_meta_data  = {
     component_name: "students",
@@ -115,7 +114,7 @@ export class StudentsTableComponent implements OnInit {
       ]
     }  ]
 
-    functions = {'add': (data_to_show) => {
+    functions={'add': (data_to_show) => {
       const config = new MatDialogConfig()
       config.autoFocus = true
       let dialog_ref = this.dialog.open(GenericFormComponent,config)
@@ -178,16 +177,7 @@ export class StudentsTableComponent implements OnInit {
   }
   constructor(private dialog: MatDialog,private crud:CrudService) { }
 
-  
-
   ngOnInit(): void {
-    if (this.overrider != undefined) {
-      var new_values = this.overrider(this.functions, this.students_meta_data)
-      this.functions = new_values[0]
-      this.students_meta_data = new_values[1]
-    } else {
-      console.log('use default values')
-    }
   }
 
 }

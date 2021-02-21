@@ -17,7 +17,9 @@ import { GenericElementsModule } from './generic-elements/generic-elements.modul
 import { StudentsModule } from './students/students.module';
 import { InstrumentsModule } from './instruments/instruments.module';
 import { PopupModule } from '@progress/kendo-angular-popup';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoansModule } from './loans/loans.module';
+import { TestsModule } from './tests/tests.module';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatDialogModule,
     InstrumentsModule,
     StudentsModule,
+    TestsModule,
+    LoansModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

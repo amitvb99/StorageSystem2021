@@ -14,19 +14,20 @@ export class AccountsService {
   }
   private userSubject: BehaviorSubject<User>;
     login(user,path){//user should be json object
-      
     return this.http.post<User>(`${environment.apiUrl}${path}`, user)
     .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('permission', 'admin');
+        localStorage.setItem('token', user.token);
+        
         this.userSubject.next(user);
         return user;
     }));
   }
   get_user_firs_name(){
     if (this.isloggedin()){
-      console.log(localStorage.getItem('user'))
-      return JSON.parse(localStorage.getItem('user')).firstName;
+      return JSON.parse(localStorage.getItem('user')).name;
     } else {
       return 'Guest';
     }
@@ -41,6 +42,9 @@ export class AccountsService {
       return this.http.post<User>(`${environment.apiUrl}${path}`, JSON.parse(localStorage.getItem('user'))).subscribe(val =>{
         this.userSubject.next(null)
         localStorage.setItem('user', null);
+        localStorage.setItem('permission', null);
+        localStorage.setItem('token', null);
+        
         return null;
       })
     }

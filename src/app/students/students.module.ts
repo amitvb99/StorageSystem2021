@@ -10,6 +10,7 @@ import { GenericElementsModule } from '../generic-elements/generic-elements.modu
   imports: [
     GenericElementsModule,
     CommonModule
-  ]
+  ],
+  exports: [StudentsTableComponent]
 })
 export class StudentsModule { }
