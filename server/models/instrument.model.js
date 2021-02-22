@@ -12,7 +12,6 @@ const instrumentSchema = mongoose.Schema({
   imprentedSerialNumber: {type: String, required: true},
   ownership: {type: String, required: true},
   status: {type: String, required: true}
-
 });
 
 

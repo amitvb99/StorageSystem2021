@@ -9,24 +9,28 @@ router.get("", checkAuth, (req, res, next)=>{
 
     Instrument.find().then(instruments=>{
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
 });
 
 router.post("/create", checkAuth, (req, res, next)=>{
-    const instument = new Instrument({
+    const instrument = new Instrument({
       generalSerialNumber: req.body.generalSerialNumber,
       type: req.body.type,
       sub_type: req.body.sub_type,
@@ -36,13 +40,18 @@ router.post("/create", checkAuth, (req, res, next)=>{
       ownership: req.body.ownership,
       status: req.body.status
     });
-    instument.save()
+    instrument.save()
     .then(result =>{
-      res.status(201).json({});
+      res.status(201).json({
+        message: "success",
+        data: instrument.id
+      });
     })
     .catch(err=>{
       console.log(err);
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
 });
@@ -51,7 +60,7 @@ router.post("/create", checkAuth, (req, res, next)=>{
 router.put("/:id", checkAuth, (req, res, next)=>{
 
   const instrument = new Instrument({
-      _id: req.body._id,
+      _id: req.params.id,  //WTF?!
       generalSerialNumber: req.body.generalSerialNumber,
       type: req.body.type,
       sub_type: req.body.sub_type,
@@ -61,12 +70,17 @@ router.put("/:id", checkAuth, (req, res, next)=>{
       ownership: req.body.ownership,
       status: req.body.status
     });
-    Instrument.updateOne({_id: instrument._id},instrument).then(result => {
-      res.status(200).json({});
+    Instrument.updateOne({_id: req.params.id},instrument).then(result => {
+      res.status(200).json({
+        message: "success",
+        data: instrument.id
+      });
     })
     .catch(err=>{
       console.log(err);
-      res.status(500).json();
+      res.status(500).json({
+        message: "failed",
+      });
     });
 });
 
@@ -74,22 +88,32 @@ router.get("/type/:id", checkAuth, (req, res, next)=>{
 
 });
 
-router.get("/:id", (req, res, next)=>{
-  Instrument.findOne({generalSerialNumber: req.params.id}).then(instrument => {
+router.get("/:id", checkAuth ,(req, res, next)=>{
+  Instrument.findOne({_id: req.params.id}).then(instrument => {
     if (instrument) {
-      res.status(200).json(instrument);
+      res.status(200).json({
+        message: "success",
+        data: instrument
+      });
     } else {
-      res.status(404).json({});
+      res.status(404).json({
+        message: "failed"
+      });
     }
   });
 });
 
 router.delete("/:id", checkAuth, (req, res, next)=>{
-  Instrument.deleteOne({ generalSerialNumber: req.params.id }).then(result => {
-    res.status(200).json({});
+  Instrument.deleteOne({ _id: req.params.id }).then(instrument => {
+    res.status(200).json({
+      message: "success",
+        data: req.params.id
+    });
   })
 .catch(err => {
-  res.status(500).json({});
+  res.status(500).json({
+    message: "failed"
+  });
 });
 });
 
@@ -105,137 +129,169 @@ router.get("/filter/:params", (req, res, next)=>{
   if (type == "type" && subtype == 'subtype' && status == 'status')
     Instrument.find({generalSerialNumber: {"$regex": serialNum, "$options": "i"}}).then(instruments => {
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (type == "type" && subtype == 'subtype' && status != 'status')
     Instrument.find({status: status}).then(instruments => {
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (type == "type" && subtype != 'subtype' && status == 'status')
     Instrument.find({sub_type: subtype}).then(instruments => {
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (type != "type" && subtype == 'subtype' && status == 'status')
     Instrument.find({type: type}).then(instruments => {
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (type == "type" && subtype != 'subtype' && status != 'status')
     Instrument.find({sub_type: subtype,status: status}).then(instruments => {
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (type != "type" && subtype == 'subtype' && status != 'status')
     Instrument.find({type: type,status: status}).then(instruments => {
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (type != "type" && subtype != 'subtype' && status == 'status')
     Instrument.find({type: type,sub_type: subtype}).then(instruments => {
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (type != "type" && subtype != 'subtype' && status != 'status')
     Instrument.find({type: type,sub_type: subtype,status: status}).then(instruments => {
       if(!instruments){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return instruments;
     })
     .then(instruments=>{
       res.status(200).json({
-        message: "instruments fetched successfully!",
-        instruments: instruments
+        message: "success",
+        data: instruments
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
 });

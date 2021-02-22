@@ -6,7 +6,11 @@ const loanSchema = mongoose.Schema({
     student: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Student"},
     instrument: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Instrument"}, // instrument id
     from: {type: String, required: true},
-    to: {type: String, required: false}
+    to: {type: String, required: false},
+    openUser: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"},
+    closeUser: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"},
+    notes: {type: String},
+    status: {type: String, required: true}
 });
 
 loanSchema.plugin(uniqueValidator);

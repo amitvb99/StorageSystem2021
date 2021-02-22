@@ -6,6 +6,7 @@ const studentsRoutes = require("./routes/students.route")
 const instrumentsRoutes = require("./routes/instruments.route")
 const loansRoutes = require("./routes/loans.route")
 const adminRoutes = require("./routes/admin.route")
+const User = require("./models/user.model")
 const mongoose = require("mongoose");
 var bodyParser = require('body-parser')
 const multer= require("multer")
@@ -18,28 +19,25 @@ var cors = require('cors')
 //mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority
 
 // mongoose.connect("mongodb://localhost:27017/myapp")
-mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/test_database?retryWrites=true&w=majority")
-test_mode = false
+// mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/test_database?retryWrites=true&w=majority")
+test_mode = false;
 for (let i in process.argv) {
+
     if (process.argv[i] == '-test_mode') {
         test_mode = true
     }
 }
-
+let url="";
 if (test_mode) {
-    /*
-    make sure to connect to test db.
-    */
+    url="mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/test_database?retryWrites=true&w=majority";
     console.log('We Are In Test Mode.')
 } else {
-    /*
-    connect to normal db
-    */
+    url="mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority";
     console.log('We Are In Production Mode.')
 }
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(()=>{
     console.log('Connected to database!')
   }).catch(()=>{
@@ -108,14 +106,38 @@ app.use((req, res, next) => {
 });
 
 
+app.post('/api/db/clear',(req,res)=>{
+  if(!test_mode)
+    return res.status(403).json({
+      message: "failed",
+    });
+  mongoose.connection.db.dropDatabase();
+  mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(()=>{
+    console.log('Connected to database again!')
+    res.status(201).json({
+      message: "success"
+    });
+  }).catch(()=>{
+    console.log('Connectino failed!')
+    return res.status(500).json({
+      message: "failed",
+    });
+  });
+  const user = new User({name: "admin", username: "admin", password: "admin"});
+  user.save();
+  return res;
+});
+
 app.use("/api/user", userRoutes)
 app.use("/api/user/students", studentsRoutes)
 app.use("/api/user/instruments", instrumentsRoutes)
 app.use("/api/user/loans", loansRoutes)
 app.use("/api/user/manage", adminRoutes)
-if (test_mode) {
-  app.use("/api/db/clear", adminRoutes)
-}
+// if (!test_mode) {
+//   app.use("/api/db", adminRoutes)
+// }
+
 
 const server = http.createServer(app)
 server.listen(port,()=>{

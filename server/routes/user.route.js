@@ -12,6 +12,7 @@ router.post("/login", (req, res, next)=>{
   User.findOne({username: req.body.username}).then(user =>{
     if(!user){
       return res.status(401).json({
+        message: "failed"
       });
     }
     fetchdeUsre = user;
@@ -20,10 +21,11 @@ router.post("/login", (req, res, next)=>{
   .then(result => {
     if(!result){
       return res.status(401).json({
+        message: "failed"
       });
     }
     let token='';
-    fetchdeUsre.username == 'admin' ?
+    fetchdeUsre.username == 'admin' ?                //// need  to change .. privilege instead of username
     token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
      'secret_this_should_be_longer_admin',
      {expiresIn: "1h"}) :
@@ -32,13 +34,16 @@ router.post("/login", (req, res, next)=>{
      {expiresIn: "1h"});
 
      res.status(200).json({
-       token: token,
-       name: fetchdeUsre.name
+      message: "success",
+       data: {token: token,
+       name: fetchdeUsre.name,
+       id: fetchdeUsre.id}
      });
   })
   .catch(err =>{
     console.log(err);
     return res.status(401).json({
+      message: "failed"
     });
   });
 });
@@ -77,11 +82,13 @@ router.post("/register",checkAuth, (req, res, next)=>{
       .save()
       .then(result => {
         res.status(201).json({
-          message: "User created!",
+          message: "success",
+          data: user.id
         });
       })
       .catch(err => {
         res.status(500).json({
+          message: "failed"
         });
       });
 });

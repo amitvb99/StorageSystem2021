@@ -9,7 +9,7 @@ const studentSchema = mongoose.Schema({
   school: {type: String, required: true},
   grade: {type: String, required: true},
   class: {type: String, required: true},
-  id: {type: String, required: true, unique: true},
+  // id: {type: String, required: true, unique: true},
   parent1Name:  {type: String},
   parent2Name:  {type: String},
   parent1PhoneNumber: {type: String},

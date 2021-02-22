@@ -32,7 +32,7 @@ router.post("/create", checkAuth,(req, res, next)=>{
       school: req.body.school,
       grade: req.body.grade,
       class: req.body.class,
-      id: req.body.id,
+      // id: req.body.id,
       parent1Name: req.body.parent1Name,
       parent2Name: req.body.parent2Name,
       parent1PhoneNumber: req.body.parent1PhoneNumber,
@@ -43,11 +43,16 @@ router.post("/create", checkAuth,(req, res, next)=>{
     });
     student.save()
     .then(result => {
-      res.status(201).json({});
+      res.status(201).json({
+        message: "success",
+        data: student.id
+      });
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 });
 
@@ -88,12 +93,14 @@ router.get("", checkAuth,(req, res, next)=>{
       })
       .then(students => {
         return res.status(200).json({
-          message: "Students fetched successfully!",
-          students: students
+          message: "success",
+          data: students
           });
       })
       .catch(err => {
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       });
 });
 
@@ -102,13 +109,12 @@ router.get("", checkAuth,(req, res, next)=>{
 router.put("/:id",checkAuth, (req, res, next)=>{
 
   const student = new Student({
-    _id: req.body._id,  //WTF?!
+    _id: req.params.id,  //WTF?!
     fName: req.body.fName,
     lName: req.body.lName,
     school: req.body.school,
     grade: req.body.grade,
     class: req.body.class,
-    id: req.body.id,
     parent1Name: req.body.parent1Name,
     parent2Name: req.body.parent2Name,
     parent1PhoneNumber: req.body.parent1PhoneNumber,
@@ -119,29 +125,42 @@ router.put("/:id",checkAuth, (req, res, next)=>{
   });
 
     Student.updateOne({ _id: req.params.id },student).then(t => {
-      res.status(200).json({message: "Student Updated!"});
+      res.status(200).json({
+        message: "success",
+        data: req.params.id
+    });
     })
     .catch(err=>{
-      res.status(500).json({err});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 });
 
 router.get("/:id",checkAuth, (req, res, next)=>{
-  Student.findOne({id: req.params.id}).then(student => {
+  Student.findOne({_id: req.params.id}).then(student => {
     if (student) {
-      res.status(200).json(student);
+      res.status(200).json({
+        message: "success",
+        data: student
+      });
     } else {
-      res.status(404).json({ message: "Student not found!" });
+      res.status(404).json({ message: "failed" });
     }
   });
 });
 
 router.delete("/:id",checkAuth, (req, res, next)=>{
-  Student.deleteOne({ id: req.params.id }).then(result => {
-      res.status(200).json({});
+  Student.deleteOne({ _id: req.params.id }).then(result => {
+      res.status(200).json({
+        message: "success",
+        data: req.params.id
+      });
     })
   .catch(err => {
-    res.status(500).json({});
+    res.status(500).json({
+      message: "failed"
+    });
   });
 
 });
@@ -158,69 +177,85 @@ router.get("/filter/:params", (req, res, next)=>{
   if (Class == "class" && level == 'level')
     Student.find().then(students => {
       if(!students){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return students;
     })
     .then(students=>{
       res.status(200).json({
-        message: "students fetched successfully!",
-        students: students
+        message: "success",
+        data: students
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (Class == "class" && level != 'level')
     Student.find({grade: level}).then(students => {
       if(!students){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return students;
     })
     .then(students=>{
       res.status(200).json({
-        message: "students fetched successfully!",
-        students: students
+        message: "success",
+        data: students
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (Class != "class" && level == 'level')
     Student.find({class: Class}).then(students => {
       if(!students){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return students;
     })
     .then(students=>{
       res.status(200).json({
-        message: "students fetched successfully!",
-        students: students
+        message: "success",
+        data: students
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
   if (Class != "class" && level != 'level')
     Student.find({class: Class, grade: level}).then(students => {
       if(!students){
-        res.status(500).json({});
+        res.status(500).json({
+          message: "failed"
+        });
       }
       return students;
     })
     .then(students=>{
       res.status(200).json({
-        message: "students fetched successfully!",
-        students: students
+        message: "success",
+        data: students
         });
     })
     .catch(err => {
-      res.status(500).json({});
+      res.status(500).json({
+        message: "failed"
+      });
     });
 
 });
