@@ -25,6 +25,7 @@ router.post("/login", (req, res, next)=>{
       });
     }
     let token='';
+    if(fetchdeUsre){
     fetchdeUsre.username == 'admin' ?                //// need  to change .. privilege instead of username
     token = jwt.sign({username: fetchdeUsre.username, userId: fetchdeUsre._id},
      'secret_this_should_be_longer_admin',
@@ -39,6 +40,7 @@ router.post("/login", (req, res, next)=>{
        name: fetchdeUsre.name,
        id: fetchdeUsre.id}
      });
+    }
   })
   .catch(err =>{
     console.log(err);
@@ -76,7 +78,7 @@ router.post("/logout", (req, res, next)=>{
 
 
 
-router.post("/register",checkAuth, (req, res, next)=>{
+router.post("/register", (req, res, next)=>{
     const user = new User({name: req.body.name, username: req.body.user, password: req.body.pass});
     user
       .save()
@@ -121,8 +123,8 @@ router.get("/users", (req, res, next)=>{
     })
     .then(users => {
       return res.status(200).json({
-        message: "users fetched successfully!",
-        users: users
+        message: "success",
+        data: users
         });
     })
     .catch(err => {

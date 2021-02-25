@@ -2,6 +2,9 @@ const express = require("express");
 const Student = require("../models/student.model");
 const checkAuth= require("../middleware/check-auth");
 const multer= require("multer");
+const csv = require('csvtojson');
+const bodyParser  = require('body-parser');
+const path = require('path');
 
 
 
@@ -56,30 +59,21 @@ router.post("/create", checkAuth,(req, res, next)=>{
     });
 });
 
-router.post("/insertExcel", multer(storage).single("excel"),checkAuth,(req, res, next)=>{
-  const student = new Student({
-    fName: req.body.fName,
-    lName: req.body.lName,
-    school: req.body.school,
-    grade: req.body.grade,
-    class: req.body.class,
-    id: req.body.id,
-    parent1Name: req.body.parent1Name,
-    parent2Name: req.body.parent2Name,
-    parent1PhoneNumber: req.body.parent1PhoneNumber,
-    parent2PhoneNumber: req.body.parent2PhoneNumber,
-    parent1Email: req.body.parent1Email,
-    parent2Email: req.body.parent2Email,
-    instruments: req.body.instruments,
-  });
-  student.save()
-  .then(result => {
-    res.status(201).json({});
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({});
-  });
+
+//, multer({ storage: storage }).single("excel")
+router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, res, next)=>{
+  csv()
+.fromFile("req.file.path")         ////  server/files/excel3.csv
+.then((jsonObj)=>{
+     Student.insertMany(jsonObj,(err,data)=>{
+            if(err){
+                console.log(err);
+            }else{
+                res.redirect('/');
+            }
+     });
+   });
+ res.status(200);
 });
 
 router.get("", checkAuth,(req, res, next)=>{
