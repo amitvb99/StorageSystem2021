@@ -7,8 +7,6 @@ const bodyParser  = require('body-parser');
 const path = require('path');
 
 
-
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     let error='';
@@ -24,7 +22,6 @@ const storage = multer.diskStorage({
     cb(null, name + "-" + Date.now() + "." + ext);
   }
 });
-
 
 const router = express.Router();
 
@@ -48,7 +45,7 @@ router.post("/create", checkAuth,(req, res, next)=>{
     .then(result => {
       res.status(201).json({
         message: "success",
-        data: student.id
+        data: student._id
       });
     })
     .catch(err => {
@@ -103,7 +100,7 @@ router.get("", checkAuth,(req, res, next)=>{
 router.put("/:id",checkAuth, (req, res, next)=>{
 
   const student = new Student({
-    _id: req.params.id,  //WTF?!
+    _id: req.params.id,  
     fName: req.body.fName,
     lName: req.body.lName,
     school: req.body.school,
@@ -121,7 +118,7 @@ router.put("/:id",checkAuth, (req, res, next)=>{
     Student.updateOne({ _id: req.params.id },student).then(t => {
       res.status(200).json({
         message: "success",
-        data: req.params.id
+        data: req.params._id
     });
     })
     .catch(err=>{
@@ -132,7 +129,7 @@ router.put("/:id",checkAuth, (req, res, next)=>{
 });
 
 router.get("/:id",checkAuth, (req, res, next)=>{
-  Student.findOne({_id: req.params.id}).then(student => {
+  Student.findOne({_id: req.params._id}).then(student => {
     if (student) {
       res.status(200).json({
         message: "success",
@@ -148,7 +145,7 @@ router.delete("/:id",checkAuth, (req, res, next)=>{
   Student.deleteOne({ _id: req.params.id }).then(result => {
       res.status(200).json({
         message: "success",
-        data: req.params.id
+        data: req.params._id
       });
     })
   .catch(err => {

@@ -14,7 +14,8 @@ export class StudentsTableComponent implements OnInit {
   component_name = "students";
   students_meta_data  = {
     component_name: "students",
-    indexing_enabled :true,
+    indexing_enabled: true,
+    add_button_enabled: true,
     columns_count:8,
     columns:['fName', 'lName', 'school', 'grade', 'class'],
     headers:{
@@ -95,12 +96,6 @@ export class StudentsTableComponent implements OnInit {
       name:'Instrument Type',
       fields:[
         {
-          id: 'id',
-          name:'ID',
-          type:'text',
-          can_edit:false,
-        },
-        {
           id: 'parent1Name',
           name:'Parent 1 Name',
           type:'text',
@@ -126,6 +121,7 @@ export class StudentsTableComponent implements OnInit {
         if (dialog_res != null){
           this.crud.create(this.component_name,dialog_res).subscribe(res => {
             if(res != null){
+              dialog_res._id = res['data']
               data_to_show.push(dialog_res)
             } else {
               // output error
@@ -174,8 +170,8 @@ export class StudentsTableComponent implements OnInit {
     'show': (data_to_show,i) => {
       alert(`${JSON.stringify(i)}`)
     },
-  
   }
+  
   constructor(private dialog: MatDialog,private crud:CrudService) { }
 
   

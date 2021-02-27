@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate, state } from '@angular/animations';
+import { AccountsService } from 'src/app/users/accounts.service';
+import { CrudService } from 'src/app/shared-services/crud.service';
 
 @Component({
   selector: 'app-add-loan',
@@ -35,14 +37,28 @@ export class AddLoanComponent implements OnInit {
   @Input() show_functions: any;
 
   add_loan_is_open = false
-  constructor() { }
+  constructor(private accounts:AccountsService, private crud:CrudService) { }
   open(){
     this.add_loan_is_open = ! this.add_loan_is_open
   }
 
   loan(){
-    this.add_loan_is_open = ! this.add_loan_is_open
-    this.show_functions['loan']()
+    console.log(this.student._id)
+    console.log(this.instrument._id)
+    console.log(this.accounts.get_user_id())
+    const loan = {
+      student:    this.student._id,
+      instrument: this.instrument._id,
+      user:       this.accounts.get_user_id(),
+      notes:      ''      
+    }
+    this.crud.loan_instrument(loan).subscribe(
+      res => {
+        console.log(res)
+      }
+    )
+    // this.add_loan_is_open = ! this.add_loan_is_open
+    // this.show_functions['loan']()
   }
 
   remove_field(field){

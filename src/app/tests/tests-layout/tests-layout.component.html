@@ -1,0 +1,16 @@
+
+<div *ngFor="let test of tests;index as i" class="test-container">
+    <div class="test-header">
+        <i class="far fa-play-circle run-button" (click)="run_test(i)"></i>
+        <i [ngClass]="{'fas': true, 'fa-angle-right': !tests[i].openned, 'fa-angle-down': tests[i].openned, 'openned' :tests[i].openned, 'open-arrow': true}" class="fas fa-angle-right open-arrow"  (click)="tests[i].openned = !tests[i].openned"></i>        
+        {{test.name}}
+    </div>
+    <div [ngClass]="{'steps-container':true, 'openned-steps-container':tests[i].openned}">
+        <div *ngFor="let step of test.steps">
+            {{step.description}} : 
+            <span *ngIf="step.status == 2" style="color:green">PASSED</span>
+            <span *ngIf="step.status == 1" style="color:red">FAILED</span>
+        </div>
+    </div>
+</div>
+

@@ -10,13 +10,14 @@
 .steps-container {
     margin-left: 30px;
     max-height: 0px;
-    border: 0px solid green;
-    transition: max-height 1s, border 1s;
+    border: 0px solid black;
+    transition: max-height 0.5s, border 0.4s;
+    transition-delay: 0ms;
     overflow: hidden;
 }
 
 .openned-steps-container {
-    border: 3px solid green;
+    border: 2px solid black;
     max-height: 1000px;
 }
 

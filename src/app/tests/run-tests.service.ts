@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 
-export interface test_t {
+export interface step_t {
   step: (_1, _2, _3)=>void,
   description:string,
   status: number
 }
-
+export interface test_t {
+  name: string
+  steps: step_t[],
+  status: number,
+  openned
+}
 @Injectable({
   providedIn: 'root'
 })

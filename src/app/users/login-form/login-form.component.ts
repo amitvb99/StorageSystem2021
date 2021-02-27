@@ -49,8 +49,7 @@ export class LoginFormComponent implements OnInit {
     if (err) {
       return;
     }
-    // var user = {'username':form.value.username,'password':sha256(form.value.password)}
-    var user = {'username':form.value.username,'password':form.value.password}
+    var user = {'username':form.value.username,'password':sha256(form.value.password)}
     this.accounts.login(user,this.path)
     .subscribe(val =>{
       console.log(val)

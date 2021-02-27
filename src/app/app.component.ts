@@ -13,6 +13,7 @@ import { GenericFormComponent } from './generic-elements/generic-form/generic-fo
 import { PermissionSystemService } from './generic-elements/permission-system.service';
 import { LoansPageComponent } from './loans/loans-page/loans-page.component';
 import { TestsContainerComponent } from './tests/tests-container/tests-container.component';
+import { UsersTableComponent } from './users/users-table/users-table.component';
 
 const permission_system : permission_system_t = {
   type: 'linear',
@@ -32,9 +33,9 @@ const meta_data  = {
     },
     {
       name:'Users',
-      url:'#/home',
+      url:'#/users',
       permission:'admin',
-      component:HomePageComponent
+      component:UsersTableComponent
     },
     {
       name:'Students',

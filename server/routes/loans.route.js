@@ -6,10 +6,13 @@ const checkAuth= require("../middleware/check-auth");
 const router = express.Router();
 
 router.post("/loanInstrument", (req, res, next)=>{
-
-    Instrument.findOne({id: req.body.id})
+  console.log('################')
+  console.log(req.body)
+  
+    Instrument.findOne({_id: req.body.instrument})
     .then(result => {
-        if(result.status === "available") {
+      console.log(result)
+        if(result.status === "in stock") {
             const loan = new Loan({
                 student: req.body.student,
                 instrument: req.body.instrument,
