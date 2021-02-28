@@ -8,21 +8,28 @@ const path = require('path');
 
 
 
-
+// 1. what should happen if he entered two files with the same name? (override, save the two files with different names)
+//2. should we save the file forever (hard desk needed for the server) or to delete them immediatly or save them for a while?
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    let error='';
-    file.mimetype=='csv' ? error = new Error("Invalid mime type") : error =null;
-    cb(error, "../files");
-  },
-  filename: (req, file, cb) => {
-    const name = file.originalname
-      .toLowerCase()
-      .split(" ")
-      .join("-");
-    const ext = 'csv';
-    cb(null, name + "-" + Date.now() + "." + ext);
-  }
+  // destination: (req, file, cb) => {
+  //   let error='';
+  //   file.mimetype=='csv' ? error = new Error("Invalid mime type") : error =null;
+  //   cb(error, "./server/files");
+  // },
+  // filename: (req, file, cb) => {
+  //   const name = file.originalname
+  //     .toLowerCase()
+  //     .split(" ")
+  //     .join("-");
+  //   const ext = 'csv';
+  //   cb(null, Date.now()+ "-" + name );
+  // }
+  destination:(req,file,cb)=>{
+    cb(null,'./server/files');
+},
+filename:(req,file,cb)=>{
+    cb(null,Date.now()+ "-" +file.originalname);
+}
 });
 
 
@@ -63,7 +70,7 @@ router.post("/create", checkAuth,(req, res, next)=>{
 //, multer({ storage: storage }).single("excel")
 router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, res, next)=>{
   csv()
-.fromFile("req.file.path")         ////  server/files/excel3.csv
+.fromFile("server/files/" + req.file.filename)         ////  server/files/excel3.csv
 .then((jsonObj)=>{
      Student.insertMany(jsonObj,(err,data)=>{
             if(err){

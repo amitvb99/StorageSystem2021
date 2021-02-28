@@ -1,6 +1,8 @@
 const express = require("express");
 const Loan = require("../models/loan.model")
+const Student = require("../models/student.model")
 const Instrument = require("../models/instrument.model")
+const User = require("../models/user.model")
 const checkAuth= require("../middleware/check-auth");
 
 const router = express.Router();
@@ -10,11 +12,12 @@ router.post("/loanInstrument", (req, res, next)=>{
     Instrument.findOne({id: req.body.id})
     .then(result => {
         if(result.status === "available") {
+            var datetime = new Date();
             const loan = new Loan({
                 student: req.body.student,
                 instrument: req.body.instrument,
                 openUser: req.body.user,
-                from: req.body.from,
+                from: datetime.toISOString().slice(0,10),
                 notes: req.body.notes,
                 status: req.body.status
             });
@@ -54,8 +57,13 @@ router.post("/loanInstrument", (req, res, next)=>{
     })
 });
 
-router.get("",checkAuth, (req, res, next)=>{
-    Loan.find().then(loans => {
+router.get("", (req, res, next)=>{
+
+    Loan.find()
+    .populate('student')
+    .populate('instrument')
+    .populate('openUser')
+    .populate('closeUser').then(loans => {
         if(loans) {
             res.status(200).json({
                 message: "success",
