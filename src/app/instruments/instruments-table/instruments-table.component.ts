@@ -83,7 +83,7 @@ export class InstrumentsTableComponent implements OnInit {
           id: 'status',
           name:'Status',
           type:'drop_down',
-          possible_values:['new','loaned','in stock','broken','maintained','back from maintainance','unusable','deleted','missing'],
+          possible_values:['new','loaned','available','broken','maintained','back from maintainance','unusable','deleted','missing'],
           can_edit:true
         },
         {

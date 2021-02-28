@@ -8,7 +8,7 @@ const loanSchema = mongoose.Schema({
     from: {type: String, required: true},
     to: {type: String, required: false},
     openUser: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"},
-    closeUser: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"},
+    closeUser: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
     notes: {type: String},
     status: {type: String, required: true}
 });

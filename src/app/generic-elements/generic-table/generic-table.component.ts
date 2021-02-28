@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import { trigger, transition, style, animate, state, query, stagger, keyframes } from '@angular/animations';
 import { CrudService } from 'src/app/shared-services/crud.service';
+// import { ConsoleReporter } from 'jasmine';
 
 interface actions_metadata_t{
   icon: string,
@@ -72,6 +73,11 @@ export  class TableComponent implements OnInit {
     let keys = Object.keys(cond)
     for(let i = 0; i < keys.length; i++){
       let key = keys[i]
+      console.log(`key ${key}`)
+      console.log(`cond[key] ${cond[key]}`)
+      console.log(`daum[key] ${datum[key]}`)
+      console.log(cond)
+      console.log(cond[key].includes(datum[key]))
       if (cond[key].includes(datum[key]))
         return true
     }
