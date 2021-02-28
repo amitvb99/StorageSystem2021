@@ -44,19 +44,32 @@ export class CrudService {
   }
   create(component:string, object_to_create, query_string:string = ''){
     const path = this.get_path(component,query_string,'create')
-    var res = this.http.post(path,object_to_create, this.get_headers())
+    console.log(object_to_create)
+    var res = this.http.post(path,object_to_create, this.get_headers()).pipe(map(res => {
+      console.log('crud service: create:')
+      console.log(res)
+      return res;
+    }))
     return res
   }
 
   delete(component:string, id:string, query_string:string = ''){
     const path = this.get_path(component, query_string,id)
-    var res = this.http.delete(path, this.get_headers())
+    var res = this.http.delete(path, this.get_headers()).pipe(map(res => {
+      console.log('crud service: delete:')
+      console.log(res)
+      return res;
+    }))
     return res
   }
 
   update(component:string, object_to_update, id:string, query_string:string = ''){
     const path = this.get_path(component,query_string,id)
-    var res = this.http.put(path,object_to_update, this.get_headers())
+    var res = this.http.put(path,object_to_update, this.get_headers()).pipe(map(res => {
+      console.log('crud service: update:')
+      console.log(res)
+      return res;
+    }))
     return res
   }
 
@@ -64,8 +77,24 @@ export class CrudService {
     const path = this.get_path(component,query_string,id)
     var res = this.http.get(path, this.get_headers()).pipe(
       map(res => {
-      return res[component];
+        console.log('crud service: read:')
+        console.log(res)
+        return res['data'];
   }))
     return res
   }
+
+  loan_instrument(loan){
+    const path = `${environment.apiUrl}/api/user/loans/loanInstrument`
+    console.log(`loan instrument: ${path}`)
+    
+
+    var res = this.http.post(path, loan, this.get_headers()).pipe(
+      map(res => {
+        return res['data'];
+  }))
+    return res
+  }
+
+
 }

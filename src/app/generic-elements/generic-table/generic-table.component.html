@@ -1,7 +1,5 @@
-
-
-<div class="button_container"> 
-    <button (click)="functions['add'](module_variables['data_to_show'])" class="btn-link"> Add </button>
+  <div *ngIf="meta_data.add_button_enabled" style="display: flex; justify-content: flex-end">
+      <i class="fas fa-plus-circle fa-5x add-button" (click)="functions['add'](module_variables['data_to_show'])"></i>
   </div>
   <div class="btn-toolbar filter-bar-container" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2 filter-bar" role="group" aria-label="First group">

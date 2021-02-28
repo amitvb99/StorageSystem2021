@@ -10,6 +10,7 @@ interface actions_metadata_t{
 interface meta_data_t {
   component_name: string,
   indexing_enabled: boolean,
+  add_button_enabled: boolean,
   columns_count: number,
   columns: string[],
   headers: Record<string,string>,
@@ -107,6 +108,7 @@ filter_bar_changed(){
   ngOnInit(): void {
     this.module_variables.filter_bar_values = Object.assign([], this.meta_data.filter_bar_array) 
     this.crud.read(this.meta_data.component_name).subscribe(function(data){
+      console.log(data)
       this.module_variables['local_db'].set(this.meta_data.filter_bar_array.join("_"),data);
       this.module_variables['data_to_show'] = this.module_variables['local_db'].get(this.meta_data.filter_bar_array.join("_"));
   }.bind(this)

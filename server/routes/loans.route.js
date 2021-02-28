@@ -8,8 +8,10 @@ const checkAuth= require("../middleware/check-auth");
 const router = express.Router();
 
 router.post("/loanInstrument", (req, res, next)=>{
+  console.log('################')
+  console.log(req.body)
 
-    Instrument.findOne({id: req.body.id})
+    Instrument.findOne({_id: req.body.instrument})
     .then(result => {
         if(result.status === "available") {
             var datetime = new Date();

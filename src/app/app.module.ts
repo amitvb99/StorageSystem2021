@@ -20,6 +20,7 @@ import { PopupModule } from '@progress/kendo-angular-popup';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoansModule } from './loans/loans.module';
 import { TestsModule } from './tests/tests.module';
+import { UsersModule } from './users/users.module';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { TestsModule } from './tests/tests.module';
     NavBarComponent,
     HomePageComponent,
     TableExampleComponent,
-    LoginFormComponent
+    // LoginFormComponent
   ],
   imports: [
     GenericElementsModule,
@@ -38,6 +39,7 @@ import { TestsModule } from './tests/tests.module';
     StudentsModule,
     TestsModule,
     LoansModule,
+    UsersModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

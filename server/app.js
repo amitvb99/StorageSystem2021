@@ -41,7 +41,7 @@ mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(()=>{
     console.log('Connected to database!')
   }).catch(()=>{
-    console.log('Connectino failed!')
+    console.log('Connection failed!')
   });
 
 var app = express();

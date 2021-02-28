@@ -47,6 +47,8 @@ export class LoansPageComponent implements OnInit {
           }
         }
     table_metadata.actions = ['choose']
+    table_metadata.add_button_enabled = false;
+    
     table_metadata.actions_metadata = {
       'choose':{
         icon:'fas fa-share-square',
@@ -66,6 +68,7 @@ export class LoansPageComponent implements OnInit {
         }
 
     table_metadata.actions = ['choose']
+    table_metadata.add_button_enabled = false;
     table_metadata.actions_metadata = {
       'choose':{
         icon:'fas fa-share-square',

@@ -14,45 +14,57 @@ export class AccountsService {
   }
   private userSubject: BehaviorSubject<User>;
     login(user,path){//user should be json object
-    return this.http.post<User>(`${environment.apiUrl}${path}`, user)
-    .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('permission', 'admin');
-        localStorage.setItem('token', user.token);
-        
-        this.userSubject.next(user);
-        return user;
-    }));
-  }
-  get_user_firs_name(){
-    if (this.isloggedin()){
-      return JSON.parse(localStorage.getItem('user')).name;
-    } else {
-      return 'Guest';
+      console.log(user)
+
+      return this.http.post(`${environment.apiUrl}${path}`, user)
+      .pipe(map(user => {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          console.log(user)
+          localStorage.setItem('user', JSON.stringify(user['data']));
+          localStorage.setItem('permission', 'admin');
+          localStorage.setItem('token', user['data']['token']);
+          localStorage.setItem('user_id', user['data']['id']);
+          return user;
+      }));
     }
-  }
+    get_user_firs_name(){
+      if (this.isloggedin()){
+        return JSON.parse(localStorage.getItem('user')).name;
+      } else {
+        return 'Guest';
+      }
+    }
+
+    get_user_id(){
+      if (this.isloggedin()){
+        return localStorage.getItem('user_id');
+      } else {
+        return '';
+      }
+    }
   isloggedin(){
     return localStorage.getItem('user') !== 'null'
   }
   logout(){
-    var path = '/api/logout'
-    if (this.isloggedin()){
-      
-      return this.http.post<User>(`${environment.apiUrl}${path}`, JSON.parse(localStorage.getItem('user'))).subscribe(val =>{
-        this.userSubject.next(null)
-        localStorage.setItem('user', null);
-        localStorage.setItem('permission', null);
-        localStorage.setItem('token', null);
-        
-        return null;
-      })
-    }
+    localStorage.setItem('user', null);
+    localStorage.setItem('permission', null);
+    localStorage.setItem('token', null);
     // this.http.post().
   }
 
   register(user){
+    console.log(user)
 
-    // this.http.post().
+    return this.http.post(`${environment.apiUrl}/api/user/register`, user)
+    .pipe(map(user => {
+        return user;
+    }));
+  }
+
+  delete_user(user_id){
+    return this.http.delete(`${environment.apiUrl}/api/user/${user_id}`)
+    .pipe(map(user => {
+        return user;
+    }));
   }
 }

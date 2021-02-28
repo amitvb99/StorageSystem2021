@@ -52,7 +52,7 @@
 
 .add-button {
     color: #056674;
-
+    /* display: flex; */
 }
 
 .add-button:hover {
@@ -158,3 +158,4 @@
         align-items: center;
     }
 }
+
