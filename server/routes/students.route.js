@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
 
 const router = express.Router();
 
-router.post("/create", checkAuth,(req, res, next)=>{
+router.post("/create", (req, res, next)=>{
     const student = new Student({
       fName: req.body.fName,
       lName: req.body.lName,
@@ -76,7 +76,7 @@ router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, re
  res.status(200);
 });
 
-router.get("", checkAuth,(req, res, next)=>{
+router.get("", (req, res, next)=>{
 
     Student.find()
       .then(students =>{
@@ -100,7 +100,7 @@ router.get("", checkAuth,(req, res, next)=>{
 
 
 //update
-router.put("/:id",checkAuth, (req, res, next)=>{
+router.put("/:id", (req, res, next)=>{
 
   const student = new Student({
     _id: req.params.id,  //WTF?!
@@ -131,7 +131,7 @@ router.put("/:id",checkAuth, (req, res, next)=>{
     });
 });
 
-router.get("/:id",checkAuth, (req, res, next)=>{
+router.get("/:id", (req, res, next)=>{
   Student.findOne({_id: req.params.id}).then(student => {
     if (student) {
       res.status(200).json({
@@ -144,7 +144,7 @@ router.get("/:id",checkAuth, (req, res, next)=>{
   });
 });
 
-router.delete("/:id",checkAuth, (req, res, next)=>{
+router.delete("/:id", (req, res, next)=>{
   Student.deleteOne({ _id: req.params.id }).then(result => {
       res.status(200).json({
         message: "success",

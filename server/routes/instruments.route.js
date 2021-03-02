@@ -5,7 +5,7 @@ const checkAuth= require("../middleware/check-auth");
 const router = express.Router();
 
 
-router.get("", checkAuth, (req, res, next)=>{
+router.get("", (req, res, next)=>{
 
     Instrument.find().then(instruments=>{
       if(!instruments){
@@ -29,7 +29,7 @@ router.get("", checkAuth, (req, res, next)=>{
 
 });
 
-router.post("/create", checkAuth, (req, res, next)=>{
+router.post("/create", (req, res, next)=>{
     const instrument = new Instrument({
       generalSerialNumber: req.body.generalSerialNumber,
       type: req.body.type,
@@ -57,7 +57,7 @@ router.post("/create", checkAuth, (req, res, next)=>{
 });
 
 //update
-router.put("/:id", checkAuth, (req, res, next)=>{
+router.put("/:id", (req, res, next)=>{
 
   const instrument = new Instrument({
       _id: req.params.id,  //WTF?!
@@ -84,11 +84,11 @@ router.put("/:id", checkAuth, (req, res, next)=>{
     });
 });
 
-router.get("/type/:id", checkAuth, (req, res, next)=>{
+router.get("/type/:id", (req, res, next)=>{
 
 });
 
-router.get("/:id", checkAuth ,(req, res, next)=>{
+router.get("/:id", (req, res, next)=>{
   Instrument.findOne({_id: req.params.id}).then(instrument => {
     if (instrument) {
       res.status(200).json({
