@@ -4,18 +4,20 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 export interface user_t{
-    name?: string,
+    id?: string,
+    name: string,
     user: string,
-    pass: string
+    pass: string,
+    privilidge: string
 }
 
 export interface student_t { 
+    id?: string,
     fName: string,
     lName: string,
     school: string,
     grade: string,
     class: string,
-    id: string,
     parent1Name: string,
     parent2Name: string,
     parent1PhoneNumber: string,
@@ -25,9 +27,8 @@ export interface student_t {
     instruments: string
 }
 
-
 export interface instrument_t{
-    id: string
+    id?: string
     generalSerialNumber: string,
     type: string,
     sub_type: string,
@@ -39,10 +40,12 @@ export interface instrument_t{
 }
 
 export interface loan_t{
+  id?: string
   student_id: string,
   instrument_id: string,
   user_id: string,
-  notes: string
+  notes: string,
+  date?: string
 }
 
 @Injectable({
@@ -71,6 +74,8 @@ export class BackendApiService {
     return this.http.post(path, obj, this.get_headers())
   }
 /**
+ *   clear()
+ *   login_admin()
  * 
  *   register_user(user: user_t){}
  *   login(user: user_t){}
@@ -81,152 +86,276 @@ export class BackendApiService {
  *   add_student(s: student_t){}
  *   delete_student(student_id: number){}
  *   update_students(s: student_t){}
+ *   add_students()
  * 
  *   get_instruments(){
  *   add_instrument(i: instrument_t){}
  *   delete_instrument(instrument_id: number){}
  *   update_instrument(i: instrument_t){}
+ *   add_instruments()
  * 
  *   get_loans(){}
  *   add_loan(l: loan_t){}
  *   delete_loan(loan_id: number){}// ?
  *   update_loan(l: loan_t){}// ?
  */
-  register_user(user: user_t){
-    var done = false
-    var data = undefined
-    this.my_post(`${environment.apiUrl}/api/user/register`, user).subscribe((d) => {
-      data = d
-      done = true
-    })
-    while (!done);
-    return data
+
+  login_admin(field_name: string = 'result'){
+    let res = async (data, continuation, next_step_idx) => {
+      
+      const usr = {username: 'admin', password: 'admin'}
+      var promise = this.my_post(`${environment.apiUrl}/api/user/login`, usr).toPromise()
+      await promise;
+      promise.then((d)=> {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1)
+      })
+    }
+    return res
   }
-  login(username: string, password: string){
+
+  clear(field_name: string = 'result'){
+    let res = async (data, continuation, next_step_idx) => {
+
+      var promise = this.my_post(`${environment.apiUrl}/api/db/clear`, {}).toPromise()
+      await promise;
+      promise.then((d)=> {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1)
+      })
+    }
+    return res
+  }
+
+  register_user(user: user_t, field_name: string = 'users'){
+    let res = async (data, continuation, next_step_idx) => {
+      
+      var promise = this.my_post(`${environment.apiUrl}/api/user/register`, user).toPromise()
+      await promise;
+      promise.then((d)=> {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1)
+      })
+    }
+    return res
+  }
+
+  login(username: string, password: string, field_name: string = 'result'){
     let res = async (data, continuation, next_step_idx) => {
       
       const usr = {username: username, password: password}
       var promise = this.my_post(`${environment.apiUrl}/api/user/login`, usr).toPromise()
       await promise;
       promise.then((d)=> {
+        data[field_name] = d
         continuation[next_step_idx-1].status = 2
         continuation[next_step_idx].step(data, continuation, next_step_idx+1)
       })
     }
     return res
 }
-  get_users(){
-    var done = false
-    var data = undefined
-    this.my_get(`${environment.apiUrl}/api/user/users`).pipe(map(res => {
-      return res['students'];
-    })).subscribe((d) => {
-      data = d
-      done = true
-    })
-    while (!done);
-    return data
-  }  
-  delete_user(user_id){
-    var done = false
-    var data = undefined
-    this.http.delete(`${environment.apiUrl}/api/user/${user_id}`, this.get_headers()).subscribe((d) => {
-      data = d
-      done = true
-    })
-    while (!done);
-    return data
-  }
-
-  get_students(){
-      var done = false
-      var data = undefined
-      this.my_get(`${environment.apiUrl}/api/students`).pipe(map(res => {
+  get_users(field_name: string = 'users'){
+    let res = async (data, continuation, next_step_idx) => {
+      var promise = this.my_get(`${environment.apiUrl}/api/user/users`).pipe(map(res => {
         return res['students'];
-      })).subscribe((d) => {
-        data = d
-        done = true
+      })).toPromise()
+      await promise
+      promise.then((d) => {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1)
       })
-      while (!done);
-      return data
+    }
+
+    return res
+  }  
+
+  delete_user(user_id_field_name = 'id', field_name: string = 'result'){
+    let res = async (data, continuation, next_step_idx) => {
+      var promise = this.http.delete(`${environment.apiUrl}/api/user/${data[user_id_field_name]}`, this.get_headers()).toPromise()
+      await promise
+      promise.then((d) => {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
+      })
+    }
+
+  return res
   }
 
-  add_student(s: student_t){
-    var done = false
-    var data = undefined
-    this.my_post(`${environment.apiUrl}/api/user/students/create`, s).subscribe((d) => {
-      data = d
-      done = true
-    })
-    while (!done);
-    return data
+  get_students(field_name: string = 'students'){
+    let res = async (data, continuation, next_step_idx) => {
+      var promise = this.my_get(`${environment.apiUrl}/api/students`).pipe(map(res => {
+                      return res[field_name];
+                    })).toPromise()
+        await promise
+        promise.then((d) => {
+        data['students'] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
+      })
+    }
+
+    return res
   }
-  delete_student(student_id: number){
-    var done = false
-    var data = undefined
-    this.http.delete(`${environment.apiUrl}/api/user/students/${student_id}`, this.get_headers()).subscribe((d) => {
-      data = d
-      done = true
-    })
-    while (!done);
-    return data
+
+  get_student_by_id(student_id_field_name = 'id',field_name: string = 'student'){
+    let res = async (data, continuation, next_step_idx) => {
+      var promise = this.my_get(`${environment.apiUrl}/api/students/${data[student_id_field_name]}`).pipe(map(res => {
+                      return res['students'];
+                    })).toPromise()
+        await promise
+        promise.then((d) => {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
+      })
+    }
+
+    return res
   }
-  update_students(s: student_t){
-    var done = false
-    var data = undefined
-    this.http.put(`${environment.apiUrl}/api/user/students/${s.id}`, s,this.get_headers()).subscribe((d) => {
-      data = d
-      done = true
-    })
-    while (!done);
-    return data
+
+  add_student(s: student_t, field_name: string = 'student'){
+    let res = async (data, continuation, next_step_idx) => {
+      var promise = this.my_post(`${environment.apiUrl}/api/user/students/create`, s).toPromise()
+      await
+      promise.then((d) => {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
+      })
+    }
+
+    return res
+
+  }
+
+  add_students(students: student_t[], field_name: string = 'ids'){
+    let res = async (data, continuation, next_step_idx) => {
+      for (let i in students){
+        var promise = this.my_post(`${environment.apiUrl}/api/user/students/create`, students[i]).toPromise()
+        await
+        promise.then((d) => {
+          if (+i == 0) {
+            data[field_name] = [d]
+          } else {
+            data[field_name].push(d) 
+          }
+          if (+i == students.length - 1){
+          continuation[next_step_idx-1].status = 2
+          continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
+          }
+        })
+      }
+      
+    }
+  
+
+    return res
+
+  }
+
+  delete_student(student_id_field_name = 'id', field_name: string = 'student'){
+    let res = async (data, continuation, next_step_idx) => {
+
+      var promise = this.http.delete(`${environment.apiUrl}/api/user/students/${data[student_id_field_name]}`, this.get_headers()).toPromise()
+      await promise
+      promise.then((d) => {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
+      })
+    }
+
+    return res
+  }
+  update_student(s: student_t,student_id_filed_name = 'id' ,field_name: string = 'student'){
+    let res = async (data, continuation, next_step_idx) => {
+
+      this.http.put(`${environment.apiUrl}/api/user/students/${data[student_id_filed_name]}`, s,  this.get_headers()).subscribe((d) => {
+        data[field_name] = d
+        continuation[next_step_idx-1].status = 2
+        continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
+      })
+    }
+
+    return res
+ 
   }
   
-  get_instruments(){
-    var done = false
-    var data = undefined
-    this.my_get(`${environment.apiUrl}/api/instruments`).pipe(map(res => {
+get_instruments(field_name: string = 'instruments'){
+  let res = async (data, continuation, next_step_idx) => {
+
+    var promise = this.my_get(`${environment.apiUrl}/api/instruments`).pipe(map(res => {
       return res['instruments'];
-    })).subscribe((d) => {
-      data = d
-      done = true
+    })).toPromise()
+    
+    promise.then((d) => {
+      data[field_name] = d
+      continuation[next_step_idx-1].status = 2
+      continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
     })
-    while (!done);
-    return data
   }
-  add_instrument(i: instrument_t){
-    var done = false
-    var data = undefined
-    this.my_post(`${environment.apiUrl}/api/user/instruments/create`, i).subscribe((d) => {
-      data = d
-      done = true
+
+  return res
+}
+
+add_instrument(i: instrument_t, field_name: string = 'instrument'){
+  let res = async (data, continuation, next_step_idx) => {
+
+    var promise = this.my_post(`${environment.apiUrl}/api/user/instruments/create`, i).toPromise()
+    promise.then((d) => {
+      data[field_name] = d
+      continuation[next_step_idx-1].status = 2
+      continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
     })
-    while (!done);
-    return data
   }
-  delete_instrument(instrument_id: number){
-    var done = false
-    var data = undefined
-    this.http.delete(`${environment.apiUrl}/api/user/instruments/${instrument_id}`, this.get_headers()).subscribe((d) => {
-      data = d
-      done = true
+
+  return res
+}
+
+
+delete_instrument(instrument_id_fieldname = 'id', field_name: string = 'instrument'){
+  let res = async (data, continuation, next_step_idx) => {
+
+    var promise = this.http.delete(`${environment.apiUrl}/api/user/instruments/${data[instrument_id_fieldname]}`, this.get_headers()).toPromise()
+    promise.then((d) => {
+      data[field_name] = d
+      continuation[next_step_idx-1].status = 2
+      continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
     })
-    while (!done);
-    return data
   }
-  update_instrument(i: instrument_t){
-    var done = false
-    var data = undefined
-    this.http.put(`${environment.apiUrl}/api/user/instruments/${i.id}`, i,this.get_headers()).subscribe((d) => {
-      data = d
-      done = true
+
+  return res
+}
+update_instrument(i: instrument_t, instrument_id_fieldname = 'id', field_name: string = 'instrument'){
+  let res = async (data, continuation, next_step_idx) => {
+    var promise = this.http.put(`${environment.apiUrl}/api/user/instruments/${data[instrument_id_fieldname]}`, i,this.get_headers()).toPromise()
+    
+    promise.then((d) => {
+      data[field_name] = d
+      continuation[next_step_idx-1].status = 2
+      continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
     })
-    while (!done);
-    return data
   }
+
+  return res
+}
   
-  get_loans(){}
-  add_loan(l: loan_t){}
+  get_loans(field_name: string = 'loans'){}
+  add_loan(l: loan_t, field_name: string = 'student'){}
   delete_loan(loan_id: number){}// ?
   update_loan(l: loan_t){}// ?
+
+  pass(){
+    let res = async (data, continuation, next_step_idx) => {
+      data['pass']()
+    }
+
+    return res
+  }
 }

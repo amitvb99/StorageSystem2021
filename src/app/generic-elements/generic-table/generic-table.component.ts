@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import { trigger, transition, style, animate, state, query, stagger, keyframes } from '@angular/animations';
 import { CrudService } from 'src/app/shared-services/crud.service';
+// import { ConsoleReporter } from 'jasmine';
 
 interface actions_metadata_t{
   icon: string,
@@ -10,6 +11,7 @@ interface actions_metadata_t{
 interface meta_data_t {
   component_name: string,
   indexing_enabled: boolean,
+  add_button_enabled: boolean,
   columns_count: number,
   columns: string[],
   headers: Record<string,string>,
@@ -71,6 +73,11 @@ export  class TableComponent implements OnInit {
     let keys = Object.keys(cond)
     for(let i = 0; i < keys.length; i++){
       let key = keys[i]
+      console.log(`key ${key}`)
+      console.log(`cond[key] ${cond[key]}`)
+      console.log(`daum[key] ${datum[key]}`)
+      console.log(cond)
+      console.log(cond[key].includes(datum[key]))
       if (cond[key].includes(datum[key]))
         return true
     }
@@ -107,6 +114,7 @@ filter_bar_changed(){
   ngOnInit(): void {
     this.module_variables.filter_bar_values = Object.assign([], this.meta_data.filter_bar_array) 
     this.crud.read(this.meta_data.component_name).subscribe(function(data){
+      console.log(data)
       this.module_variables['local_db'].set(this.meta_data.filter_bar_array.join("_"),data);
       this.module_variables['data_to_show'] = this.module_variables['local_db'].get(this.meta_data.filter_bar_array.join("_"));
   }.bind(this)

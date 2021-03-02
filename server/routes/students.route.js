@@ -8,23 +8,29 @@ const path = require('path');
 
 
 
-
+// 1. what should happen if he entered two files with the same name? (override, save the two files with different names)
+//2. should we save the file forever (hard desk needed for the server) or to delete them immediatly or save them for a while?
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    let error='';
-    file.mimetype=='csv' ? error = new Error("Invalid mime type") : error =null;
-    cb(error, "../files");
-  },
-  filename: (req, file, cb) => {
-    const name = file.originalname
-      .toLowerCase()
-      .split(" ")
-      .join("-");
-    const ext = 'csv';
-    cb(null, name + "-" + Date.now() + "." + ext);
-  }
+  // destination: (req, file, cb) => {
+  //   let error='';
+  //   file.mimetype=='csv' ? error = new Error("Invalid mime type") : error =null;
+  //   cb(error, "./server/files");
+  // },
+  // filename: (req, file, cb) => {
+  //   const name = file.originalname
+  //     .toLowerCase()
+  //     .split(" ")
+  //     .join("-");
+  //   const ext = 'csv';
+  //   cb(null, Date.now()+ "-" + name );
+  // }
+  destination:(req,file,cb)=>{
+    cb(null,'./server/files');
+},
+filename:(req,file,cb)=>{
+    cb(null,Date.now()+ "-" +file.originalname);
+}
 });
-
 
 const router = express.Router();
 
@@ -48,7 +54,7 @@ router.post("/create", (req, res, next)=>{
     .then(result => {
       res.status(201).json({
         message: "success",
-        data: student.id
+        data: student._id
       });
     })
     .catch(err => {
@@ -63,7 +69,7 @@ router.post("/create", (req, res, next)=>{
 //, multer({ storage: storage }).single("excel")
 router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, res, next)=>{
   csv()
-.fromFile("req.file.path")         ////  server/files/excel3.csv
+.fromFile("server/files/" + req.file.filename)         ////  server/files/excel3.csv
 .then((jsonObj)=>{
      Student.insertMany(jsonObj,(err,data)=>{
             if(err){
@@ -103,7 +109,7 @@ router.get("", (req, res, next)=>{
 router.put("/:id", (req, res, next)=>{
 
   const student = new Student({
-    _id: req.params.id,  //WTF?!
+    _id: req.params.id,
     fName: req.body.fName,
     lName: req.body.lName,
     school: req.body.school,
@@ -121,7 +127,7 @@ router.put("/:id", (req, res, next)=>{
     Student.updateOne({ _id: req.params.id },student).then(t => {
       res.status(200).json({
         message: "success",
-        data: req.params.id
+        data: req.params._id
     });
     })
     .catch(err=>{
@@ -148,7 +154,7 @@ router.delete("/:id", (req, res, next)=>{
   Student.deleteOne({ _id: req.params.id }).then(result => {
       res.status(200).json({
         message: "success",
-        data: req.params.id
+        data: req.params._id
       });
     })
   .catch(err => {

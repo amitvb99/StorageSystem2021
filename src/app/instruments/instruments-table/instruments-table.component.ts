@@ -15,7 +15,8 @@ export class InstrumentsTableComponent implements OnInit {
   component_name = "instruments";
   instruments_meta_data  = {
     component_name: "instruments",
-    indexing_enabled :true,
+    indexing_enabled : true,
+    add_button_enabled: true,
     columns_count:8,
     columns:['generalSerialNumber', 'type', 'sub_type', 'company', 'style', 'imprentedSerialNumber', 'ownership', 'status'],
     headers:{
@@ -82,7 +83,7 @@ export class InstrumentsTableComponent implements OnInit {
           id: 'status',
           name:'Status',
           type:'drop_down',
-          possible_values:['new','loaned','in stock','broken','maintained','back from maintainance','unusable','deleted','missing'],
+          possible_values:['new','loaned','available','broken','maintained','back from maintainance','unusable','deleted','missing'],
           can_edit:true
         },
         {
@@ -141,6 +142,8 @@ export class InstrumentsTableComponent implements OnInit {
       if (dialog_res != null){
         this.crud.create(this.component_name,dialog_res).subscribe(res => {
           if(res != null){
+            // dialog_res
+            dialog_res._id = res['data']
             data_to_show.push(dialog_res)
           } else {
             // output error
@@ -172,7 +175,7 @@ export class InstrumentsTableComponent implements OnInit {
     instance.data = i
     instance.is_add =  false;
     dialog_ref.afterClosed().subscribe(dialog_res => {
-      this.crud.update(this.component_name,dialog_res,dialog_res['generalSerialNumber']).subscribe(res =>{
+      this.crud.update(this.component_name,dialog_res,dialog_res['_id']).subscribe(res =>{
         if (res !== null){
           for (let key in dialog_res) {
             //update ui

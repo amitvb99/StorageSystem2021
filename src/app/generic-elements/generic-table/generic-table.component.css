@@ -78,6 +78,7 @@
 }
 
 @media only screen and (min-width: 767px) {
+    
     table {
         margin: 1% auto;
         max-width:70%;
@@ -161,7 +162,7 @@ div.controller_container{
     flex:1;
 }
 
-div i{
+td div i{
     flex:1;
 }
 .hide_element {
@@ -169,10 +170,6 @@ div i{
 }
 .act {
     background-color: red;
-}
-/*to delete stuff*/
-div.button_container{
-    text-align: center;
 }
 
 .filter-bar-container{
@@ -210,4 +207,20 @@ select {
 }
 select::-ms-expand {
     display: none;
+}
+
+div.add-button-container {
+    display: block;
+}
+
+i.add-button {
+    margin-right: 3%;
+    margin-top: 3%;
+    display: block;
+    color: #056674;
+}
+
+i.add-button:hover {
+    color: #66bfbf;
+    border-color: #66bfbf;
 }

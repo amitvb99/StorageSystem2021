@@ -16,7 +16,7 @@ router.post("/login", (req, res, next)=>{
       });
     }
     fetchdeUsre = user;
-    return req.body.password== user.password;
+    return req.body.password  == user.password;
   })
   .then(result => {
     if(!result){
@@ -79,9 +79,9 @@ router.post("/logout", (req, res, next)=>{
 
 
 router.post("/register", (req, res, next)=>{
-    const user = new User({name: req.body.name, username: req.body.user, password: req.body.pass});
-    user
-      .save()
+    const user = new User({name: req.body.name, username: req.body.username, password: req.body.password, privilege: req.body.privilege});
+    
+    user.save()
       .then(result => {
         res.status(201).json({
           message: "success",
@@ -131,12 +131,5 @@ router.get("/users", (req, res, next)=>{
       res.status(500).json({});
     });
 });
-
-
-
-
-
-
-
 
 module.exports = router;
