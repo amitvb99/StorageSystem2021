@@ -105,6 +105,39 @@ export class CrudService {
     return res
   }
 
+  filtered_read(component:string, filter_string:string, query_string:string = ''){
+    const path = this.get_path(component,'',`filter/${filter_string}`)
+
+    var res = this.http.get(path, this.get_headers()).pipe(
+      map(res => {
+        console.log('crud service: filtered_read:')
+        if (component == 'loans'){
+          for (var idx in res['data']) {
+            res['data'][idx].student_name = res['data'][idx]['student']['fName']
+            res['data'][idx].student_school = res['data'][idx]['student']['school']
+            res['data'][idx].student_class = res['data'][idx]['student']['class']
+            res['data'][idx].student_class = res['data'][idx]['student']['class']
+            res['data'][idx].openning_user = res['data'][idx]['openUser']['name']
+            res['data'][idx].instrument = res['data'][idx]['instrument']['generalSerialNumber']
+
+
+            if (res['data'][idx]['closeUser'] != undefined)
+               res['data'][idx].closing_user = res['data'][idx]['closeUser']['name']
+            else {
+              res['data'][idx].closing_user = ''
+            }
+
+            if (res['data'][idx].closing_user == '') res['data'][idx].closing_user = 'X'
+            if (res['data'][idx].to == '') res['data'][idx].to = 'X'
+            if (res['data'][idx].notes == '') res['data'][idx].notes = 'X'            
+          }
+        }
+        return res['data'];
+        
+  }))
+    return res
+  }
+
   loan_instrument(loan){
     const path = `${environment.apiUrl}/api/user/loans/loanInstrument`
     console.log(`loan instrument: ${path}`)

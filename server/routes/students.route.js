@@ -35,11 +35,12 @@ filename:(req,file,cb)=>{
 const router = express.Router();
 
 router.post("/create", (req, res, next)=>{
+  console.log(req.body)
     const student = new Student({
       fName: req.body.fName,
       lName: req.body.lName,
       school: req.body.school,
-      grade: req.body.grade,
+      level: req.body.level,
       class: req.body.class,
       // id: req.body.id,
       parent1Name: req.body.parent1Name,
@@ -113,7 +114,7 @@ router.put("/:id", (req, res, next)=>{
     fName: req.body.fName,
     lName: req.body.lName,
     school: req.body.school,
-    grade: req.body.grade,
+    level: req.body.level,
     class: req.body.class,
     parent1Name: req.body.parent1Name,
     parent2Name: req.body.parent2Name,
@@ -196,7 +197,7 @@ router.get("/filter/:params", (req, res, next)=>{
     });
 
   if (Class == "class" && level != 'level')
-    Student.find({grade: level}).then(students => {
+    Student.find({level: level}).then(students => {
       if(!students){
         res.status(500).json({
           message: "failed"
@@ -238,7 +239,7 @@ router.get("/filter/:params", (req, res, next)=>{
     });
 
   if (Class != "class" && level != 'level')
-    Student.find({class: Class, grade: level}).then(students => {
+    Student.find({class: Class, level: level}).then(students => {
       if(!students){
         res.status(500).json({
           message: "failed"

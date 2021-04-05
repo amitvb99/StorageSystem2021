@@ -44,11 +44,13 @@ export class LoansTableComponent implements OnInit {
       }
   }
     },
-    filter_bar_array:['student_grade','instrument_type', 'instrument_subtype'],
+    filter_bar_array:['student level', 'student class', 'status', 'instrument type', 'instrument subtype'],
     filter_by:{
-      'student_grade':["1","2","3","4","5","6"],
-      'instrument_type':["4","5","6","7","8","9"],
-      'instrument_subtype':["4","5","6","7","8","9"],
+      'student level':      ["4","5","6","7","8","9"],
+      'student class':      ["1","2","3","4","5","6"],
+      'status':             ['openned', 'closed'],
+      'instrument type':    ["4","5","6","7","8","9"],
+      'instrument subtype': ["4","5","6","7","8","9"],
     }
   }
 

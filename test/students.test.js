@@ -30,7 +30,7 @@ describe('Student Tests', function() {
             'fName': 'Amit',
             'lName': 'Vigdor Bart',
             'school': 'BGU',
-            'grade': '7th',
+            'level': '7th',
             'class': '2',
             'parent1Name': 'parent1',
             'parent2Name': 'parent2',
@@ -77,14 +77,14 @@ describe('Student Tests', function() {
         });
     });
 
-    it('should filter students only in 7th grade', function(done) {
+    it('should filter students only in 7th level', function(done) {
         chai.request(server)
         .post('/api/user/students/create')
         .send({
             'fName': 'Lionel',
             'lName': 'Messi',
             'school': 'FC Barcelona',
-            'grade': '7th',
+            'level': '7th',
             'class': '5',
             'parent1Name': 'parent1',
             'parent2Name': 'parent2',
@@ -99,7 +99,7 @@ describe('Student Tests', function() {
             'fName': 'Cristiano',
             'lName': 'Ronaldo',
             'school': 'Juventus',
-            'grade': '9th',
+            'level': '9th',
             'class': '2',
             'parent1Name': 'parent1',
             'parent2Name': 'parent2',
@@ -115,7 +115,7 @@ describe('Student Tests', function() {
             res.should.have.status(200);
             res.should.be.json;
             res.body.data.every(function(element, index) {
-                element.should.have.property('grade').eql('7th');
+                element.should.have.property('level').eql('7th');
             });
             done();
         });
@@ -135,7 +135,7 @@ describe('Student Tests', function() {
         });
     });
 
-    it('should filter students only in class 2 and 7th grade', function(done) {
+    it('should filter students only in class 2 and 7th level', function(done) {
         chai.request(server)
         .get('/api/user/students/filter/2_7th')
         .send({})
@@ -143,7 +143,7 @@ describe('Student Tests', function() {
             res.should.have.status(200);
             res.should.be.json;
             res.body.data.every(function(element, index) {
-                element.should.have.property('grade').eql('7th');
+                element.should.have.property('level').eql('7th');
                 element.should.have.property('class').eql('2');
             });
             done()
