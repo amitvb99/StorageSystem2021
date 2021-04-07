@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import { trigger, transition, style, animate, state, query, stagger, keyframes } from '@angular/animations';
 import { CrudService } from 'src/app/shared-services/crud.service';
+import { filter } from 'rxjs/operators';
+// import { ConsoleReporter } from 'jasmine';
 
 interface actions_metadata_t{
   icon: string,
@@ -97,10 +99,25 @@ export  class TableComponent implements OnInit {
   }
 
 filter_bar_changed(){
-  let filter_bar = this.module_variables['filter_bar_values'].join("_")
+  let filter_bar: string = this.module_variables['filter_bar_values'].join("_")
+  let _filter_bar: string[] = new Array<string>(filter_bar.length - filter_bar.split(" ").length + 1);
+  var i: number = 0, j: number = 0
+  for (; i < filter_bar.length; i++, j++) {
+    if (filter_bar[i] == ' ') {
+      _filter_bar[j] = filter_bar[i+1].toUpperCase()
+      i = i + 1
+    } else {
+      _filter_bar[j] = filter_bar[i]
+    }
+  }
+  filter_bar = _filter_bar.join('')
+  console.log(filter_bar)
   if (this.module_variables['local_db'].get(filter_bar) === undefined){
-    //make_http_request
-    this.module_variables['data_to_show'] = []
+    this.crud.filtered_read(this.meta_data.component_name, filter_bar).subscribe(res => {
+      console.log(`res is ${res}`)
+      this.module_variables['data_to_show'] = res
+    })
+    
   } else {
     this.module_variables['data_to_show'] = this.module_variables['local_db'].get(filter_bar)
   }

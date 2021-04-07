@@ -38,12 +38,13 @@ filename:(req,file,cb)=>{
 
 const router = express.Router();
 
-router.post("/create", checkAuth,(req, res, next)=>{
+router.post("/create", (req, res, next)=>{
+  console.log(req.body)
     const student = new Student({
       fName: req.body.fName,
       lName: req.body.lName,
       school: req.body.school,
-      grade: req.body.grade,
+      level: req.body.level,
       class: req.body.class,
       // id: req.body.id,
       parent1Name: req.body.parent1Name,
@@ -86,7 +87,7 @@ router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, re
  res.status(200);
 });
 
-router.get("",(req, res, next)=>{
+router.get("", (req, res, next)=>{
 
     Student.find()
       .then(students =>{
@@ -110,14 +111,14 @@ router.get("",(req, res, next)=>{
 
 
 //update
-router.put("/:id",checkAuth, (req, res, next)=>{
+router.put("/:id", (req, res, next)=>{
 
   const student = new Student({
     _id: req.params.id,
     fName: req.body.fName,
     lName: req.body.lName,
     school: req.body.school,
-    grade: req.body.grade,
+    level: req.body.level,
     class: req.body.class,
     parent1Name: req.body.parent1Name,
     parent2Name: req.body.parent2Name,
@@ -141,8 +142,8 @@ router.put("/:id",checkAuth, (req, res, next)=>{
     });
 });
 
-router.get("/:id",checkAuth, (req, res, next)=>{
-  Student.findOne({_id: req.params._id}).then(student => {
+router.get("/:id", (req, res, next)=>{
+  Student.findOne({_id: req.params.id}).then(student => {
     if (student) {
       res.status(200).json({
         message: "success",
@@ -154,7 +155,7 @@ router.get("/:id",checkAuth, (req, res, next)=>{
   });
 });
 
-router.delete("/:id",checkAuth, (req, res, next)=>{
+router.delete("/:id", (req, res, next)=>{
   Student.deleteOne({ _id: req.params.id }).then(result => {
       res.status(200).json({
         message: "success",
@@ -200,7 +201,7 @@ router.get("/filter/:params", (req, res, next)=>{
     });
 
   if (Class == "class" && level != 'level')
-    Student.find({grade: level}).then(students => {
+    Student.find({level: level}).then(students => {
       if(!students){
         res.status(500).json({
           message: "failed"
@@ -242,7 +243,7 @@ router.get("/filter/:params", (req, res, next)=>{
     });
 
   if (Class != "class" && level != 'level')
-    Student.find({class: Class, grade: level}).then(students => {
+    Student.find({class: Class, level: level}).then(students => {
       if(!students){
         res.status(500).json({
           message: "failed"

@@ -57,8 +57,8 @@ export class AddLoanComponent implements OnInit {
         console.log(res)
       }
     )
-    // this.add_loan_is_open = ! this.add_loan_is_open
-    // this.show_functions['loan']()
+    this.add_loan_is_open = ! this.add_loan_is_open
+    this.show_functions['loan']()
   }
 
   remove_field(field){

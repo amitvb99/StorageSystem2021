@@ -17,12 +17,12 @@ export class StudentsTableComponent implements OnInit {
     indexing_enabled: true,
     add_button_enabled: true,
     columns_count:8,
-    columns:['fName', 'lName', 'school', 'grade', 'class'],
+    columns:['fName', 'lName', 'school', 'level', 'class'],
     headers:{
       'fName':'First Name',
       'lName':'Last Name',
       'school':'School',
-      'grade':'Level',
+      'level':'Level',
       'class':'Class',
     },
     actions:['remove','edit','show'],
@@ -45,10 +45,10 @@ export class StudentsTableComponent implements OnInit {
         }
     }
     },
-    filter_bar_array:['class','grade'],
+    filter_bar_array:['class','level'],
     filter_by:{
       'class':["1","2","3","4","5","6"],
-      'grade':["4","5","6","7","8","9"],
+      'level':["4","5","6","7","8","9"],
     }
 
   }
@@ -76,7 +76,7 @@ export class StudentsTableComponent implements OnInit {
           can_edit:true
         },
         {
-          id: 'grade',
+          id: 'level',
           name:'Level',
           type:'drop_down',
           possible_values:["4","5","6","7","8","9"],

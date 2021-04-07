@@ -8,9 +8,6 @@ const checkAuth= require("../middleware/check-auth");
 const router = express.Router();
 
 router.post("/loanInstrument", (req, res, next)=>{
-  console.log('################')
-  console.log(req.body)
-
     Instrument.findOne({_id: req.body.instrument})
     .then(result => {
         if(result.status === "available") {
@@ -21,7 +18,7 @@ router.post("/loanInstrument", (req, res, next)=>{
                 openUser: req.body.user,
                 from: datetime.toISOString().slice(0,10),
                 notes: req.body.notes,
-                status: req.body.status
+                status: 'openned'
             });
             loan.save()
             .then(result => {
@@ -85,7 +82,7 @@ router.post("/endLoan/:id", (req, res, next)=>{
     _id: req.params.id,
     closeUser: req.body.user,
     to: req.body.to,
-    status: req.body.status
+    status: 'closed'
   });
   Loan.updateOne({_id: req.params.id},loan).then(result => {
     res.status(200).json({
