@@ -94,7 +94,7 @@ router.post("/endLoan/:id", (req, res, next)=>{
     });
     const instrument1 = new Instrument({
       _id: req.body.instrument,
-      status: "available"
+      status: "available"              // TODO -  neeed to check
     });
     Instrument.updateOne({_id: req.body.instrument}, instrument1, function(err, res) {
         if(err) console.log(err);

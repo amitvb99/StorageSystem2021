@@ -5,8 +5,12 @@ const multer= require("multer");
 const csv = require('csvtojson');
 const bodyParser  = require('body-parser');
 const path = require('path');
-
-
+const Json2csvParser = require('json2csv').Parser;
+const fs = require('fs');
+const ws = fs.createWriteStream("server/files/customer.csv");
+const fastcsv = require("fast-csv");
+const createCsvWriter = require("csv-writer").createObjectCsvWriter;
+const { Console } = require("console");
 
 // 1. what should happen if he entered two files with the same name? (override, save the two files with different names)
 //2. should we save the file forever (hard desk needed for the server) or to delete them immediatly or save them for a while?
@@ -82,7 +86,7 @@ router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, re
  res.status(200);
 });
 
-router.get("", checkAuth,(req, res, next)=>{
+router.get("",(req, res, next)=>{
 
     Student.find()
       .then(students =>{
@@ -263,6 +267,39 @@ router.get("/filter/:params", (req, res, next)=>{
 
 router.get("/stuentsHistory", (req, res, next)=>{
 
+});
+
+router.post("/exportExcel", (req, res, next)=>{
+  Student.find().then(students=>{
+    if(students){
+
+      const csvWriter = createCsvWriter({
+        path: "server/files/students.csv",
+        header: [
+          { id: "_id", title: "_id" },
+          { id: "fName", title: "first name" },
+          { id: "lName", title: "last name" },
+          { id: "school", title: "school" },
+          { id: "grade", title: "grade" },
+          { id: "class", title: "class" },
+          //to be continued
+        ]
+      });
+
+      csvWriter
+        .writeRecords(students)
+        .then(()=>
+          console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
+       );
+       var path= __dirname.slice(0,__dirname.length-6)+'/files/students.csv';
+       res.download(path);
+    }
+    else{
+      res.status(500).json({
+        message: "failed"
+      });
+    }
+  })
 });
 
 module.exports = router;
