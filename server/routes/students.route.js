@@ -35,7 +35,7 @@ filename:(req,file,cb)=>{
 const router = express.Router();
 
 router.post("/create", (req, res, next)=>{
-  console.log(req.body)
+  console.log(req.body.parent1Email)
     const student = new Student({
       fName: req.body.fName,
       lName: req.body.lName,
@@ -84,7 +84,7 @@ router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, re
 });
 
 router.get("", (req, res, next)=>{
-
+    console.log(req.headers.user_id)
     Student.find()
       .then(students =>{
         if(!students){
@@ -108,6 +108,7 @@ router.get("", (req, res, next)=>{
 
 //update
 router.put("/:id", (req, res, next)=>{
+  console.log(req.body.parent1Email)
 
   const student = new Student({
     _id: req.params.id,

@@ -14,6 +14,10 @@ import { PermissionSystemService } from './generic-elements/permission-system.se
 import { LoansPageComponent } from './loans/loans-page/loans-page.component';
 import { TestsContainerComponent } from './tests/tests-container/tests-container.component';
 import { UsersTableComponent } from './users/users-table/users-table.component';
+import { StudentPageComponent } from './students/student-page/student-page.component';
+import { InstrumentPageComponent } from './instruments/instrument-page/instrument-page.component';
+import { LoanPageComponent } from './loans/loan-page/loan-page.component';
+
 
 const permission_system : permission_system_t = {
   type: 'linear',
@@ -100,6 +104,27 @@ const meta_data  = {
       permission:'user',
       not_apage:true,
       component:TestsContainerComponent
+    },
+    {
+      name:'student',
+      url:'#/students/:id',
+      permission:'user',
+      not_apage:true,
+      component:StudentPageComponent
+    },
+    {
+      name:'instrument',
+      url:'#/instruments/:id',
+      permission:'user',
+      not_apage:true,
+      component:InstrumentPageComponent
+    },
+    {
+      name:'loans',
+      url:'#/loans/:id',
+      permission:'user',
+      not_apage:true,
+      component:LoanPageComponent
     }
   ]}
 @Component({

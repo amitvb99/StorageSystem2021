@@ -4,6 +4,7 @@ import { generic_form_meta_data_t } from 'src/app/app-interfaes';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { GenericFormComponent } from 'src/app/generic-elements/generic-form/generic-form.component';
 import { CrudService } from 'src/app/shared-services/crud.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-instruments-table',
@@ -12,11 +13,15 @@ import { CrudService } from 'src/app/shared-services/crud.service';
 })
 export class InstrumentsTableComponent implements OnInit {
   @Input() overrider;
+  @Input() data: any = undefined;
+  
   component_name = "instruments";
   instruments_meta_data  = {
     component_name: "instruments",
     indexing_enabled : true,
     add_button_enabled: true,
+    discrete_filter_bar: true,
+    free_text_filter_bar: true,
     columns_count:8,
     columns:['generalSerialNumber', 'type', 'sub_type', 'company', 'style', 'imprentedSerialNumber', 'ownership', 'status'],
     headers:{
@@ -54,10 +59,9 @@ export class InstrumentsTableComponent implements OnInit {
     filter_bar_array:['type','subtype','status'],
     filter_by:{
       'type':["A","B","C"],
-      'subtype':["A1","A2","A3","B1","B2","B3","C1","C2"],
+      'subtype':{'type':{'A':['A1', 'A2', 'A3'], 'B':['B1', 'B2', 'B3'], 'C':['C1', 'C2', 'C3']} },
       'status':["loaned","missing","available"]
     }
-
   }
 
 
@@ -126,7 +130,7 @@ export class InstrumentsTableComponent implements OnInit {
         },
       ]
     }  ]
-  constructor(private dialog: MatDialog,private crud:CrudService) { }
+  constructor(private dialog: MatDialog,private crud:CrudService, private router:Router) { }
 
   // close_func = () => {
   //   this.dialog.componentInstance.cl
@@ -190,7 +194,8 @@ export class InstrumentsTableComponent implements OnInit {
     
   },
   'show': (data_to_show,i) => {
-    alert(`${JSON.stringify(i)}`)
+      this.router.navigate(['/instruments/', i['_id']]);
+      // alert(`${JSON.stringify(i)}`)
   },
 
 }

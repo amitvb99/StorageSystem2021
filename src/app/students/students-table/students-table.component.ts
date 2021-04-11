@@ -3,6 +3,8 @@ import { generic_form_meta_data_t } from 'src/app/app-interfaes';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CrudService } from 'src/app/shared-services/crud.service';
 import { GenericFormComponent } from 'src/app/generic-elements/generic-form/generic-form.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-students-table',
@@ -93,7 +95,7 @@ export class StudentsTableComponent implements OnInit {
   ]
     },
     { 
-      name:'Instrument Type',
+      name:'Parents Info',
       fields:[
         {
           id: 'parent1Name',
@@ -104,6 +106,30 @@ export class StudentsTableComponent implements OnInit {
         {
           id: 'parent2Name',
           name:'Parent 2 Name',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent1PhoneNumber',
+          name:'Parent 1 Number',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent2PhoneNumber',
+          name:'Parent 2 Number',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent1Email',
+          name:'Parent 1 Email',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent2Email',
+          name:'Parent 2 Email',
           type:'text',
           can_edit:false,
         },
@@ -168,11 +194,12 @@ export class StudentsTableComponent implements OnInit {
       
     },
     'show': (data_to_show,i) => {
-      alert(`${JSON.stringify(i)}`)
+      this.router.navigate(['/students/', i['_id']]);
+      // alert(`${JSON.stringify(i)}`)
     },
   }
   
-  constructor(private dialog: MatDialog,private crud:CrudService) { }
+  constructor(private dialog: MatDialog,private crud:CrudService, private router:Router) { }
 
   
 

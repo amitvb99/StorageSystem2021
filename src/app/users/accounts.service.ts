@@ -14,12 +14,10 @@ export class AccountsService {
   }
   private userSubject: BehaviorSubject<User>;
     login(user,path){//user should be json object
-      console.log(user)
 
       return this.http.post(`${environment.apiUrl}${path}`, user)
       .pipe(map(user => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          console.log(user)
           localStorage.setItem('user', JSON.stringify(user['data']));
           localStorage.setItem('permission', 'admin');
           localStorage.setItem('token', user['data']['token']);

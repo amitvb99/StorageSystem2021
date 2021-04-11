@@ -1,0 +1,66 @@
+<div class="header-container">
+
+    <div class="table-container">
+        <table class="data-table">
+            <tr>
+                <td>Id</td>
+                <td>{{id}}</td>
+            </tr>
+
+            <tr>
+                <td>Type</td>
+                <td>{{instrument['type'] == undefined ? 'NA' : instrument['type']}}</td>
+            </tr>
+
+            <tr>
+                <td>Sub Type</td>
+                <td>{{instrument['sub_type'] == undefined ? 'NA' : instrument['sub_type']}}</td>
+            </tr>
+            
+            <tr>
+                <td>Style</td>
+                <td>{{instrument['style'] == undefined ? 'NA' : instrument['style']}}</td>
+            </tr>
+            
+            <tr>
+                <td>Status</td>
+                <td>{{instrument['status'] == undefined ? 'NA' : instrument['status']}}</td>
+            </tr>
+            
+            <tr>
+                <td>Company</td>
+                <td>{{instrument['company'] == undefined ? 'NA' : instrument['company']}}</td>
+            </tr>
+
+            <tr>
+                <td>OwnerShip</td>
+                <td>{{instrument['ownership'] == undefined ? 'NA' : instrument['ownership']}}</td>
+            </tr>
+            
+            <tr>
+                <td>imprented Serial Number</td>
+                <td>{{instrument['imprentedSerialNumber'] == undefined ? 'NA' : instrument['imprentedSerialNumber']}}</td>
+            </tr>
+
+            <tr>
+                <td>general Serial Number</td>
+                <td>{{instrument['generalSerialNumber'] == undefined ? 'NA' : instrument['generalSerialNumber']}}</td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="buttons-container">
+        <div class="button-group"  >
+            <button type="button" class="btn btn-success">loan</button>
+            <button type="button" class="btn btn-warning">edit</button>
+            <button type="button" class="btn btn-danger">delete</button>
+        </div>
+    </div>
+</div>
+
+<div class="history-container">
+    <span class="history-table-header">History:</span> 
+    <generic-table [data]="data" [meta_data]="history_table_metadata"></generic-table>
+</div>
+
+
