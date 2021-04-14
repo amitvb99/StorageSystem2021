@@ -2,14 +2,14 @@
       <i class="fas fa-plus-circle fa-5x add-button" (click)="functions['add'](module_variables['data_to_show'])"></i>
   </div>
 
-  <div class="search-box-container">
+  <div *ngIf="meta_data.discrete_filter_bar" class="search-box-container">
     <div  class="search-box-sub-container">
-      <input type="text" class="search-box" > 
+      <input type="text"  class="search-box" > 
       <i class="fas fa-search fa-2x search-button" ></i>
     </div>
   </div>
 
-  <div class="btn-toolbar filter-bar-container" role="toolbar" aria-label="Toolbar with button groups">
+  <div *ngIf="meta_data.discrete_filter_bar" class="btn-toolbar filter-bar-container" role="toolbar" aria-label="Toolbar with button groups">
 
     <div class="btn-group mr-2 filter-bar" role="group" aria-label="First group">
       <select   (change)="filter_bar_changed()" *ngFor="let filter of meta_data.filter_bar_array; let i = index" [(ngModel)]="module_variables['filter_bar_values'][i]" class="btn btn-secondary filter-button">
@@ -40,7 +40,7 @@
             <span class="row_data"> {{datum[column]}} </span>
         </td>  
   
-        <td class="action_columns">
+        <td *ngIf="meta_data.actions.length > 0" class="action_columns">
           <div >
             
               <i  (click)="functions[action](module_variables['data_to_show'],this.module_variables['data_to_show'][i])" *ngFor="let action of meta_data.actions"  [ngClass]="getClass(datum,action)"  ></i>  

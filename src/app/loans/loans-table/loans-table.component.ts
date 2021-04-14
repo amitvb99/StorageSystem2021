@@ -3,6 +3,7 @@ import { generic_form_meta_data_t } from 'src/app/app-interfaes';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CrudService } from 'src/app/shared-services/crud.service';
 import { GenericFormComponent } from 'src/app/generic-elements/generic-form/generic-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loans-table',
@@ -57,7 +58,7 @@ export class LoansTableComponent implements OnInit {
   
     functions={
     'show': (data_to_show,i) => {
-      alert(`${JSON.stringify(i)}`)
+      this.router.navigate(['/loans/', i['_id']])
     },
     'end_loan': (data_to_show,i) => {
       var loan_id = i._id
@@ -74,7 +75,7 @@ export class LoansTableComponent implements OnInit {
     
   
   }
-  constructor(private dialog: MatDialog,private crud:CrudService) { }
+  constructor(private dialog: MatDialog,private crud:CrudService, private router: Router) { }
 
   ngOnInit(): void {
   }

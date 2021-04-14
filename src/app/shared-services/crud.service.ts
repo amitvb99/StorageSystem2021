@@ -15,7 +15,8 @@ export class CrudService {
  private get_headers(){
   const headerDict = {
     'Accept': 'application/json, text/plain, */*',
-    'authorization': localStorage.getItem('token')
+    'authorization': localStorage.getItem('token'),
+    'user_id': localStorage.getItem('user_id')
   }
   
   const requestOptions = {                                                                                                                                                                                 
