@@ -1,5 +1,6 @@
 const express = require("express");
 const Instrument = require("../models/instrument.model");
+const History = require("../models/history.model");
 const checkAuth= require("../middleware/check-auth");
 
 const router = express.Router();
@@ -70,10 +71,23 @@ router.put("/:id", (req, res, next)=>{
       ownership: req.body.ownership,
       status: req.body.status
     });
-    Instrument.updateOne({_id: req.params.id},instrument).then(result => {
+    Instrument.findOneAndUpdate({_id: req.params.id},instrument,{ returnOriginal: true }).then(result => {
+      if(result["status"] !== instrument["status"]){
+        console.log(true);
+        var datetime = new Date();
+        const history_rec = new History({
+          instrument: req.params.id,
+          date: datetime.toISOString().slice(0,10),
+          user: req.headers.user_id,
+          status: instrument["status"],
+          notes: req.body.notes
+        });
+        history_rec.save();
+      }
       res.status(200).json({
         message: "success",
         data: instrument.id
+
       });
     })
     .catch(err=>{
@@ -117,6 +131,42 @@ router.delete("/:id", checkAuth, (req, res, next)=>{
 });
 });
 
+
+router.get("/filter/:params", (req, res, next)=>{
+  let filterString=req.params.params.split('-');
+  let discreteFields = filterString[0].split('_');
+  let map = {}
+
+  let type = discreteFields[0];
+  let subtype = discreteFields[1];
+  let status = discreteFields[2];
+  type !=="type" ?  map['type'] = type:1;
+  subtype !== "subtype" ? map['sub_type'] = subtype:1;
+  status !== "status" ? map['status'] = status:1;
+
+
+  console.log(type, subtype, status);
+  console.log(map);
+  Instrument.find(map).then(instruments => {
+    if(!instruments){
+      res.status(500).json({
+        message: "failed"
+      });
+    }
+    return instruments;
+  })
+  .then(instruments=>{
+    res.status(200).json({
+      message: "success",
+      data: instruments
+      });
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: "failed"
+    });
+  });
+});
 router.get("/filter/:params", (req, res, next)=>{
 
   let filterString=req.params.params.split('-');
@@ -211,7 +261,7 @@ router.get("/filter/:params", (req, res, next)=>{
     });
 
   if (type == "type" && subtype != 'subtype' && status != 'status')
-    Instrument.find({sub_type: subtype,status: status}).then(instruments => {
+    Instrument.find({sub_type: subtype,status: status, type: type=="type"? null: type}).then(instruments => {
       if(!instruments){
         res.status(500).json({
           message: "failed"
@@ -301,8 +351,19 @@ router.delete("/type/:id", (req, res, next)=>{
 });
 
 
-router.get("/instrumentHistory", (req, res, next)=>{
-
+router.get("/history/:id", (req, res, next)=>{
+  History.find({instrument: req.params.id}).then(history => {
+    if (history) {
+      res.status(200).json({
+        message: "success",
+        data: history
+      });
+    } else {
+      res.status(404).json({
+        message: "failed"
+      });
+    }
+  });
 });
 
 
