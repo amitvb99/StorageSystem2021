@@ -3,12 +3,6 @@ const Student = require("../models/student.model");
 const checkAuth= require("../middleware/check-auth");
 const multer= require("multer");
 const csv = require('csvtojson');
-const bodyParser  = require('body-parser');
-const path = require('path');
-const Json2csvParser = require('json2csv').Parser;
-const fs = require('fs');
-const ws = fs.createWriteStream("server/files/customer.csv");
-const fastcsv = require("fast-csv");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const { Console } = require("console");
 

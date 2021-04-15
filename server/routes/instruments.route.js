@@ -104,16 +104,21 @@ router.get("/type/:id", (req, res, next)=>{
 
 router.get("/:id", (req, res, next)=>{
   Instrument.findOne({_id: req.params.id}).then(instrument => {
-    if (instrument) {
-      res.status(200).json({
-        message: "success",
-        data: instrument
-      });
-    } else {
-      res.status(404).json({
-        message: "failed"
-      });
-    }
+    History.find({instrument: instrument._id}).populate('user').then(history => {
+      if (instrument) {
+        let data = {};
+        data['instrument'] = instrument;
+        data['history'] = history;
+        res.status(200).json({
+          message: "success",
+          data: data
+        });
+      } else {
+        res.status(404).json({
+          message: "failed"
+        });
+      }
+    });
   });
 });
 
