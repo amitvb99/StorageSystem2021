@@ -4,34 +4,39 @@ const User = require("../models/user.model");
 const router = express.Router();
 
 
-// router.post('/clear',(req,res)=>{
-//   mongoose.connection.db.dropDatabase();
-//   mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
-//   .then(()=>{
-//     console.log('Connected to database!')
-//   }).catch(()=>{
-//     console.log('Connectino failed!')
-//   });
-//   const user = new User({name: req.body.name, username: req.body.user, password: req.body.pass});
-//     user
-//       .save()
-//       .then(result => {
-//         res.status(201).json({
-//           message: "User created!",
-//         });
-//       })
-//       .catch(err => {
-//         res.status(500).json({
-//         });
-//       });
-// })
-
-
-router.post("/registerUser", (req, res, next)=>{
-
+router.post("/demoteAdmin/:id", (req, res, next)=>{
+  const user = new User({
+    _id: req.params.id,
+    privilege: 'user'
+  });
+  User.updateOne({_id: req.params.id},user).then(u =>{
+    res.status(200).json({
+          message: "success",
+          data: req.params.id
+      });
+      })
+      .catch(err=>{
+        res.status(500).json({
+          message: "failed"
+        });
+    });
 });
 
-router.post("/promoteUser", (req, res, next)=>{
-
+router.post("/promoteUser/:id", (req, res, next)=>{
+  const user = new User({
+    _id: req.params.id,
+    privilege: 'admin'
+  });
+  User.updateOne({_id: req.params.id},user).then(u =>{
+    res.status(200).json({
+          message: "success",
+          data: req.params.id
+      });
+      })
+      .catch(err=>{
+        res.status(500).json({
+          message: "failed"
+        });
+    });
 });
 module.exports = router;

@@ -1,5 +1,6 @@
 const express = require("express");
 const Student = require("../models/student.model");
+const Loan = require("../models/loan.model")
 const checkAuth= require("../middleware/check-auth");
 const multer= require("multer");
 const csv = require('csvtojson');
@@ -140,9 +141,14 @@ router.put("/:id", (req, res, next)=>{
 router.get("/:id", (req, res, next)=>{
   Student.findOne({_id: req.params.id}).then(student => {
     if (student) {
-      res.status(200).json({
-        message: "success",
-        data: student
+      Loan.find({student: req.params.id}).then(result =>{
+        let data = {};
+        data['student']=student;
+        data['loans'] = result;
+        res.status(200).json({
+          message: "success",
+          data: data
+        });
       });
     } else {
       res.status(404).json({ message: "failed" });
