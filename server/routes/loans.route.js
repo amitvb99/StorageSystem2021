@@ -88,15 +88,15 @@ router.get("", (req, res, next)=>{
     })
 });
 router.get("/:id", (req, res, next)=>{
-  Loan.find({_id: req.params.id})
+  Loan.findOne({_id: req.params.id})
   .populate('student')
   .populate('instrument')
   .populate('openUser')
-  .populate('closeUser').then(loans => {
-      if(loans) {
+  .populate('closeUser').then(loan => {
+      if(loan) {
           res.status(200).json({
               message: "success",
-              data: loans
+              data: loan
           });
       }
       else {

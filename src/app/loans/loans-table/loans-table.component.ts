@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { generic_form_meta_data_t } from 'src/app/app-interfaes';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CrudService } from 'src/app/shared-services/crud.service';
@@ -12,7 +12,9 @@ import { Router } from '@angular/router';
 })
 export class LoansTableComponent implements OnInit {
   component_name = "loans";
-  students_meta_data  = {
+  @Input() data: any = {};
+  @Input() global_cfg: any = {};
+  loans_meta_data  = {
     component_name: "loans",
     indexing_enabled :true,
     add_button_enabled: false,

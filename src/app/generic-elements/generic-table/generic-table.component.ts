@@ -60,7 +60,8 @@ export  class TableComponent implements OnInit {
   @Input() meta_data: meta_data_t; 
   @Input() data: any; 
   @Input() functions: any; 
-
+  @Input() global_cfg: any = {};
+  
   module_variables = {
     filter_bar_values:undefined,
     local_db: new Map(),
@@ -159,14 +160,19 @@ filter_bar_changed(){
   }
 }
   ngOnInit(): void {
+    this.global_cfg['genericTable.add_to_table'] = (element) => {
+      this.module_variables['data_to_show'].push(element)
+    }
     this.module_variables.filter_bar_values = Object.assign([], this.meta_data.filter_bar_array) 
-    if (this.data == undefined || this.data == 'undefined') {
+    if (this.data == undefined || this.data == 'undefined' || this.data['data'] == undefined) {
       this.crud.read(this.meta_data.component_name).subscribe(function(data){
           console.log(data)
           this.module_variables['local_db'].set(this.meta_data.filter_bar_array.join("_"),data);
           this.module_variables['data_to_show'] = this.module_variables['local_db'].get(this.meta_data.filter_bar_array.join("_"));
         }.bind(this)
       )
+
+
     } else {
       this.module_variables['local_db'].set(this.meta_data.filter_bar_array.join("_"),this.data);
       this.module_variables['data_to_show'] = this.module_variables['local_db'].get(this.meta_data.filter_bar_array.join("_"));

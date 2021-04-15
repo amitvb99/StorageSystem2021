@@ -10,6 +10,7 @@ import { CrudService } from 'src/app/shared-services/crud.service';
 export class InstrumentPageComponent implements OnInit {
   id: string = '0'
   instrument = {}
+  history = []
   history_table_metadata = {
     component_name: "instruments",
     indexing_enabled : true,
@@ -53,9 +54,14 @@ export class InstrumentPageComponent implements OnInit {
       this.id = params['id'];
       this.crud.read('instruments', this.id).subscribe(
         res => {
-          this.instrument = res;
-          console.log(res);
-        }
+          this.instrument = res['instrument'];
+          for (let i = 0; i < res['history'].length; i++) {
+            res['history'][i]['user-data'] = res['history'][i]['user']
+            res['history'][i]['user'] = res['history'][i]['user-data']['name']
+            
+            this.history.push(res['history'][res['history'].length - 1 - i])
+          }
+       }
       )
     }) 
   }

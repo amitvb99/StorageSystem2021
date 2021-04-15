@@ -35,6 +35,7 @@ export class AddLoanComponent implements OnInit {
   @Input() student: any; 
   @Input() instrument: any; 
   @Input() show_functions: any;
+  @Input() global_cfg: any = {};
 
   add_loan_is_open = false
   constructor(private accounts:AccountsService, private crud:CrudService) { }
@@ -43,9 +44,6 @@ export class AddLoanComponent implements OnInit {
   }
 
   loan(){
-    console.log(this.student._id)
-    console.log(this.instrument._id)
-    console.log(this.accounts.get_user_id())
     const loan = {
       student:    this.student._id,
       instrument: this.instrument._id,
@@ -54,7 +52,29 @@ export class AddLoanComponent implements OnInit {
     }
     this.crud.loan_instrument(loan).subscribe(
       res => {
-        console.log(res)
+        res.subscribe( res => {
+          console.log(res)
+          res.student_name = res['student']['fName']
+          res.student_school = res['student']['school']
+          res.student_class = res['student']['class']
+          res.student_class = res['student']['class']
+          res.openning_user = res['openUser']['name']
+          res.instrument = res['instrument']['generalSerialNumber']
+
+          if (res['closeUser'] != undefined)
+             res.closing_user = res['closeUser']['name']
+          else {
+            res.closing_user = ''
+          }
+
+          if (res.closing_user == '') res.closing_user = 'X'
+          if (res.to == '') res.to = 'X'
+          if (res.notes == '') res.notes = 'X' 
+
+          if (this.global_cfg['genericTable.add_to_table'] != undefined) {
+            this.global_cfg['genericTable.add_to_table'](res)
+          }
+        })
       }
     )
     this.add_loan_is_open = ! this.add_loan_is_open

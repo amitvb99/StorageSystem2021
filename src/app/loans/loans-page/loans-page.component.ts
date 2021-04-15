@@ -9,6 +9,7 @@ import { DeclareFunctionStmt } from '@angular/compiler';
 })
 export class LoansPageComponent implements OnInit {
 
+  global_cfg: any = {};
   student = undefined
   instrument = undefined
   

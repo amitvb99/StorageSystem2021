@@ -140,13 +140,19 @@ export class CrudService {
   }
 
   loan_instrument(loan){
-    const path = `${environment.apiUrl}/api/user/loans/loanInstrument`
+    var path = `${environment.apiUrl}/api/user/loans/loanInstrument`
     console.log(`loan instrument: ${path}`)
     
 
     var res = this.http.post(path, loan, this.get_headers()).pipe(
       map(res => {
-        return res['data'];
+        const loan_id =  res['data'];
+        path = `${environment.apiUrl}/api/user/loans/${loan_id}`
+        return this.http.get(path, this.get_headers()).pipe(map(
+          res => {
+            return res["data"]
+          }
+      ))
   }))
     return res
   }
@@ -160,6 +166,28 @@ export class CrudService {
         return res['data'];
   }))
     return res
+  }
+
+
+  promote_user(user_id){
+    const path = `${environment.apiUrl}/api/user/manage/promoteUser/${user_id}`
+    const observer = this.http.post(path, {}, this.get_headers()).pipe(
+      map(res => {
+        console.log(res)
+        return res
+      })
+    )
+    return observer
+  }
+  
+  demote_user(user_id){
+    const path = `${environment.apiUrl}/api/user/manage/demoteAdmin/${user_id}`
+    const observer = this.http.post(path, {}, this.get_headers()).pipe(
+      map(res => {
+        console.log(res)
+      })
+    )
+    return observer
   }
 
 

@@ -1,9 +1,9 @@
-<app-add-loan [student]="student" [instrument]="instrument" [show_functions]="show_functions"></app-add-loan>
+<app-add-loan [global_cfg]="global_cfg"  [student]="student" [instrument]="instrument" [show_functions]="show_functions"></app-add-loan>
 <div *ngIf="(show_students || show_instruments)"   class="back-container">
     <i class="fas fa-chevron-circle-left back-button fa-4x" (click)="back_to_leans_table()" ></i>
 </div>
 
-<app-loans-table *ngIf="!(show_students || show_instruments)"></app-loans-table>
+<app-loans-table  [global_cfg]="global_cfg"  *ngIf="!(show_students || show_instruments)"></app-loans-table>
 <app-students-table *ngIf="show_students" [overrider]="student_overrider"></app-students-table>
 <app-instruments-table *ngIf="show_instruments" [overrider]="instrument_overrider"></app-instruments-table>
 
