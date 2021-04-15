@@ -95,25 +95,25 @@ router.post("/endLoan/:id", (req, res, next)=>{
     to: req.body.to,
     status: 'closed'
   });
-  Loan.updateOne({_id: req.params.id},loan).then(result => {
+  Loan.findOneAndUpdate({_id: req.params.id},loan).then(result => {
     res.status(200).json({
       message: "success",
       data: req.params.id
     });
     const instrument1 = new Instrument({
-      _id: req.body.instrument,
+      _id: result.instrument,
       status: "available"              // TODO -  neeed to check
     });
     var datetime = new Date();
     const history_rec = new History({
-      instrument: req.body.instrument,
+      instrument: result.instrument,
       date: datetime.toISOString().slice(0,10),
-      user: req.body.user,
+      user: req.headers.user_id,
       status: "available",
       notes: req.body.notes
     });
     history_rec.save();
-    Instrument.updateOne({_id: req.body.instrument}, instrument1, function(err, res) {
+    Instrument.updateOne({_id: result.instrument}, instrument1, function(err, res) {
         if(err) console.log(err);
         console.log("updated");
     });
