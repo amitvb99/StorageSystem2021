@@ -179,90 +179,30 @@ router.get("/filter/:params", (req, res, next)=>{
   let Class = discreteFields[0];
   let level = discreteFields[1];
 
+  let map = {}
+  Class !=='class' ? map['class'] = Class:1;
+  level !== 'level' ?  map['level'] = level:1;
 
-  if (Class == "class" && level == 'level')
-    Student.find().then(students => {
-      if(!students){
-        res.status(500).json({
-          message: "failed"
-        });
-      }
-      return students;
-    })
-    .then(students=>{
-      res.status(200).json({
-        message: "success",
-        data: students
-        });
-    })
-    .catch(err => {
+  Student.find(map).or([{fName:freeText},{lName:freeText},{parent1Name:freeText},{parent2Name:freeText}])
+  .then(students => {
+    if(!students){
       res.status(500).json({
         message: "failed"
       });
-    });
-
-  if (Class == "class" && level != 'level')
-    Student.find({level: level}).then(students => {
-      if(!students){
-        res.status(500).json({
-          message: "failed"
-        });
-      }
-      return students;
-    })
-    .then(students=>{
-      res.status(200).json({
-        message: "success",
-        data: students
-        });
-    })
-    .catch(err => {
-      res.status(500).json({
-        message: "failed"
+    }
+    return students;
+  })
+  .then(students=>{
+    res.status(200).json({
+      message: "success",
+      data: students
       });
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: "failed"
     });
-
-  if (Class != "class" && level == 'level')
-    Student.find({class: Class}).then(students => {
-      if(!students){
-        res.status(500).json({
-          message: "failed"
-        });
-      }
-      return students;
-    })
-    .then(students=>{
-      res.status(200).json({
-        message: "success",
-        data: students
-        });
-    })
-    .catch(err => {
-      res.status(500).json({
-        message: "failed"
-      });
-    });
-
-  if (Class != "class" && level != 'level')
-    Student.find({class: Class, level: level}).then(students => {
-      if(!students){
-        res.status(500).json({
-          message: "failed"
-        });
-      }
-      return students;
-    })
-    .then(students=>{
-      res.status(200).json({
-        message: "success",
-        data: students
-        });
-    })
-    .catch(err => {
-      res.status(500).json({
-        message: "failed"
-      });
-    });
+  });
 
 });
 
