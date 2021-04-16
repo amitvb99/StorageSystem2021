@@ -140,6 +140,7 @@ router.delete("/:id", checkAuth, (req, res, next)=>{
 router.get("/filter/:params", (req, res, next)=>{
   let filterString=req.params.params.split('-');
   let discreteFields = filterString[0].split('_');
+  let freeText = filterString[1];
   let map = {}
 
   let type = discreteFields[0];
@@ -148,10 +149,8 @@ router.get("/filter/:params", (req, res, next)=>{
   type !=="type" ?  map['type'] = type:1;
   subtype !== "subtype" ? map['sub_type'] = subtype:1;
   status !== "status" ? map['status'] = status:1;
-
-
-  console.log(type, subtype, status);
-  console.log(map);
+  if(freeText)
+    map['generalSerialNumber'] = freeText;
   Instrument.find(map).then(instruments => {
     if(!instruments){
       res.status(500).json({
