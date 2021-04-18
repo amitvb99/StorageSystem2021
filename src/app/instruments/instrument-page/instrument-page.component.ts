@@ -18,7 +18,7 @@ export class InstrumentPageComponent implements OnInit {
     discrete_filter_bar: false,
     free_text_filter_bar: false,
     columns_count:3,
-    columns:['date', 'status', 'user',],
+    columns:['date', 'status', 'user'],
     headers:{
       'date':'Date',
       'status':'Status',
@@ -54,6 +54,7 @@ export class InstrumentPageComponent implements OnInit {
       this.id = params['id'];
       this.crud.read('instruments', this.id).subscribe(
         res => {
+          console.log(res)
           this.instrument = res['instrument'];
           for (let i = 0; i < res['history'].length; i++) {
             res['history'][i]['user-data'] = res['history'][i]['user']
@@ -61,6 +62,7 @@ export class InstrumentPageComponent implements OnInit {
             
             this.history.push(res['history'][res['history'].length - 1 - i])
           }
+          return
        }
       )
     }) 

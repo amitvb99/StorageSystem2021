@@ -164,7 +164,7 @@ filter_bar_changed(){
       this.module_variables['data_to_show'].push(element)
     }
     this.module_variables.filter_bar_values = Object.assign([], this.meta_data.filter_bar_array) 
-    if (this.data == undefined || this.data == 'undefined' || this.data['data'] == undefined) {
+    if (this.data == undefined || this.data == 'undefined') {
       this.crud.read(this.meta_data.component_name).subscribe(function(data){
           console.log(data)
           this.module_variables['local_db'].set(this.meta_data.filter_bar_array.join("_"),data);
