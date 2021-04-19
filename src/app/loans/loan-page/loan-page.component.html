@@ -1,13 +1,189 @@
-<div class="container">
+<div class="container-of-rows">
+    <div class="row"> 
+        <div class="container">
+            <h1>Instrument: </h1>
+            <table class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Type</td>
+                    <td>{{instrument['type'] == undefined ? 'NA' : instrument['type']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Sub Type</td>
+                    <td>{{instrument['sub_type'] == undefined ? 'NA' : instrument['sub_type']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Style</td>
+                    <td>{{instrument['style'] == undefined ? 'NA' : instrument['style']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Status</td>
+                    <td>{{instrument['status'] == undefined ? 'NA' : instrument['status']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Company</td>
+                    <td>{{instrument['company'] == undefined ? 'NA' : instrument['company']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>OwnerShip</td>
+                    <td>{{instrument['ownership'] == undefined ? 'NA' : instrument['ownership']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>imprented Serial Number</td>
+                    <td>{{instrument['imprentedSerialNumber'] == undefined ? 'NA' : instrument['imprentedSerialNumber']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>general Serial Number</td>
+                    <td>{{instrument['generalSerialNumber'] == undefined ? 'NA' : instrument['generalSerialNumber']}}</td>
+                </tr>
+                
+            </table>
+        </div>
 
-    <table>
-        <tr>
-            <td>Id</td>
-            <td>{{id}}</td>
-        </tr>
+        <div class="container">
+            <h1>Student: </h1>
+            <table class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+    
+                <tr>
+                    <td>First Name</td>
+                    <td>{{student['fName'] == undefined ? 'NA' : student['fName']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Last Name</td>
+                    <td>{{student['lName'] == undefined ? 'NA' : student['lName']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>School</td>
+                    <td>{{student['school'] == undefined ? 'NA' : student['school']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Class</td>
+                    <td>{{student['class'] == undefined ? 'NA' : student['class']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Level</td>
+                    <td>{{student['level'] == undefined ? 'NA' : student['level']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Parent 1 Name</td>
+                    <td>{{student['parent1Name'] == undefined ? 'NA' : student['parent1Name']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Parent 2 Name</td>
+                    <td>{{student['parent2Name'] == undefined ? 'NA' : student['parent2Name']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Parent 1 Phone Number</td>
+                    <td>{{student['parent1PhoneNumber'] == undefined ? 'NA' : student['parent1PhoneNumber']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Parent 2 Phone Number</td>
+                    <td>{{student['parent2PhoneNumber'] == undefined ? 'NA' : student['parent2PhoneNumber']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Parent 1 Email</td>
+                    <td>{{student['parent1Email'] == undefined ? 'NA' : student['parent1Email']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Parent 2 Email</td>
+                    <td>{{student['parent2Email'] == undefined ? 'NA' : student['parent2Email']}}</td>
+                </tr>
+                
+            </table>
+        </div>
+    </div>
 
-       
-    </table>
+    <div class="row">
+        <div class="container">
+            <h1>Openning User: </h1>
+            <table class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Name</td>
+                    <td>{{openning_user['name'] == undefined ? 'NA' : openning_user['name']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>UserName</td>
+                    <td>{{openning_user['username'] == undefined ? 'NA' : openning_user['username']}}</td>
+                </tr>   
+            </table>
+        </div>
+
+        <div class="container">
+            <H1>Closing User</H1>
+            <table *ngIf="closing_user != undefined" class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+            </table>
+            <p> The Loan Is not closed Yet</p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="container">
+            <h1>Loan: </h1>
+            <table class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Starting Date: </td>
+                    <td>{{loan['name'] == undefined ? 'NA' : loan['name']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>End Date:</td>
+                    <td>{{loan['username'] == undefined ? 'NA' : loan['username']}}</td>
+                </tr>   
+
+                <tr>
+                    <td>Status:</td>
+                    <td>{{loan['username'] == undefined ? 'NA' : loan['username']}}</td>
+                </tr>   
+
+                <tr>
+                    <td>Notes:</td>
+                    <td>{{loan['username'] == undefined ? 'NA' : loan['username']}}</td>
+                </tr>   
+            </table>
+            <button type="button" class="btn btn-primary">Export loan</button>
+        </div>
+    </div>
 </div>
 
 

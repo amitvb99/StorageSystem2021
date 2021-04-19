@@ -29,12 +29,12 @@ const permission_system : permission_system_t = {
 const meta_data  = {
   user_loggedin_enabled:true,
   pages:[
-    {
-      name:'Home',
-      url:'#/home',
-      permission:'user',
-      component:HomePageComponent
-    },
+    // {
+    //   name:'Home',
+    //   url:'#/home',
+    //   permission:'user',
+    //   component:HomePageComponent
+    // },
     {
       name:'Users',
       url:'#/users',
@@ -65,46 +65,46 @@ const meta_data  = {
       not_apage:true,
       component:LoginFormComponent
     },
-    {
-      name:'Orders',
-      url:'#/orders',
-      permission:'user',
-      component:TableExampleComponent
-    },
-    {
-      name:'Items',
-      url:'#/items',
-      permission:'user',
-      component:TableExampleComponent
-    },
-    {
-      name:'category',
-      dropdown:[
-        {
-            name:'category A',
-            url:'#/cat/ca',
-            component:TableExampleComponent
-        },
-        {
-          name:'category B',
-          url:'#/cat/cb',
-          component:TableExampleComponent
-        },
-        {
-          name:'category C',
-          url:'#/cat/cc',
-          permission:'admin',
-          component:TableExampleComponent
-        }],
-      permission:'user'
-    },
-    {
-      name:'Tests',
-      url:'#/tests',
-      permission:'user',
-      not_apage:true,
-      component:TestsContainerComponent
-    },
+    // {
+    //   name:'Orders',
+    //   url:'#/orders',
+    //   permission:'user',
+    //   component:TableExampleComponent
+    // },
+    // {
+    //   name:'Items',
+    //   url:'#/items',
+    //   permission:'user',
+    //   component:TableExampleComponent
+    // },
+    // {
+    //   name:'category',
+    //   dropdown:[
+    //     {
+    //         name:'category A',
+    //         url:'#/cat/ca',
+    //         component:TableExampleComponent
+    //     },
+    //     {
+    //       name:'category B',
+    //       url:'#/cat/cb',
+    //       component:TableExampleComponent
+    //     },
+    //     {
+    //       name:'category C',
+    //       url:'#/cat/cc',
+    //       permission:'admin',
+    //       component:TableExampleComponent
+    //     }],
+    //   permission:'user'
+    // },
+    // {
+    //   name:'Tests',
+    //   url:'#/tests',
+    //   permission:'user',
+    //   not_apage:true,
+    //   component:TestsContainerComponent
+    // },
     {
       name:'student',
       url:'#/students/:id',

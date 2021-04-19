@@ -66,19 +66,16 @@
     </div>
     <div class="buttons-container">
         <div class="button-group"  >
-            <button type="button" class="btn btn-success">loan</button>
-            <button type="button" class="btn btn-warning">edit</button>
-            <button type="button" class="btn btn-danger">delete</button>
+            <button type="button" class="btn btn-success">Loan</button>
+            <button type="button" class="btn btn-warning">Edit</button>
+            <button type="button" class="btn btn-primary">Export</button>
+            <button type="button" class="btn btn-danger">Delete</button>
         </div>
     </div>
 </div>
 
 <div class="instruments-container">
-    <span class="instrument-table-header">Current Loaned Instruments:</span> 
-    <app-instruments-table [data]="[]" [overrider]="instrument_overrider"></app-instruments-table>
+    <span class="instrument-table-header">Loans for this Student:</span> 
+    <generic-table [data]="loans" [functions]="functions" [meta_data]="loans_meta_data"></generic-table>
 </div>
 
-<div class="instruments-container">
-    <span class="instrument-table-header">Previous Loaned Instruments:</span> 
-    <app-instruments-table [data]="[]" [overrider]="instrument_overrider"></app-instruments-table>
-</div>

@@ -13,6 +13,7 @@ interface meta_data_t {
   component_name: string,
   indexing_enabled: boolean,
   add_button_enabled: boolean,
+  export_button_enabled: boolean,
   discrete_filter_bar: boolean,
   free_text_filter_bar: boolean,
   columns_count: number,
@@ -126,39 +127,45 @@ export  class TableComponent implements OnInit {
     return res
   }
 
-filter_bar_changed(){
-  let filter_bar: string = this.module_variables['filter_bar_values'].join("_")
-  let _filter_bar: string[] = new Array<string>(filter_bar.length - filter_bar.split(" ").length + 1);
-  var i: number = 0, j: number = 0
-  for (; i < filter_bar.length; i++, j++) {
-    if (filter_bar[i] == ' ') {
-      _filter_bar[j] = filter_bar[i+1].toUpperCase()
-      i = i + 1
+  filter_bar_changed(){
+    let filter_bar: string = this.module_variables['filter_bar_values'].join("_")
+    let _filter_bar: string[] = new Array<string>(filter_bar.length - filter_bar.split(" ").length + 1);
+    var i: number = 0, j: number = 0
+    for (; i < filter_bar.length; i++, j++) {
+      if (filter_bar[i] == ' ') {
+        _filter_bar[j] = filter_bar[i+1].toUpperCase()
+        i = i + 1
+      } else {
+        _filter_bar[j] = filter_bar[i]
+      }
+    }
+    filter_bar = _filter_bar.join('')
+    console.log(filter_bar)
+    
+    for ( let j = 0 ; j < this.meta_data.filter_bar_array.length; j++) {
+      const option = this.meta_data.filter_bar_array[j]
+      const option_value = this.module_variables['filter_bar_values'][j]
+      if (this.get_filter_options(option).indexOf(option_value) == -1){
+        this.module_variables['filter_bar_values'][j] = option
+      }  
+    } 
+
+    if (this.module_variables['local_db'].get(filter_bar) === undefined){
+      this.crud.filtered_read(this.meta_data.component_name, filter_bar).subscribe(res => {
+        console.log(`res is ${res}`)
+        this.module_variables['data_to_show'] = res
+      })
+      
     } else {
-      _filter_bar[j] = filter_bar[i]
+      this.module_variables['data_to_show'] = this.module_variables['local_db'].get(filter_bar)
     }
   }
-  filter_bar = _filter_bar.join('')
-  console.log(filter_bar)
-  
-  for ( let j = 0 ; j < this.meta_data.filter_bar_array.length; j++) {
-    const option = this.meta_data.filter_bar_array[j]
-    const option_value = this.module_variables['filter_bar_values'][j]
-    if (this.get_filter_options(option).indexOf(option_value) == -1){
-      this.module_variables['filter_bar_values'][j] = option
-    }  
-  } 
 
-  if (this.module_variables['local_db'].get(filter_bar) === undefined){
-    this.crud.filtered_read(this.meta_data.component_name, filter_bar).subscribe(res => {
-      console.log(`res is ${res}`)
-      this.module_variables['data_to_show'] = res
-    })
-    
-  } else {
-    this.module_variables['data_to_show'] = this.module_variables['local_db'].get(filter_bar)
+
+  export(){
+    alert('exporting...')
   }
-}
+
   ngOnInit(): void {
     this.global_cfg['genericTable.add_to_table'] = (element) => {
       this.module_variables['data_to_show'].push(element)

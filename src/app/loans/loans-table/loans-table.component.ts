@@ -12,12 +12,13 @@ import { Router } from '@angular/router';
 })
 export class LoansTableComponent implements OnInit {
   component_name = "loans";
-  @Input() data: any = {};
   @Input() global_cfg: any = {};
+  @Input() data: any;
   loans_meta_data  = {
     component_name: "loans",
     indexing_enabled :true,
     add_button_enabled: false,
+    export_button_enabled: false,
     columns_count:9,
     columns:['instrument', 'student_name', 'student_school', 'student_class', 'openning_user', 'closing_user', 'notes', 'from', 'status', 'to'],
     headers:{

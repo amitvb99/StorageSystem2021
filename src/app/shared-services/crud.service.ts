@@ -73,31 +73,34 @@ export class CrudService {
     return res
   }
 
+  fix_loan(loan){
+    loan.student_name = loan['student']['fName']
+    loan.student_school = loan['student']['school']
+    loan.student_class = loan['student']['class']
+    loan.student_class = loan['student']['class']
+    loan.openning_user = loan['openUser']['name']
+    loan.instrument = loan['instrument']['generalSerialNumber']
+
+
+    if (loan['closeUser'] != undefined)
+       loan.closing_user = loan['closeUser']['name']
+    else {
+      loan.closing_user = ''
+    }
+
+    if (loan.closing_user == '') loan.closing_user = 'X'
+    if (loan.to == '') loan.to = 'X'
+    if (loan.notes == '') loan.notes = 'X'  
+  }
   read(component:string,id:string = '',query_string:string = ''){
     const path = this.get_path(component,query_string,id)
     var res = this.http.get(path, this.get_headers()).pipe(
       map(res => {
         console.log('crud service: read:')
         console.log(res)
-        if (component == 'loans'){
+        if (component == 'loans' && id == ''){
           for (var idx in res['data']) {
-            res['data'][idx].student_name = res['data'][idx]['student']['fName']
-            res['data'][idx].student_school = res['data'][idx]['student']['school']
-            res['data'][idx].student_class = res['data'][idx]['student']['class']
-            res['data'][idx].student_class = res['data'][idx]['student']['class']
-            res['data'][idx].openning_user = res['data'][idx]['openUser']['name']
-            res['data'][idx].instrument = res['data'][idx]['instrument']['generalSerialNumber']
-
-
-            if (res['data'][idx]['closeUser'] != undefined)
-               res['data'][idx].closing_user = res['data'][idx]['closeUser']['name']
-            else {
-              res['data'][idx].closing_user = ''
-            }
-
-            if (res['data'][idx].closing_user == '') res['data'][idx].closing_user = 'X'
-            if (res['data'][idx].to == '') res['data'][idx].to = 'X'
-            if (res['data'][idx].notes == '') res['data'][idx].notes = 'X'            
+            this.fix_loan(res['data'][idx])            
           }
         }
         return res['data'];
@@ -114,23 +117,7 @@ export class CrudService {
         console.log('crud service: filtered_read:')
         if (component == 'loans'){
           for (var idx in res['data']) {
-            res['data'][idx].student_name = res['data'][idx]['student']['fName']
-            res['data'][idx].student_school = res['data'][idx]['student']['school']
-            res['data'][idx].student_class = res['data'][idx]['student']['class']
-            res['data'][idx].student_class = res['data'][idx]['student']['class']
-            res['data'][idx].openning_user = res['data'][idx]['openUser']['name']
-            res['data'][idx].instrument = res['data'][idx]['instrument']['generalSerialNumber']
-
-
-            if (res['data'][idx]['closeUser'] != undefined)
-               res['data'][idx].closing_user = res['data'][idx]['closeUser']['name']
-            else {
-              res['data'][idx].closing_user = ''
-            }
-
-            if (res['data'][idx].closing_user == '') res['data'][idx].closing_user = 'X'
-            if (res['data'][idx].to == '') res['data'][idx].to = 'X'
-            if (res['data'][idx].notes == '') res['data'][idx].notes = 'X'            
+            this.fix_loan(res['data'][idx]) 
           }
         }
         return res['data'];

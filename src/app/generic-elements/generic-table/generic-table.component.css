@@ -72,10 +72,21 @@ i.add-button {
     color: #056674;
 }
 
-i.add-button:hover {
+i.add-button:hover, i.export:hover {
     color: #66bfbf;
     border-color: #66bfbf;
 }
+
+i.export {
+    margin-left: 3%;
+    margin-top: 3%;
+    display: block;
+    color: #056674;
+}
+
+
+
+
 
 .search-box {
     border-top-left-radius:5px ;
@@ -111,6 +122,10 @@ i.add-button:hover {
 
 }
 
+.table-headers {
+    display: flex;
+    justify-content: space-between;
+}
 @media only screen and (max-width: 767px) {
 
     table, thead, tbody, th, td, tr {

@@ -1,5 +1,8 @@
-  <div *ngIf="meta_data.add_button_enabled != false" style="display: flex; justify-content: flex-end">
-      <i class="fas fa-plus-circle fa-5x add-button" (click)="functions['add'](module_variables['data_to_show'])"></i>
+<!--  -->
+  <div *ngIf="meta_data.add_button_enabled != false || meta_data.export_button_enabled != false" class="table-headers">
+      
+      <i *ngIf="meta_data.export_button_enabled != false" class="fas fa-file-export fa-5x export" (click)="export()"></i>
+      <i *ngIf="meta_data.add_button_enabled != false" class="fas fa-plus-circle fa-5x add-button" (click)="functions['add'](module_variables['data_to_show'])"></i>
   </div>
 
   <div *ngIf="meta_data.discrete_filter_bar != false" class="search-box-container">

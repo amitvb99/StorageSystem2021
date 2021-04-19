@@ -4,6 +4,7 @@ import { StudentsTableComponent } from './students-table/students-table.componen
 import { GenericElementsModule } from '../generic-elements/generic-elements.module';
 import { StudentPageComponent } from './student-page/student-page.component';
 import { InstrumentsModule } from '../instruments/instruments.module';
+import { LoansModule } from '../loans/loans.module';
 
 
 

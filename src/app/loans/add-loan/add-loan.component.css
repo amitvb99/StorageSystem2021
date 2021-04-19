@@ -8,7 +8,7 @@
 .show-add-loan-container{
     display: flex;
     align-content: flex-end;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
 }
 
@@ -55,10 +55,16 @@
     /* display: flex; */
 }
 
-.add-button:hover {
+.add-button:hover, i.export:hover {
     color: #66bfbf;
     border-color: #66bfbf;
 }
+
+i.export {
+    margin-left: 3%;
+    margin-top: 3%;
+    color: #056674;
+} 
 
 @media only screen and (max-width: 767px) {
     .container {
