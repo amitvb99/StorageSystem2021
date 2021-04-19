@@ -141,7 +141,11 @@ router.put("/:id", (req, res, next)=>{
 router.get("/:id", (req, res, next)=>{
   Student.findOne({_id: req.params.id}).then(student => {
     if (student) {
-      Loan.find({student: req.params.id}).then(result =>{
+      Loan.find({student: req.params.id})
+      .populate('student')
+      .populate('instrument')
+      .populate('openUser')
+      .populate('closeUser').then(result =>{
         let data = {};
         data['student']=student;
         data['loans'] = result;
