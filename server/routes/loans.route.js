@@ -110,7 +110,7 @@ router.get("/:id", (req, res, next)=>{
 router.post("/endLoan/:id", (req, res, next)=>{
   const loan =  new Loan({
     _id: req.params.id,
-    closeUser: req.body.user,
+    closeUser: req.headers.user_id,
     to: req.body.to,
     status: 'closed'
   });
