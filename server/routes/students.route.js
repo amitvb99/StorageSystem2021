@@ -187,6 +187,7 @@ router.get("/filter/:params", (req, res, next)=>{
   Class !=='class' ? map['class'] = Class:1;
   level !== 'level' ?  map['level'] = level:1;
 
+  if(freeText){
   Student.find(map).or([{fName:freeText},{lName:freeText},{parent1Name:freeText},{parent2Name:freeText}])
   .then(students => {
     if(!students){
@@ -207,7 +208,29 @@ router.get("/filter/:params", (req, res, next)=>{
       message: "failed"
     });
   });
-
+}
+    else{
+      Student.find(map)
+  .then(students => {
+    if(!students){
+      res.status(500).json({
+        message: "failed"
+      });
+    }
+    return students;
+  })
+  .then(students=>{
+    res.status(200).json({
+      message: "success",
+      data: students
+      });
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: "failed"
+    });
+  });
+    }
 });
 
 
