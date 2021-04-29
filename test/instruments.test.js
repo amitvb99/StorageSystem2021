@@ -138,4 +138,35 @@ describe('Instrument Tests', function() {
             done();
         });
     });
+
+    // it('Should return the history of an instrument', function(done) {
+    //     chai.request(server)
+    //     .posst('/api/user/instruments/create')
+    //     .send({
+    //         'generalSerialNumber':  '111111',
+    //         'type':  'Saxophone',
+    //         'sub_type': 'Alto',
+    //         'company': 'Selmer',
+    //         'style': 'blabla',
+    //         'imprentedSerialNumber': '222222',
+    //         'ownership': 'Amit',
+    //         'status': 'storage'
+    //     });
+    //     chai.request(server)
+    //     .post('/api/user/students/create')
+    //     .send({
+    //         'fName': 'Amit',
+    //         'lName': 'Vigdor Bart',
+    //         'school': 'BGU',
+    //         'level': '7th',
+    //         'class': '2',
+    //         'parent1Name': 'parent1',
+    //         'parent2Name': 'parent2',
+    //         'parent1PhoneNumber': '0234768712',
+    //         'parent2PhoneNumber': '1230917983',
+    //         'parent1Email': 'parent1@ninini.com',
+    //         'parent2Email': 'parent2@ninini.com',
+    //     });
+        
+    // })
 });
