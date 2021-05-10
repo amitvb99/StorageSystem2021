@@ -55,8 +55,9 @@ describe('Instrument Tests', function() {
                     res.body.should.have.property('message').eql('success');
                     res.body.data.should.have.property('ownership').eql("Not Amit");
                 });
+                done();
             });
-            done();
+
         });
     });
 
@@ -167,6 +168,6 @@ describe('Instrument Tests', function() {
     //         'parent1Email': 'parent1@ninini.com',
     //         'parent2Email': 'parent2@ninini.com',
     //     });
-        
+
     // })
 });

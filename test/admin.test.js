@@ -39,7 +39,7 @@ describe('Admin Tests', function() {
             .post('/api/user/login')
             .send({
                 "username": "admin",
-                "password": "admin" 
+                "password": "admin"
             });
             chai.request(server)
             .post('/api/user/manage/promoteUser' + id)
@@ -54,15 +54,14 @@ describe('Admin Tests', function() {
                 chai.request(server)
                 .post('/api/user/manage/demoteAdmin' + id)
                 .send({
-                    "id": id 
+                    "id": id
                 })
                 .end(function(res, err) {
                     res.should.have.status(201);
                     res.should.be.json;
                     res.body.should.have.property("message").eql("success");
-                    // done();
+                    console.log("asddddddddddddddddddddddddddddddddddddd");
                 });
-                // done();
             });
             done();
         });
