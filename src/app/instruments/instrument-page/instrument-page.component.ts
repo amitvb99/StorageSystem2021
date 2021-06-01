@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CrudService } from 'src/app/shared-services/crud.service';
+import { environment } from 'src/environments/environment';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-instrument-page',
@@ -17,6 +20,7 @@ export class InstrumentPageComponent implements OnInit {
     add_button_enabled: false,
     discrete_filter_bar: false,
     free_text_filter_bar: false,
+    export_button_enabled: false,
     columns_count:3,
     columns:['date', 'status', 'user'],
     headers:{
@@ -47,8 +51,19 @@ export class InstrumentPageComponent implements OnInit {
     {'date':'Date', 'status':'loaned', 'user':'User',},
     {'date':'Date', 'status':'available', 'user':'User',},
 ]
-  constructor(private route: ActivatedRoute, private crud: CrudService) { }
+  constructor(private http:HttpClient, private route: ActivatedRoute, private crud: CrudService) { }
 
+  export() {
+    alert('exporting')
+    let url = `${environment.apiUrl}/api/user/imports/instruments/:${this.id}`
+    this.http.get(url, {responseType: "blob"})
+              .toPromise()
+              .then(blob => {
+                  saveAs(blob, `instrument_${this.id}.gz`); 
+              })
+              .catch(err => console.error("download error = ", err))
+  }
+  
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];

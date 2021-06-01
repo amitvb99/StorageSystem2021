@@ -21,7 +21,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LoansModule } from './loans/loans.module';
 import { TestsModule } from './tests/tests.module';
 import { UsersModule } from './users/users.module';
-
+import {MatRadioModule} from '@angular/material/radio';
+import { ImportsModule } from './imports/imports.module';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,9 @@ import { UsersModule } from './users/users.module';
     NgSelectModule,
     FormsModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    ImportsModule,
+    MatRadioModule
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}],
   bootstrap: [AppComponent],

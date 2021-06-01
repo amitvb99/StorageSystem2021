@@ -50,14 +50,13 @@ export class LoginFormComponent implements OnInit {
       return;
     }
     var user = {'username':form.value.username,'password':sha256(form.value.password)}
+
+    // var user = {'username':form.value.username,'password':form.value.password}
     this.accounts.login(user,this.path)
     .subscribe(val =>{
       console.log(val)
-      this.router.navigateByUrl('home')
+      this.router.navigateByUrl('users')
     })
-
-
-
   }
 
 }
