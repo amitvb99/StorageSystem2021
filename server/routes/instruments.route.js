@@ -2,6 +2,7 @@ const express = require("express");
 const Instrument = require("../models/instrument.model");
 const History = require("../models/history.model");
 const checkAuth= require("../middleware/check-auth");
+const Notification = require("../models/notifications.model");
 
 const router = express.Router();
 
@@ -84,6 +85,23 @@ router.put("/:id", (req, res, next)=>{
         });
         history_rec.save();
       }
+        console.log(instrument["status"]);
+        if(instrument["status"]=="lost"){
+          const notification = new Notification({
+            data: "the status of intrument " + instrument["generalSerialNumber"] + " has been updated to lost",
+            seenStatus: false
+          });
+          notification.save();
+        }
+        else if(instrument["status"]=="stolen"){
+          console.log("faswee");
+          const notification = new Notification({
+            data: "the status of intrument" + instrument["generalSerialNumber"] + " has been updated to stolen",
+            seenStatus: false
+          });
+          notification.save();
+        }
+
       res.status(200).json({
         message: "success",
         data: instrument.id

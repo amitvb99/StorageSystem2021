@@ -68,6 +68,7 @@ router.post("/create", (req, res, next)=>{
 
 //, multer({ storage: storage }).single("excel")
 router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, res, next)=>{
+  console.log(req.file.filename);
   csv()
 .fromFile("server/files/" + req.file.filename)         ////  server/files/excel3.csv
 .then((jsonObj)=>{
@@ -79,7 +80,9 @@ router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, re
             }
      });
    });
- res.status(200);
+ res.status(200).json({
+  message: "success",
+  });
 });
 
 router.get("", (req, res, next)=>{
@@ -238,10 +241,9 @@ router.get("/stuentsHistory", (req, res, next)=>{
 
 });
 
-router.post("/exportExcel", (req, res, next)=>{
+router.get("/export/ex", (req, res, next)=>{
   Student.find().then(students=>{
     if(students){
-
       const csvWriter = createCsvWriter({
         path: "server/files/students.csv",
         header: [
@@ -260,8 +262,10 @@ router.post("/exportExcel", (req, res, next)=>{
         .then(()=>
           console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
        );
-       var path= __dirname.slice(0,__dirname.length-6)+'/files/students.csv';
-       res.download(path);
+      var path= __dirname.slice(0,__dirname.length-6)+'files\\students.csv';
+      console.log(path);
+      res.download(path);
+      //  return res.status(200).json({message: "success"});
     }
     else{
       res.status(500).json({

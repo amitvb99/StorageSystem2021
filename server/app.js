@@ -6,6 +6,7 @@ const studentsRoutes = require("./routes/students.route")
 const instrumentsRoutes = require("./routes/instruments.route")
 const loansRoutes = require("./routes/loans.route")
 const adminRoutes = require("./routes/admin.route")
+const notificationRoutes = require("./routes/notificatoins.route")
 const User = require("./models/user.model")
 const mongoose = require("mongoose");
 var bodyParser = require('body-parser')
@@ -134,6 +135,7 @@ app.use("/api/user/students", studentsRoutes)
 app.use("/api/user/instruments", instrumentsRoutes)
 app.use("/api/user/loans", loansRoutes)
 app.use("/api/user/manage", adminRoutes)
+app.use("/api/user/notifications", notificationRoutes)
 // if (!test_mode) {
 //   app.use("/api/db", adminRoutes)
 // }
