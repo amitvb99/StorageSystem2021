@@ -161,35 +161,38 @@ let download_table_file = (component) => {
 		} else if (component == 'loan') {
       let map = {}
 
-      let type = discreteFields[0];
-      let subtype = discreteFields[1];
+      let subtype = discreteFields[4];
+      let type = discreteFields[3];
       let status = discreteFields[2];
-      let class_ = discreteFields[3];
-      let level = discreteFields[4];
-      type !=="studentLevel" ?  map['type'] = type:1;
-      subtype !== "studentsClass" ? map['sub_type'] = subtype:1;
+      let class_ = discreteFields[1];
+      let level = discreteFields[0];
+      level !=="studentLevel" ?  map['level'] = level:1;
+      class_ !== "studentClass" ? map['class'] = class_:1;
       status !== "status" ? map['status'] = status:1;
-      class_ !== "instrumentType" ? map['class'] = status:1;
-      level !== "instrumentSubtype" ? map['level'] = status:1;
-      let from = req.query.from.split('_');
+      type !== "instrumentType" ? map['type'] = type:1;
+      subtype !== "instrumentSubtype" ? map['subtype'] = subtype:1;
+      console.log(map)
+      let from="1_1_1900".split('_');
+      let to="31_12_2200".split('_');
+      if(req.query.from && req.query.to){
+        from = req.query.from.split('_');
+        to = req.query.to.split('_');
+      }
       let from_date = new Date(from[2],from[1]-1,from[0]);
-      let to = req.query.to.split('_');
       let to_date = new Date(to[2],to[1]-1,to[0]);
-      console.log(to_date.toDateString());
-      var datetime = new Date("1-4-2021");
-      console.log(from_date < datetime &&  datetime < to_date);
-      let k=[];
+
       Loan.find().populate({path: 'instrument',
       match: map}).populate({path: 'student',
       match: map}).populate('openUser')
       .populate('closeUser').then(loans => {
-
+        let k=[];
         let j=0;
         for (let index = 0; index < loans.length; index++) {
           const element = loans[index];
-          console.log(element.from);
           let loan_date = element.from.split('-');
           loan_date = new Date(loan_date[0],loan_date[1]-1,loan_date[2]);
+          console.log(from_date);
+          console.log(to_date);
           if(from_date < loan_date &&  loan_date < to_date && element.student!=null && element.instrument!=null){
             console.log(element);
             k[j] = element;
@@ -197,10 +200,11 @@ let download_table_file = (component) => {
           }
 
         }
+        console.log(k);
         return k;
       }).then(k=>{
         const csvWriter = createCsvWriter({
-        path: "server/files/loans.csv",
+        path: "server/files/loans4.csv",
         header: [
           { id: "_id", title: "_id" },
           { id: "student", title: "student" },
@@ -220,12 +224,14 @@ let download_table_file = (component) => {
         .then(()=>
           console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
       );
-
     })
-    path= __dirname.slice(0,__dirname.length-6)+'files\\loans.csv';
+    path= __dirname.slice(0,__dirname.length-6)+'files\\loans4.csv';
 		}
-    console.log(path);
-		res.download(path);
+      setTimeout(function () {
+      console.log(path);
+      res.download(path);
+    }, 1000)
+
 	}
 
 	return download_xxxxx_table_file
