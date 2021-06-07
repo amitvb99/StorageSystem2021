@@ -160,6 +160,7 @@ let download_table_file = (component) => {
 
 		} else if (component == 'loan') {
       let map = {}
+      let map2={}
 
       let subtype = discreteFields[4];
       let type = discreteFields[3];
@@ -168,7 +169,7 @@ let download_table_file = (component) => {
       let level = discreteFields[0];
       level !=="studentLevel" ?  map['level'] = level:1;
       class_ !== "studentClass" ? map['class'] = class_:1;
-      status !== "status" ? map['status'] = status:1;
+      status !== "status" ? map2['status'] = status:1;
       type !== "instrumentType" ? map['type'] = type:1;
       subtype !== "instrumentSubtype" ? map['subtype'] = subtype:1;
       console.log(map)
@@ -181,7 +182,7 @@ let download_table_file = (component) => {
       let from_date = new Date(from[2],from[1]-1,from[0]);
       let to_date = new Date(to[2],to[1]-1,to[0]);
 
-      Loan.find().populate({path: 'instrument',
+      Loan.find(map2).populate({path: 'instrument',
       match: map}).populate({path: 'student',
       match: map}).populate('openUser')
       .populate('closeUser').then(loans => {

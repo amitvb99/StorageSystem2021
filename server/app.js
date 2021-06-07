@@ -10,7 +10,7 @@ const loansRoutes = require("./routes/loans.route")
 const adminRoutes = require("./routes/admin.route")
 const notificationRoutes = require("./routes/notificatoins.route")
 const importsRoutes = require("./routes/imports.route")
-
+const fixesRoutes = require("./routes/fixes.route")
 const User = require("./models/user.model")
 const mongoose = require("mongoose");
 var bodyParser = require('body-parser')
@@ -42,7 +42,7 @@ if (test_mode) {
 }
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect("mongodb://localhost:27017/myapp", { useUnifiedTopology: true, useNewUrlParser: true })
 
   .then(()=>{
     console.log('Connected to database!')
@@ -146,9 +146,8 @@ app.use("/api/user/loans", loansRoutes)
 app.use("/api/user/manage", adminRoutes)
 app.use("/api/user/notifications", notificationRoutes)
 app.use("/api/user/imports", importsRoutes)
-// if (!test_mode) {
-//   app.use("/api/db", adminRoutes)
-// }
+app.use("/api/user/fixes", fixesRoutes)
+
 
 
 const server = http.createServer(app)
