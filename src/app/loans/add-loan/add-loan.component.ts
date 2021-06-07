@@ -2,6 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { trigger, transition, query, style, stagger, animate, state } from '@angular/animations';
 import { AccountsService } from 'src/app/users/accounts.service';
 import { CrudService } from 'src/app/shared-services/crud.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-add-loan',
@@ -38,7 +42,7 @@ export class AddLoanComponent implements OnInit {
   @Input() global_cfg: any = {};
 
   add_loan_is_open = false
-  constructor(private accounts:AccountsService, private crud:CrudService) { }
+  constructor(private http: HttpClient, private accounts:AccountsService, private crud:CrudService) { }
   open(){
     this.add_loan_is_open = ! this.add_loan_is_open
   }
@@ -107,6 +111,19 @@ export class AddLoanComponent implements OnInit {
     //   }
     // }
   }
+
+  export(){
+    alert('exporting...')
+    let url = `${environment.apiUrl}/api/user/imports/loans/table/${this.global_cfg['get_filter_bar']()}`
+    this.http.get(url, {responseType: "blob"})
+              .toPromise()
+              .then(blob => {
+                  saveAs(blob, `loans.gz`); 
+              })
+              .catch(err => console.error("download error = ", err))
+
+  }
+  
   ngOnInit(): void {
   }
 

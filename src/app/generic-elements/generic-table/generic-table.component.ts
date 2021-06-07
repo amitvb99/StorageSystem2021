@@ -3,6 +3,9 @@ import {HttpClient} from '@angular/common/http'
 import { trigger, transition, style, animate, state, query, stagger, keyframes } from '@angular/animations';
 import { CrudService } from 'src/app/shared-services/crud.service';
 import { filter } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { saveAs } from 'file-saver';
+
 // import { ConsoleReporter } from 'jasmine';
 
 interface actions_metadata_t{
@@ -70,7 +73,7 @@ export  class TableComponent implements OnInit {
 }
 
   index = 0
-  constructor(private crud:CrudService) { }
+  constructor(private http: HttpClient, private crud:CrudService) { }
 
 
 
@@ -127,7 +130,7 @@ export  class TableComponent implements OnInit {
     return res
   }
 
-  filter_bar_changed(){
+  get_filter_bar(){
     let filter_bar: string = this.module_variables['filter_bar_values'].join("_")
     let _filter_bar: string[] = new Array<string>(filter_bar.length - filter_bar.split(" ").length + 1);
     var i: number = 0, j: number = 0
@@ -140,6 +143,10 @@ export  class TableComponent implements OnInit {
       }
     }
     filter_bar = _filter_bar.join('')
+    return filter_bar
+  }
+  filter_bar_changed(){
+    let filter_bar:string = this.get_filter_bar()
     console.log(filter_bar)
     
     for ( let j = 0 ; j < this.meta_data.filter_bar_array.length; j++) {
@@ -164,9 +171,21 @@ export  class TableComponent implements OnInit {
 
   export(){
     alert('exporting...')
+    let url = `${environment.apiUrl}/api/user/imports/${this.meta_data.component_name}/table/${this.get_filter_bar()}`
+    this.http.get(url, {responseType: "blob"})
+              .toPromise()
+              .then(blob => {
+                  saveAs(blob, `${this.meta_data.component_name}.gz`); 
+              })
+              .catch(err => console.error("download error = ", err))
+
   }
 
   ngOnInit(): void {
+    this.global_cfg['get_filter_bar'] = ()=> {
+      return this.get_filter_bar()
+    }
+
     this.global_cfg['genericTable.add_to_table'] = (element) => {
       this.module_variables['data_to_show'].push(element)
     }

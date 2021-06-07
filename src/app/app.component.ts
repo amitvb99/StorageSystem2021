@@ -17,6 +17,7 @@ import { UsersTableComponent } from './users/users-table/users-table.component';
 import { StudentPageComponent } from './students/student-page/student-page.component';
 import { InstrumentPageComponent } from './instruments/instrument-page/instrument-page.component';
 import { LoanPageComponent } from './loans/loan-page/loan-page.component';
+import { ImportsPageComponent } from './imports/imports-page/imports-page.component';
 
 
 const permission_system : permission_system_t = {
@@ -64,6 +65,12 @@ const meta_data  = {
       url:'#/login',
       not_apage:true,
       component:LoginFormComponent
+    },
+    {
+      name:'imports',
+      url:'#/imports',
+      permission:'user',
+      component:ImportsPageComponent
     },
     // {
     //   name:'Orders',

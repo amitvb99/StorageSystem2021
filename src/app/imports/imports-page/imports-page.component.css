@@ -1,0 +1,22 @@
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 15px;
+}
+  
+.example-radio-button {
+    margin: 5px;
+}
+
+
+.pick-component-container {
+    margin: 50px 15px;
+}
+
+.choose-file-container {
+
+}
+
+.container {
+    
+}

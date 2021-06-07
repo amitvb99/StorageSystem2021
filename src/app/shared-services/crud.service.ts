@@ -74,6 +74,8 @@ export class CrudService {
   }
 
   fix_loan(loan){
+    console.log("loan is\n")
+    console.log(loan)
     loan.student_name = loan['student']['fName']
     loan.student_school = loan['student']['school']
     loan.student_class = loan['student']['class']
