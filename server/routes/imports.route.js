@@ -28,7 +28,7 @@ var upload = multer({storage: storage});
 let uploadFile = (compononet) => {
 	let upload_component_file = (req, res) => {
 		console.log(`+++++++++\n\timporting file for component \"${compononet}\"\n\tfile path is \"${req.file.filename}\"\n+++++++++`)
-		
+		if(compononet== 'student'){
 		csv()
 		.fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
 		.then((jsonObj)=>{
@@ -40,9 +40,35 @@ let uploadFile = (compononet) => {
 						res.redirect('/');
 					}
 			});
-			res.status(200);
 		  });
-		
+    }else if(compononet == 'instrument'){
+      csv()
+		.fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
+		.then((jsonObj)=>{
+			Instrument.insertMany(jsonObj,(err,data)=>{
+					if(err){
+					  console.log(err);
+					  return res.status(500);
+					}else{
+						res.redirect('/');
+					}
+			});
+		  });
+    }else if(compononet == 'maintainer'){
+      csv()
+      .fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
+      .then((jsonObj)=>{
+        Maintainer.insertMany(jsonObj,(err,data)=>{
+            if(err){
+              console.log(err);
+              return res.status(500);
+            }else{
+              res.redirect('/');
+            }
+        });
+        });
+    }
+
 		res.send('File uploaded successfully!');
 	}
 	return upload_component_file
@@ -140,11 +166,11 @@ let download_table_file = (component) => {
       let status = discreteFields[2];
       let class_ = discreteFields[3];
       let level = discreteFields[4];
-      type !=="type" ?  map['type'] = type:1;
-      subtype !== "subtype" ? map['sub_type'] = subtype:1;
+      type !=="studentLevel" ?  map['type'] = type:1;
+      subtype !== "studentsClass" ? map['sub_type'] = subtype:1;
       status !== "status" ? map['status'] = status:1;
-      class_ !== "class" ? map['class'] = status:1;
-      level !== "level" ? map['level'] = status:1;
+      class_ !== "instrumentType" ? map['class'] = status:1;
+      level !== "instrumentSubtype" ? map['level'] = status:1;
       let from = req.query.from.split('_');
       let from_date = new Date(from[2],from[1]-1,from[0]);
       let to = req.query.to.split('_');
