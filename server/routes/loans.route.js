@@ -161,7 +161,6 @@ router.get("/filter/:params", (req, res, next)=>{
   status !== "status" ? map['status'] = status:1;
   class_ !== "class" ? map['class'] = status:1;
   level !== "level" ? map['level'] = status:1;
-  console.log(map);
   let from = req.query.from.split('_');
   let from_date = new Date(from[2],from[1]-1,from[0]);
   let to = req.query.to.split('_');
@@ -169,7 +168,9 @@ router.get("/filter/:params", (req, res, next)=>{
   console.log(to_date.toDateString());
   var datetime = new Date("1-4-2021");
   console.log(from_date < datetime &&  datetime < to_date);
+
   Loan.find().populate({path: 'instrument',
+  match: map}).populate({path: 'student',
   match: map}).then(loans => {
     let k=[];
     let j=0;
@@ -179,7 +180,10 @@ router.get("/filter/:params", (req, res, next)=>{
       let loan_date = element.from.split('-');
       loan_date = new Date(loan_date[0],loan_date[1]-1,loan_date[2]);
       console.log(loan_date.toDateString());
-      if(from_date < loan_date &&  loan_date < to_date && element.instrument !=null && element.student!=null){
+      console.log(from_date);
+      console.log(to_date)
+      if(from_date < loan_date &&  loan_date < to_date ){
+        console.log(element);
         k[j] = element;
         j++;
       }
@@ -197,180 +201,6 @@ router.get("/filter/:params", (req, res, next)=>{
           message: "failed"
         });
    });
-  // let filterString=req.params.params.split('-');
-  // let discreteFields = filterString[0].split('_');
-  // let serialNum = filterString[1];
-  // let type = discreteFields[0];
-  // let subtype = discreteFields[1];
-  // let status = discreteFields[2];
-
-  // if (type == "type" && subtype == 'subtype' && status == 'status')
-  //   Instrument.find({generalSerialNumber: {"$regex": serialNum, "$options": "i"}}).then(instruments => {
-  //     if(!instruments){
-  //       res.status(500).json({
-  //         message: "failed"
-  //       });
-  //     }
-  //     return instruments;
-  //   })
-  //   .then(instruments=>{
-  //     res.status(200).json({
-  //       message: "success",
-  //       data: instruments
-  //       });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       message: "failed"
-  //     });
-  //   });
-
-  // if (type == "type" && subtype == 'subtype' && status != 'status')
-  //   Instrument.find({status: status}).then(instruments => {
-  //     if(!instruments){
-  //       res.status(500).json({
-  //         message: "failed"
-  //       });
-  //     }
-  //     return instruments;
-  //   })
-  //   .then(instruments=>{
-  //     res.status(200).json({
-  //       message: "success",
-  //       data: instruments
-  //       });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       message: "failed"
-  //     });
-  //   });
-
-  // if (type == "type" && subtype != 'subtype' && status == 'status')
-  //   Instrument.find({sub_type: subtype}).then(instruments => {
-  //     if(!instruments){
-  //       res.status(500).json({
-  //         message: "failed"
-  //       });
-  //     }
-  //     return instruments;
-  //   })
-  //   .then(instruments=>{
-  //     res.status(200).json({
-  //       message: "success",
-  //       data: instruments
-  //       });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       message: "failed"
-  //     });
-  //   });
-
-  // if (type != "type" && subtype == 'subtype' && status == 'status')
-  //   Instrument.find({type: type}).then(instruments => {
-  //     if(!instruments){
-  //       res.status(500).json({
-  //         message: "failed"
-  //       });
-  //     }
-  //     return instruments;
-  //   })
-  //   .then(instruments=>{
-  //     res.status(200).json({
-  //       message: "success",
-  //       data: instruments
-  //       });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       message: "failed"
-  //     });
-  //   });
-
-  // if (type == "type" && subtype != 'subtype' && status != 'status')
-  //   Instrument.find({sub_type: subtype,status: status}).then(instruments => {
-  //     if(!instruments){
-  //       res.status(500).json({
-  //         message: "failed"
-  //       });
-  //     }
-  //     return instruments;
-  //   })
-  //   .then(instruments=>{
-  //     res.status(200).json({
-  //       message: "success",
-  //       data: instruments
-  //       });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       message: "failed"
-  //     });
-  //   });
-
-  // if (type != "type" && subtype == 'subtype' && status != 'status')
-  //   Instrument.find({type: type,status: status}).then(instruments => {
-  //     if(!instruments){
-  //       res.status(500).json({
-  //         message: "failed"
-  //       });
-  //     }
-  //     return instruments;
-  //   })
-  //   .then(instruments=>{
-  //     res.status(200).json({
-  //       message: "success",
-  //       data: instruments
-  //       });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       message: "failed"
-  //     });
-  //   });
-
-  // if (type != "type" && subtype != 'subtype' && status == 'status')
-  //   Instrument.find({type: type,sub_type: subtype}).then(instruments => {
-  //     if(!instruments){
-  //       res.status(500).json({
-  //         message: "failed"
-  //       });
-  //     }
-  //     return instruments;
-  //   })
-  //   .then(instruments=>{
-  //     res.status(200).json({
-  //       message: "success",
-  //       data: instruments
-  //       });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       message: "failed"
-  //     });
-  //   });
-
-  // if (type != "type" && subtype != 'subtype' && status != 'status')
-  //   Instrument.find({type: type,sub_type: subtype,status: status}).then(instruments => {
-  //     if(!instruments){
-  //       res.status(500).json({
-  //         message: "failed"
-  //       });
-  //     }
-  //     return instruments;
-  //   })
-  //   .then(instruments=>{
-  //     res.status(200).json({
-  //       message: "success",
-  //       data: instruments
-  //       });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       message: "failed"
-  //     });
-  //   });
 
 });
 

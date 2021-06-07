@@ -81,8 +81,9 @@ router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, re
      });
    });
  res.status(200).json({
-  message: "success",
-  });
+          message: "success",
+          data: students
+          });
 });
 
 router.get("", (req, res, next)=>{

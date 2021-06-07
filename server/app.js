@@ -7,12 +7,9 @@ const studentsRoutes = require("./routes/students.route")
 const instrumentsRoutes = require("./routes/instruments.route")
 const loansRoutes = require("./routes/loans.route")
 const adminRoutes = require("./routes/admin.route")
-<<<<<<< HEAD
 const notificationRoutes = require("./routes/notificatoins.route")
-=======
 const importsRoutes = require("./routes/imports.route")
 
->>>>>>> b1febb6570499552045446315a0fd0acb08208a2
 const User = require("./models/user.model")
 const mongoose = require("mongoose");
 var bodyParser = require('body-parser')
@@ -44,7 +41,7 @@ if (test_mode) {
 }
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect("mongodb://localhost:27017/myapp", { useUnifiedTopology: true, useNewUrlParser: true })
   .then(()=>{
     console.log('Connected to database!')
   }).catch(()=>{
@@ -143,11 +140,8 @@ app.use("/api/user/students", studentsRoutes)
 app.use("/api/user/instruments", instrumentsRoutes)
 app.use("/api/user/loans", loansRoutes)
 app.use("/api/user/manage", adminRoutes)
-<<<<<<< HEAD
 app.use("/api/user/notifications", notificationRoutes)
-=======
 app.use("/api/user/imports", importsRoutes)
->>>>>>> b1febb6570499552045446315a0fd0acb08208a2
 // if (!test_mode) {
 //   app.use("/api/db", adminRoutes)
 // }
