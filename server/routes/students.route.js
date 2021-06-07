@@ -276,4 +276,56 @@ router.get("/export/ex", (req, res, next)=>{
   })
 });
 
+router.post("/init", (req,res,next) =>{
+  const student1 = new Student({
+    fName: 'mahmoud',
+    lName: 'saleh',
+    school: 'school a',
+    level: 'legendary',
+    class: 'class of legends',
+    parent1Name: 'father',
+    parent2Name: 'mother',
+    parent1PhoneNumber: '0501233211',
+    parent2PhoneNumber: '0524322342',
+    parent1Email: 'a@b.c',
+    parent2Email: 'c@b.a',
+  });
+  const student2 = new Student({
+    fName: 'baraa',
+    lName: 'natour',
+    school: 'school b',
+    level: 'word class',
+    class: 'class of professional',
+    parent1Name: 'father',
+    parent2Name: 'mother',
+    parent1PhoneNumber: '0501233112',
+    parent2PhoneNumber: '0524322111',
+    parent1Email: 'aa@bb.cc',
+    parent2Email: 'vc@bv.aa',
+  });
+  const student3 = new Student({
+    fName: 'sunders',
+    lName: 'bruksin',
+    school: 'school c',
+    level: 'semi pro',
+    class: 'class of semi professionals',
+    parent1Name: 'father',
+    parent2Name: 'mother',
+    parent1PhoneNumber: '0501233999',
+    parent2PhoneNumber: '0529999999',
+    parent1Email: 'a1@b1.ce',
+    parent2Email: 'c1@b1.ea',
+  });
+
+  student1.save();
+  student2.save();
+  student3.save();
+
+  res.status(200).json({
+    message: "success",
+    data: [student1._id, student2._id, student3._id]
+  });
+
+});
+
 module.exports = router;

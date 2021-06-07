@@ -389,4 +389,48 @@ router.get("/history/:id", (req, res, next)=>{
 });
 
 
+router.post('/init' , (req,res,next)=>{
+  const instrument1 = new Instrument({
+    generalSerialNumber: '9991',
+    type: 'type1',
+    sub_type: 'subtype1',
+    company: 'company1',
+    style: 'style1',
+    imprentedSerialNumber: '99911',
+    ownership: 'owner1',
+    status: 'available'
+  });
+  const instrument2 = new Instrument({
+    generalSerialNumber: '9992',
+    type: 'type2',
+    sub_type: 'subtype2',
+    company: 'company2',
+    style: 'style2',
+    imprentedSerialNumber: '99922',
+    ownership: 'owner2',
+    status: 'available'
+  });
+  const instrument3 = new Instrument({
+    generalSerialNumber: '9993',
+    type: 'type3',
+    sub_type: 'subtype3',
+    company: 'company3',
+    style: 'style3',
+    imprentedSerialNumber: '99933',
+    ownership: 'owner3',
+    status: 'available'
+  });
+
+  instrument1.save();
+  instrument2.save();
+  instrument3.save();
+
+  res.status(200).json({
+    message: 'success',
+    data: [instrument1._id, instrument2._id,instrument3._id]
+  });
+
+});
+
+
 module.exports = router;
