@@ -171,7 +171,7 @@ export  class TableComponent implements OnInit {
 
   export(){
     alert('exporting...')
-    let url = `${environment.apiUrl}/api/user/imports/${this.meta_data.component_name}/table/${this.get_filter_bar()}`
+    let url = `${environment.apiUrl}/api/user/imports/table/${this.meta_data.component_name}/${this.get_filter_bar()}`
     this.http.get(url, {responseType: "blob"})
               .toPromise()
               .then(blob => {

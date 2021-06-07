@@ -25,30 +25,35 @@ var storage = multer.diskStorage({
 
 var upload = multer({storage: storage});
 
-
-let uploadFile = (req, res) => {
-    csv()
-    .fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
-    .then((jsonObj)=>{
-        Student.insertMany(jsonObj,(err,data)=>{
-                if(err){
-                  console.log(err);
-                  return res.status(500);
-                }else{
-                    res.redirect('/');
-                }
-        });
-        res.status(200);
-      });
+let uploadFile = (compononet) => {
+	let upload_component_file = (req, res) => {
+		console.log(`+++++++++\n\timporting file for component \"${compononet}\"\n\tfile path is \"${req.file.filename}\"\n+++++++++`)
+		
+		csv()
+		.fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
+		.then((jsonObj)=>{
+			Student.insertMany(jsonObj,(err,data)=>{
+					if(err){
+					  console.log(err);
+					  return res.status(500);
+					}else{
+						res.redirect('/');
+					}
+			});
+			res.status(200);
+		  });
+		
+		res.send('File uploaded successfully!');
+	}
+	return upload_component_file
 }
 
 let download_table_file = (component) => {
 
 	let download_xxxxx_table_file = (req, res) => {
 		let filter_bar = req.params.params
-    let filterString=req.params.params.split('-');
-    let discreteFields = filterString[0].split('_');
-
+		let filterString=req.params.params.split('-');
+		let discreteFields = filterString[0].split('_');
 
 		console.log(`exporting ${component} with filter bar: ${filter_bar}`)
 		let path="";
@@ -80,12 +85,12 @@ let download_table_file = (component) => {
             ]
           });
 
+
           csvWriter
             .writeRecords(students)
             .then(()=>
               console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
            );
-
         }
       })
       path= __dirname.slice(0,__dirname.length-6)+'files\\students.csv';
@@ -229,13 +234,11 @@ let download_file = (component) => {
               //to be continued
             ]
           });
-
           csvWriter
             .writeRecords(students)
             .then(()=>
               console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!a")
            );
-
         }
       })
       path= __dirname.slice(0,__dirname.length-6)+'files\\students3.csv';
@@ -303,11 +306,11 @@ let download_file = (component) => {
 	return download_xxxxx_file
 }
 
-router.post("/students", upload.single("file"), uploadFile);
+router.post("/students", upload.single("file"), uploadFile("student"));
 
-router.post("/instruments", upload.single("file"), uploadFile);
+router.post("/instruments", upload.single("file"), uploadFile("instrument"));
 
-router.post("/maintainers", upload.single("file"), uploadFile);
+router.post("/maintainers", upload.single("file"), uploadFile("maintainer"));
 
 
 router.get("/students/:id", download_file('student'));
@@ -316,7 +319,8 @@ router.get("/instruments/:id", download_file('instrument'));
 
 router.get("/maintainers/:id", download_file('maintainer'));
 
-router.get("/loans", download_file('loan'));
+router.get("/loans/:id", download_file('loan'));
+
 
 router.get("/table/students/:params", download_table_file('student'));
 
@@ -325,6 +329,5 @@ router.get("/table/instruments/:params", download_table_file('instrument'));
 router.get("/table/maintainers/:params", download_table_file('maintainer'));
 
 router.get("/table/loans/:params", download_table_file('loan'));
-
 
 module.exports = router;

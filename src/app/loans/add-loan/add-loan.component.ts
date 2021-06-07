@@ -114,7 +114,7 @@ export class AddLoanComponent implements OnInit {
 
   export(){
     alert('exporting...')
-    let url = `${environment.apiUrl}/api/user/imports/loans/table/${this.global_cfg['get_filter_bar']()}`
+    let url = `${environment.apiUrl}/api/user/imports/table/loans/${this.global_cfg['get_filter_bar']()}`
     this.http.get(url, {responseType: "blob"})
               .toPromise()
               .then(blob => {

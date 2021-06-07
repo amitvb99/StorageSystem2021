@@ -13,10 +13,10 @@ import { saveAs } from 'file-saver';
 export class LoanPageComponent implements OnInit {
   id: string = '0'
   loan: string;
-  student: any;
-  instrument: any;
-  openning_user: any;
-  closing_user: any;
+  student: any = {};
+  instrument: any = {};
+  openning_user: any = {};
+  closing_user: any = {};
   
   constructor(private http: HttpClient, private route: ActivatedRoute, private crud: CrudService) { }
 
@@ -41,6 +41,7 @@ export class LoanPageComponent implements OnInit {
         this.instrument = res['instrument']
         this.openning_user = res['openUser']
         this.closing_user = res['closeUser']
+        
       })
     })
   }
