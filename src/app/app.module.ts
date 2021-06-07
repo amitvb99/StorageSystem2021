@@ -23,6 +23,7 @@ import { TestsModule } from './tests/tests.module';
 import { UsersModule } from './users/users.module';
 import {MatRadioModule} from '@angular/material/radio';
 import { ImportsModule } from './imports/imports.module';
+import { MaintainersModule } from './maintainers/maintainers.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ImportsModule } from './imports/imports.module';
     MatDialogModule,
     InstrumentsModule,
     StudentsModule,
+    MaintainersModule,
     TestsModule,
     LoansModule,
     UsersModule,

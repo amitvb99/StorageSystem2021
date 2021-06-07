@@ -18,6 +18,8 @@ import { StudentPageComponent } from './students/student-page/student-page.compo
 import { InstrumentPageComponent } from './instruments/instrument-page/instrument-page.component';
 import { LoanPageComponent } from './loans/loan-page/loan-page.component';
 import { ImportsPageComponent } from './imports/imports-page/imports-page.component';
+import { MaintainersTableComponent } from './maintainers/maintainers-table/maintainers-table.component';
+import { MaintainerPageComponent } from './maintainers/maintainer-page/maintainer-page.component';
 
 
 const permission_system : permission_system_t = {
@@ -59,6 +61,12 @@ const meta_data  = {
       url:'#/instruments',
       permission:'user',
       component:InstrumentsTableComponent
+    },
+    {
+      name:'Maintainers',
+      url:'#/maintainers',
+      permission:'user',
+      component:MaintainersTableComponent
     },
     {
       name:'login',
@@ -132,6 +140,13 @@ const meta_data  = {
       permission:'user',
       not_apage:true,
       component:LoanPageComponent
+    },
+    {
+      name:'loans',
+      url:'#/maintainers/:id',
+      permission:'user',
+      not_apage:true,
+      component:MaintainerPageComponent
     }
   ]}
 @Component({

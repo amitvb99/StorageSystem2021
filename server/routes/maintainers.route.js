@@ -6,6 +6,7 @@ const multer= require("multer");
 const csv = require('csvtojson');
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const { Console } = require("console");
+const { model } = require("../models/maintainer.model");
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.post("/create", (req, res, next) => {
     .then(result => {
       res.status(201).json({
         message: "success",
-        data: student._id
+        data: maintainer._id
       });
     })
     .catch(err => {
@@ -33,6 +34,7 @@ router.post("/create", (req, res, next) => {
 
 router.get("", (req, res, next)=>{
     // console.log(req.headers.user_id)
+    console.log("getting maintainers")
     Maintainer.find()
       .then(maintainers =>{
         if(!maintainers){
@@ -76,7 +78,19 @@ router.put("/:id", (req, res, next)=>{
       });
   });
 
-  //TODO: get(/:id)
+  router.get("/:id", (req, res, next)=>{
+    Maintainer.findOne({_id: req.params.id}).then(maintainer => {
+      if (maintainer) {
+          // if you want, add previous maintainance to maintainer
+        res.status(200).json({
+              message: "success",
+              data: {'maintainer' : maintainer}
+            });
+      } else {
+        res.status(404).json({ message: "failed" });
+      }
+    });
+  });
 
 router.delete("/:id", (req, res, next)=>{
 Maintainer.deleteOne({ _id: req.params.id }).then(result => {
@@ -189,3 +203,5 @@ router.post("/returnFromMaintainer/:id", (req, res, next)=>{
       });
     })
   });
+
+  module.exports = router
