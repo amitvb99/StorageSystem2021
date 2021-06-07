@@ -1,0 +1,35 @@
+<div class="header-container">
+    <div class="table-container">
+        <table class="data-table">
+            <tr>
+                <td>Id</td>
+                <td>{{id}}</td>
+            </tr>
+
+            <tr>
+                <td>Name</td>
+                <td>{{maintainer['maintainerName'] == undefined ? 'NA' : maintainer['maintainerName']}}</td>
+            </tr>
+
+            <tr>
+                <td>Phone Number</td>
+                <td>{{maintainer['maintainerPhone'] == undefined ? 'NA' : maintainer['maintainerPhone']}}</td>
+            </tr>
+            
+            <tr>
+                <td>Address</td>
+                <td>{{maintainer['maintainerAddress'] == undefined ? 'NA' : maintainer['maintainerAddress']}}</td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="buttons-container">
+        <div class="button-group"  >
+            <button type="button" class="btn btn-success">Maintain</button>
+            <button type="button" class="btn btn-warning">Edit</button>
+            <button type="button" class="btn btn-primary" (click)="export()" >Export</button>
+            <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+

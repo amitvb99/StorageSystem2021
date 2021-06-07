@@ -4,6 +4,7 @@ var http = require("http");
 global.__basedir = __dirname;
 const userRoutes = require("./routes/user.route")
 const studentsRoutes = require("./routes/students.route")
+const maintainersRoutes = require("./routes/maintainers.route")
 const instrumentsRoutes = require("./routes/instruments.route")
 const loansRoutes = require("./routes/loans.route")
 const adminRoutes = require("./routes/admin.route")
@@ -41,7 +42,7 @@ if (test_mode) {
 }
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect("mongodb://localhost:27017/myapp", { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
 
   .then(()=>{
     console.log('Connected to database!')
@@ -138,6 +139,8 @@ app.post('/api/db/clear',(req,res)=>{
 
 app.use("/api/user", userRoutes)
 app.use("/api/user/students", studentsRoutes)
+app.use("/api/user/maintainers", maintainersRoutes)
+
 app.use("/api/user/instruments", instrumentsRoutes)
 app.use("/api/user/loans", loansRoutes)
 app.use("/api/user/manage", adminRoutes)
