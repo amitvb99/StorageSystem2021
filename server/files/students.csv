@@ -1,0 +1,47 @@
+_id,first name,last name,school,level,class,parent1Name,parent2Name,parent1PhoneNumber,parent2PhoneNumber,parent1Email,parent2Email
+60b0edef81024483947263fa,dasdas,dasd,dfg,2,12e,,,,,,
+60bc9b1318010435b87ad38e,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bc9b1318010435b87ad38f,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bc9b5674ab2f458cdc4682,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bc9b5674ab2f458cdc4683,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd06081eafdd5988fcc72c,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd06081eafdd5988fcc72d,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0638d3d0484430672d43,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd0638d3d0484430672d44,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0638d3d0484430672d45,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd071c312d1f4a68a8abcc,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd071c312d1f4a68a8abcd,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd071c312d1f4a68a8abce,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0738cefda24a54835924,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd0738cefda24a54835925,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0738cefda24a54835926,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0751227e9155649e85c7,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd0751227e9155649e85c8,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0751227e9155649e85c9,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd077d4c46f46178ee3e0e,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd077d4c46f46178ee3e0f,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd077d4c46f46178ee3e10,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd080b9d5f5466c44383cd,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd080b9d5f5466c44383ce,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd080b9d5f5466c44383cf,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0845eda1885720cb34a6,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd0845eda1885720cb34a7,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0845eda1885720cb34a8,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd084fbf61ba228c14a92f,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd084fbf61ba228c14a930,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd084fbf61ba228c14a931,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd087b7230a92a2457a2d7,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd087b7230a92a2457a2d8,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd087b7230a92a2457a2d9,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd088a7053d73e74ae7f25,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd088a7053d73e74ae7f26,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd088a7053d73e74ae7f27,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0897ba5be162d81c6eef,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60bd0897ba5be162d81c6ef0,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60bd0897ba5be162d81c6ef1,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60be119db574c208d0b7e021,mahmoud,saleh,school a,legendary,class of legends,father,mother,0501233211,0524322342,a@b.c,c@b.a
+60be119db574c208d0b7e022,baraa,natour,school b,word class,class of professional,father,mother,0501233112,0524322111,aa@bb.cc,vc@bv.aa
+60be119db574c208d0b7e023,sunders,bruksin,school c,semi pro,class of semi professionals,father,mother,0501233999,0529999999,a1@b1.ce,c1@b1.ea
+60be181b2043f35650e421d7,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
+60be181b2043f35650e421d8,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+60be181b2043f35650e421d9,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as

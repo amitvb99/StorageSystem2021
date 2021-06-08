@@ -60,7 +60,15 @@ router.post("/create", (req, res, next)=>{
 
 //update
 router.put("/:id", (req, res, next)=>{
-
+  Instrument.findOne({_id: req.params.id}).then(result=>{
+    if(result.status == 'inFix' || result.status == 'loaned'){
+      if(result.status !== req.body.status){
+        return res.status(400).json({
+          message: `failed: can't edit status ${result.status}`,
+        });
+      }
+    }
+  });
   const instrument = new Instrument({
       _id: req.params.id,  //WTF?!
       generalSerialNumber: req.body.generalSerialNumber,
@@ -74,6 +82,7 @@ router.put("/:id", (req, res, next)=>{
     });
     Instrument.findOneAndUpdate({_id: req.params.id},instrument,{ returnOriginal: true }).then(result => {
       if(result["status"] !== instrument["status"]){
+
         console.log(true);
         var datetime = new Date();
         const history_rec = new History({

@@ -1,0 +1,33 @@
+_id,student,instrument,from,to,openUser,closeUser,notes,status
+606d8d45052a2b195cebfb44,"{
+  fName: 'dasdas',
+  lName: 'dasd',
+  school: 'dfg',
+  level: '2',
+  class: '12e'
+}","{
+  generalSerialNumber: '12213',
+  type: 'asd',
+  sub_type: 'asfasfa',
+  company: 'fsaff',
+  style: 'dfbdf',
+  imprentedSerialNumber: '345',
+  ownership: '234',
+  status: 'available'
+}",2021-01-04,tommorw,"{ name: 'mahmoud', username: 'mahmoud' }","{ name: 'mahmoud', username: 'mahmoud' }",mama,closed
+60735904cfe1f93d1000acc5,"{
+  fName: 'mahmoud3',
+  lName: 'saleh2',
+  school: 'hah',
+  level: 'asd',
+  class: 'as'
+}","{
+  generalSerialNumber: '12213',
+  type: 'asd',
+  sub_type: 'asfasfa',
+  company: 'fsaff',
+  style: 'dfbdf',
+  imprentedSerialNumber: '345',
+  ownership: '234',
+  status: 'available'
+}",2021-01-04,tommorw,,,mama,closed

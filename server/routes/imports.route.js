@@ -9,6 +9,7 @@ const uploadFolder = __basedir + '/uploads/';
 const exports_folder = __basedir + '/downloads/';
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const Instrument = require("../models/instrument.model");
+const Maintainer = require("../models/maintainer.model");
 const Loan = require("../models/loan.model")
 
 
@@ -77,9 +78,10 @@ let uploadFile = (compononet) => {
 let download_table_file = (component) => {
 
 	let download_xxxxx_table_file = (req, res) => {
-		let filter_bar = req.params.params
-		let filterString=req.params.params.split('-');
-		let discreteFields = filterString[0].split('_');
+    // if(component == 'maintainers')
+		let filter_bar = req.params.params != undefined ? req.params.params : ''
+		let filterString = req.params.params != undefined ? req.params.params.split('-') : []
+		let discreteFields = req.params.params != undefined ?  filterString[0].split('_') : ''
 
 		console.log(`exporting ${component} with filter bar: ${filter_bar}`)
 		let path="";
@@ -119,7 +121,7 @@ let download_table_file = (component) => {
            );
         }
       })
-      path= __dirname.slice(0,__dirname.length-6)+'files\\students.csv';
+      path= __dirname.slice(0,__dirname.length-6)+'files/students.csv';
 		} else if (component == 'instrument') {
       let type = discreteFields[0];
       let subtype = discreteFields[1];
@@ -154,10 +156,26 @@ let download_table_file = (component) => {
 
         }
       })
-      path= __dirname.slice(0,__dirname.length-6)+'files\\instruments.csv';
+      path= __dirname.slice(0,__dirname.length-6)+'files/instruments.csv';
 		} else if (component == 'maintainer') {
+      Maintainer.find().then(result=>{
+        const csvWriter = createCsvWriter({
+          path: "server/files/maintainers.csv",
+          header: [
+            { id: "_id", title: "_id" },
+            { id: "maintainerName", title: "maintainer name" },
+            { id: "maintainerPhone", title: "maintainer phone" },
+            { id: "maintainerAddress", title: "maintainre address"}
+          ]
+        });
 
-
+        csvWriter
+          .writeRecords(result)
+          .then(()=>
+            console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
+        );
+      });
+      path= __dirname.slice(0,__dirname.length-6)+'files/maintainers.csv';
 		} else if (component == 'loan') {
       let map = {}
       let map2={}
@@ -182,10 +200,10 @@ let download_table_file = (component) => {
       let from_date = new Date(from[2],from[1]-1,from[0]);
       let to_date = new Date(to[2],to[1]-1,to[0]);
 
-      Loan.find(map2).populate({path: 'instrument',
-      match: map}).populate({path: 'student',
-      match: map}).populate('openUser')
-      .populate('closeUser').then(loans => {
+      Loan.find(map2).populate({path: 'instrument', select:'generalSerialNumber type sub_type style imprentedSerialNumber ownership status company  -_id',
+      match: map}).populate({path: 'student',select:'fName lName school level class -_id',
+      match: map}).populate({path:'openUser' ,select:'name username -_id',})
+      .populate({path:'closeUser' ,select:'name username -_id',}).then(loans => {
         let k=[];
         let j=0;
         for (let index = 0; index < loans.length; index++) {
@@ -205,7 +223,7 @@ let download_table_file = (component) => {
         return k;
       }).then(k=>{
         const csvWriter = createCsvWriter({
-        path: "server/files/loans4.csv",
+        path: "server/files/loans.csv",
         header: [
           { id: "_id", title: "_id" },
           { id: "student", title: "student" },
@@ -226,8 +244,10 @@ let download_table_file = (component) => {
           console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
       );
     })
-    path= __dirname.slice(0,__dirname.length-6)+'files\\loans4.csv';
-		}
+    path= __dirname.slice(0,__dirname.length-6)+'files/loans.csv';
+		}else if (component == 'fix'){
+
+    }
       setTimeout(function () {
       console.log(path);
       res.download(path);
@@ -250,7 +270,7 @@ let download_file = (component) => {
         if(students){
           console.log(students);
           const csvWriter = createCsvWriter({
-            path: "server/files/students3.csv",
+            path: "server/files/student.csv",
             header: [
               { id: "_id", title: "_id" },
               { id: "fName", title: "first name" },
@@ -274,12 +294,12 @@ let download_file = (component) => {
            );
         }
       })
-      path= __dirname.slice(0,__dirname.length-6)+'files\\students3.csv';
+      path= __dirname.slice(0,__dirname.length-6)+'files\\student.csv';
 		} else if (component == 'instrument') {
-      Instrument.findOne({_id: id}).then(instruments=>{
+      Instrument.find({_id: id}).then(instruments=>{
         if(instruments){
           const csvWriter = createCsvWriter({
-            path: "server/files/instruments.csv",
+            path: "server/files/instrument.csv",
             header: [
               { id: "_id", title: "_id" },
               { id: "generalSerialNumber", title: "general serial number" },
@@ -303,13 +323,34 @@ let download_file = (component) => {
         }
       })
 
-      path= __dirname.slice(0,__dirname.length-6)+'files\\instruments.csv';
+      path= __dirname.slice(0,__dirname.length-6)+'files/instrument.csv';
 		} else if (component == 'maintainer') {
-      //
-		} else if (component == 'loan') {
-      Loan.findOne({_id: id}).then(k=>{
+      Maintainer.find({_id:id}).then(result=>{
         const csvWriter = createCsvWriter({
-        path: "server/files/loans.csv",
+          path: "server/files/maintainer.csv",
+          header: [
+            { id: "_id", title: "_id" },
+            { id: "maintainerName", title: "maintainer name" },
+            { id: "maintainerPhone", title: "maintainer phone" },
+            { id: "maintainerAddress", title: "maintainre address"}
+          ]
+        });
+
+        csvWriter
+          .writeRecords(result)
+          .then(()=>
+            console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
+        );
+      });
+      path= __dirname.slice(0,__dirname.length-6)+'files/maintainer.csv';
+		} else if (component == 'loan') {
+      Loan.find({_id: id})
+      .populate({path: 'instrument', select:'generalSerialNumber type sub_type style imprentedSerialNumber ownership status company  -_id'})
+      .populate({path: 'student',select:'fName lName school level class -_id'})
+      .populate({path:'openUser' ,select:'name username -_id',})
+      .populate({path:'closeUser' ,select:'name username -_id',}).then(k=>{
+        const csvWriter = createCsvWriter({
+        path: "server/files/loan.csv",
         header: [
           { id: "_id", title: "_id" },
           { id: "student", title: "student" },
@@ -331,9 +372,12 @@ let download_file = (component) => {
       );
 
     })
-    path= __dirname.slice(0,__dirname.length-6)+'files\\loans.csv';
+    path= __dirname.slice(0,__dirname.length-6)+'files/loan.csv';
 		}
-		res.download(path);
+		setTimeout(function () {
+      console.log(path);
+      res.download(path);
+    }, 1000)
 	}
 
 	return download_xxxxx_file
@@ -359,8 +403,9 @@ router.get("/table/students/:params", download_table_file('student'));
 
 router.get("/table/instruments/:params", download_table_file('instrument'));
 
-router.get("/table/maintainers/:params", download_table_file('maintainer'));
+router.get("/table/maintainers/", download_table_file('maintainer'));
 
 router.get("/table/loans/:params", download_table_file('loan'));
+
 
 module.exports = router;

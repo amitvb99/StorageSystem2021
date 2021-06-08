@@ -55,7 +55,7 @@ router.post("/loanInstrument", (req, res, next)=>{
         }
         else {
             res.status(400).json({
-              message: "failed"
+              message: "failed: the instrument is not available"
             })
         }
     })

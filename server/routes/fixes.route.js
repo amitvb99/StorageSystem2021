@@ -31,7 +31,7 @@ router.post("/fix", (req, res, next)=>{
                 });
                 const instrument1 = new Instrument({
                     _id:req.body.instrument,
-                    status: "in fix"
+                    status: "inFix"
                   });
                   var datetime = new Date();
                   const history_rec = new History({
@@ -94,6 +94,9 @@ router.get("/:id", (req, res, next)=>{
   .populate('instrument')
   .populate('openUser')
   .populate('closeUser').then(fix => {
+    if(fix.status == 'done' && fix.closeUser==null){
+      fix['closeUser'] = {_id:'admin', name:'admin', username:'admin'}
+    }
       if(fix) {
           res.status(200).json({
               message: "success",
@@ -109,6 +112,7 @@ router.get("/:id", (req, res, next)=>{
 });
 
 router.post("/endFix/:id", (req, res, next)=>{
+
   var datetime = new Date();
   const fix =  new Fix({
     _id: req.params.id,

@@ -1,0 +1,11 @@
+_id,student,instrument,from,to,openUser,closeUser,notes,status
+6033f256a0087210ec4be2ec,,"{
+  generalSerialNumber: '12213',
+  type: 'asd',
+  sub_type: 'asfasfa',
+  company: 'fsaff',
+  style: 'dfbdf',
+  imprentedSerialNumber: '345',
+  ownership: '234',
+  status: 'available'
+}",today,tommorw,,,haha,ended
