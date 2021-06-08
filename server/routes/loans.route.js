@@ -80,7 +80,7 @@ router.get("", (req, res, next)=>{
               loan['closeUser'] = {_id:'admin', name:'admin', username:'admin'}
             }
           })
-          
+
             res.status(200).json({
                 message: "success",
                 data: loans
@@ -181,7 +181,8 @@ router.get("/filter/:params", (req, res, next)=>{
 
   Loan.find(map2).populate({path: 'instrument',
   match: map}).populate({path: 'student',
-  match: map}).then(loans => {
+  match: map}).populate('openUser')
+  .populate('closeUser').then(loans => {
     let k=[];
     let j=0;
     for (let index = 0; index < loans.length; index++) {

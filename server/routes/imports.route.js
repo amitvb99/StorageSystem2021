@@ -5,6 +5,7 @@ const multer = require('multer');
 const router = express.Router();
 const csv = require('csvtojson');
 const Student = require("../models/student.model");
+const Fix = require("../models/fixes.model");
 const uploadFolder = __basedir + '/uploads/';
 const exports_folder = __basedir + '/downloads/';
 const files_folder = __basedir + '/files/';
@@ -247,8 +248,70 @@ let download_table_file = (component) => {
       );
     })
     path= __dirname.slice(0,__dirname.length-6)+'files/loans.csv';
-		}else if (component == 'fix'){
 
+		}else if (component == 'fix'){
+      let map = {}
+      let map2={}
+
+      let subtype = discreteFields[2];
+      let type = discreteFields[1];
+      let status = discreteFields[0];
+
+      status !== "status" ? map2['status'] = status:1;
+      type !== "instrumentType" ? map['type'] = type:1;
+      subtype !== "instrumentSubtype" ? map['subtype'] = subtype:1;
+      console.log(map);
+      console.log(map2);
+      let from="1_1_1900".split('_');
+      let to="31_12_2200".split('_');
+      if(req.query.from && req.query.to){
+        from = req.query.from.split('_');
+        to = req.query.to.split('_');
+      }
+      let from_date = new Date(from[2],from[1]-1,from[0]);
+      let to_date = new Date(to[2],to[1]-1,to[0]);
+
+      Fix.find(map2)
+      .populate({path: 'instrument',select:'generalSerialNumber type sub_type style imprentedSerialNumber ownership status company  -_id',
+      match: map})
+      .populate({path: 'maintainer', select: 'maintainerName maintainerPhone maintainerAddress -_id'}).then(fixes => {
+        let k=[];
+        let j=0;
+        for (let index = 0; index < fixes.length; index++) {
+          const element = fixes[index];
+          let fix_date = element.from.split('-');
+          fix_date = new Date(fix_date[0],fix_date[1]-1,fix_date[2]);
+          if(from_date < fix_date &&  fix_date < to_date  && element.instrument!=null){
+            k[j] = element;
+            j++;
+          }
+
+        }
+        return k;
+      }).then(k=>{
+        const csvWriter = createCsvWriter({
+        path: "server/files/fixes.csv",
+        header: [
+          { id: "_id", title: "_id" },
+          { id: "maintainer", title: "maintainer" },
+          { id: "instrument", title: "instrument" },
+          { id: "from", title: "from" },
+          { id: "to", title: "to" },
+          { id: "openUser", title: "openUser" },
+          { id: "closeUser", title: "closeUser" },
+          { id: "notes", title: "notes" },
+          { id: "status", title: "status" },
+          //to be continued
+        ]
+      });
+
+      csvWriter
+        .writeRecords(k)
+        .then(()=>
+          console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
+      );
+    })
+    path= __dirname.slice(0,__dirname.length-6)+'files/fixes.csv';
     }
       setTimeout(function () {
       console.log(path);

@@ -180,7 +180,7 @@ router.get("/filter/:params", (req, res, next)=>{
   let to_date = new Date(to[2],to[1]-1,to[0]);
 
   Fix.find(map2).populate({path: 'instrument',
-  match: map}).then(fixes => {
+  match: map}).populate('maintainer').populate('openUser').populate('closeUser').then(fixes => {
     let k=[];
     let j=0;
     for (let index = 0; index < fixes.length; index++) {
