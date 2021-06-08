@@ -13,7 +13,9 @@ const files_folder = __basedir + '/files/';
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const Instrument = require("../models/instrument.model");
 const Maintainer = require("../models/maintainer.model");
-const Loan = require("../models/loan.model")
+const Loan = require("../models/loan.model");
+const { populate } = require("../models/loan.model");
+const { json } = require("body-parser");
 
 
 
@@ -36,23 +38,53 @@ let uploadFile = (compononet) => {
 		csv()
 		.fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
 		.then((jsonObj)=>{
-			Student.insertMany(jsonObj,(err,data)=>{
+      let data = []
+      for(let i=0;i<jsonObj.length;i++){
+        let arr = Object.values(jsonObj[i])
+        let d= {}
+        d['fName'] = arr[0]
+        d['lName'] = arr[1]
+        d['school'] = arr[2]
+        d['level'] = arr[3]
+        d['class'] = arr[4]
+        arr[5] == undefined? 1:d['parent1Name'] = arr[5];
+        arr[6] == undefined? 1:d['parent2Name'] = arr[6];
+        arr[7] == undefined? 1:d['parent1PhoneNumber'] = arr[7];
+        arr[8] == undefined? 1:d['parent2PhoneNumber'] = arr[8];
+        arr[9] == undefined? 1:d['parent1Email'] = arr[9];
+        arr[10] == undefined? 1:d['parent2Email'] = arr[10];
+        data.push(d);
+      }
+			Student.insertMany(data,(err,data)=>{
 					if(err){
 					  console.log(err);
-					  return res.status(500);
 					}else{
 						res.redirect('/');
 					}
 			});
+
 		  });
     }else if(compononet == 'instrument'){
       csv()
 		.fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
 		.then((jsonObj)=>{
-			Instrument.insertMany(jsonObj,(err,data)=>{
+      let data = []
+      for(let i=0;i<jsonObj.length;i++){
+        let arr = Object.values(jsonObj[i])
+        let d= {}
+        d['generalSerialNumber'] = arr[0]
+        d['type'] = arr[1]
+        d['sub_type'] = arr[2]
+        d['company'] = arr[3]
+        d['style'] = arr[4]
+        d['imprentedSerialNumber'] = arr[5];
+        d['ownership'] = arr[6];
+        d['status'] = arr[7];
+        data.push(d);
+      }
+			Instrument.insertMany(data,(err,data)=>{
 					if(err){
 					  console.log(err);
-					  return res.status(500);
 					}else{
 						res.redirect('/');
 					}
@@ -62,10 +94,19 @@ let uploadFile = (compononet) => {
       csv()
       .fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
       .then((jsonObj)=>{
-        Maintainer.insertMany(jsonObj,(err,data)=>{
+      let data = []
+      for(let i=0;i<jsonObj.length;i++){
+        let arr = Object.values(jsonObj[i])
+        let d= {}
+        d['maintainerName'] = arr[0]
+        d['maintainerPhone'] = arr[1]
+        d['maintainerAddress'] = arr[2]
+
+        data.push(d);
+      }
+        Maintainer.insertMany(data,(err,data)=>{
             if(err){
               console.log(err);
-              return res.status(500);
             }else{
               res.redirect('/');
             }
@@ -73,7 +114,7 @@ let uploadFile = (compononet) => {
         });
     }
 
-		res.send('File uploaded successfully!');
+		res.status('200');
 	}
 	return upload_component_file
 }
@@ -180,7 +221,8 @@ let download_table_file = (component) => {
       });
       path= __dirname.slice(0,__dirname.length-6)+'files/maintainers.csv';
 		} else if (component == 'loan') {
-      let map = {}
+      let map1 = {}
+      let map3 = {}
       let map2={}
 
       let subtype = discreteFields[4];
@@ -188,12 +230,11 @@ let download_table_file = (component) => {
       let status = discreteFields[2];
       let class_ = discreteFields[1];
       let level = discreteFields[0];
-      level !=="studentLevel" ?  map['level'] = level:1;
-      class_ !== "studentClass" ? map['class'] = class_:1;
+      level !=="studentLevel" ?  map1['level'] = level:1;
+      class_ !== "studentClass" ? map1['class'] = class_:1;
       status !== "status" ? map2['status'] = status:1;
-      type !== "instrumentType" ? map['type'] = type:1;
-      subtype !== "instrumentSubtype" ? map['subtype'] = subtype:1;
-      console.log(map)
+      type !== "instrumentType" ? map3['type'] = type:1;
+      subtype !== "instrumentSubtype" ? map3['subtype'] = subtype:1;
       let from="1_1_1900".split('_');
       let to="31_12_2200".split('_');
       if(req.query.from && req.query.to){
@@ -204,8 +245,8 @@ let download_table_file = (component) => {
       let to_date = new Date(to[2],to[1]-1,to[0]);
 
       Loan.find(map2).populate({path: 'instrument', select:'generalSerialNumber type sub_type style imprentedSerialNumber ownership status company  -_id',
-      match: map}).populate({path: 'student',select:'fName lName school level class -_id',
-      match: map}).populate({path:'openUser' ,select:'name username -_id',})
+      match: map3}).populate({path: 'student',select:'fName lName school level class -_id',
+      match: map1}).populate({path:'openUser' ,select:'name username -_id',})
       .populate({path:'closeUser' ,select:'name username -_id',}).then(loans => {
         let k=[];
         let j=0;
@@ -274,7 +315,9 @@ let download_table_file = (component) => {
       Fix.find(map2)
       .populate({path: 'instrument',select:'generalSerialNumber type sub_type style imprentedSerialNumber ownership status company  -_id',
       match: map})
-      .populate({path: 'maintainer', select: 'maintainerName maintainerPhone maintainerAddress -_id'}).then(fixes => {
+      .populate({path: 'maintainer', select: 'maintainerName maintainerPhone maintainerAddress -_id'})
+      .populate({path:'openUser' ,select:'name username -_id',})
+      .populate({path:'closeUser' ,select:'name username -_id',}).then(fixes => {
         let k=[];
         let j=0;
         for (let index = 0; index < fixes.length; index++) {
@@ -327,7 +370,6 @@ let download_table_file = (component) => {
 let download_file = (component) => {
 
 	let download_xxxxx_file = (req, res) => {
-    console.log('istighfar')
 		let id = req.params.id
 		console.log(`exporting ${component} with ID: ${id}`)
     let path="";
@@ -439,7 +481,36 @@ let download_file = (component) => {
 
     })
     path= __dirname.slice(0,__dirname.length-6)+'files/loan.csv';
-		}
+		} else if(component == 'fix'){
+      Fix.find({_id:id}).populate({path: 'instrument',select:'generalSerialNumber type sub_type style imprentedSerialNumber ownership status company  -_id'})
+      .populate({path: 'maintainer', select: 'maintainerName maintainerPhone maintainerAddress -_id'})
+      .populate({path:'openUser' ,select:'name username -_id',})
+      .populate({path:'closeUser' ,select:'name username -_id',})
+      .then(k=>{
+        const csvWriter = createCsvWriter({
+          path: "server/files/fix.csv",
+          header: [
+            { id: "_id", title: "_id" },
+            { id: "maintainer", title: "maintainer" },
+            { id: "instrument", title: "instrument" },
+            { id: "from", title: "from" },
+            { id: "to", title: "to" },
+            { id: "openUser", title: "openUser" },
+            { id: "closeUser", title: "closeUser" },
+            { id: "notes", title: "notes" },
+            { id: "status", title: "status" },
+            //to be continued
+          ]
+        });
+
+        csvWriter
+          .writeRecords(k)
+          .then(()=>
+            console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
+        );
+      });
+      path= __dirname.slice(0,__dirname.length-6)+'files/fix.csv';
+    }
 		setTimeout(function () {
       console.log(path);
       res.download(path);

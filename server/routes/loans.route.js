@@ -156,7 +156,8 @@ router.post("/endLoan/:id", (req, res, next)=>{
 router.get("/filter/:params", (req, res, next)=>{
   let filterString=req.params.params.split('-');
   let discreteFields = filterString[0].split('_');
-  let map = {}
+  let map1 = {}
+  let map3 = {}
   let map2={}
 
   let subtype = discreteFields[4];
@@ -164,11 +165,11 @@ router.get("/filter/:params", (req, res, next)=>{
   let status = discreteFields[2];
   let class_ = discreteFields[1];
   let level = discreteFields[0];
-  level !=="studentLevel" ?  map['level'] = level:1;
-  class_ !== "studentClass" ? map['class'] = class_:1;
+  level !=="studentLevel" ?  map1['level'] = level:1;
+  class_ !== "studentClass" ? map1['class'] = class_:1;
   status !== "status" ? map2['status'] = status:1;
-  type !== "instrumentType" ? map['type'] = type:1;
-  subtype !== "instrumentSubtype" ? map['subtype'] = subtype:1;
+  type !== "instrumentType" ? map3['type'] = type:1;
+  subtype !== "instrumentSubtype" ? map3['subtype'] = subtype:1;
 
   let from="1_1_1900".split('_');
   let to="31_12_2200".split('_');
@@ -178,15 +179,15 @@ router.get("/filter/:params", (req, res, next)=>{
   }
   let from_date = new Date(from[2],from[1]-1,from[0]);
   let to_date = new Date(to[2],to[1]-1,to[0]);
-
   Loan.find(map2).populate({path: 'instrument',
-  match: map}).populate({path: 'student',
-  match: map}).populate('openUser')
+  match: map3}).populate({path: 'student',
+  match: map1}).populate('openUser')
   .populate('closeUser').then(loans => {
     let k=[];
     let j=0;
     for (let index = 0; index < loans.length; index++) {
       const element = loans[index];
+      console.log(element);
       let loan_date = element.from.split('-');
       loan_date = new Date(loan_date[0],loan_date[1]-1,loan_date[2]);
       if(from_date < loan_date &&  loan_date < to_date && element.student!=null && element.instrument!=null){

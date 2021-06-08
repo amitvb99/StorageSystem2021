@@ -51,7 +51,7 @@ if (test_mode) {
 }
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect("mongodb://localhost:27017/myapp", { useUnifiedTopology: true, useNewUrlParser: true })
 
   .then(()=>{
     console.log('Connected to database!')
