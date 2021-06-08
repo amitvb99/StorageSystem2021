@@ -69,7 +69,6 @@ export class InstrumentPageComponent implements OnInit {
       this.id = params['id'];
       this.crud.read('instruments', this.id).subscribe(
         res => {
-          console.log(res)
           this.instrument = res['instrument'];
           for (let i = 0; i < res['history'].length; i++) {
             res['history'][i]['user-data'] = res['history'][i]['user']

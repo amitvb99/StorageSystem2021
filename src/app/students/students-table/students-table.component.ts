@@ -209,7 +209,6 @@ export class StudentsTableComponent implements OnInit {
       this.functions = new_values[0]
       this.students_meta_data = new_values[1]
     } else {
-      console.log('use default values')
     }
   }
 

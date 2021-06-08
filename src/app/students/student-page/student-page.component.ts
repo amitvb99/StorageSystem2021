@@ -117,7 +117,6 @@ export class StudentPageComponent implements OnInit {
             this.crud.fix_loan(res['loans'][i])
             this.loans.push(res['loans'][i])
           }
-          console.log(this.loans);
         }
       )
     }) 

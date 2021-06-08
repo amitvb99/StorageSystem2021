@@ -147,7 +147,6 @@ export  class TableComponent implements OnInit {
   }
   filter_bar_changed(){
     let filter_bar:string = this.get_filter_bar()
-    console.log(filter_bar)
     
     for ( let j = 0 ; j < this.meta_data.filter_bar_array.length; j++) {
       const option = this.meta_data.filter_bar_array[j]
@@ -159,7 +158,6 @@ export  class TableComponent implements OnInit {
 
     if (this.module_variables['local_db'].get(filter_bar) === undefined){
       this.crud.filtered_read(this.meta_data.component_name, filter_bar).subscribe(res => {
-        console.log(`res is ${res}`)
         this.module_variables['data_to_show'] = res
       })
       
@@ -172,7 +170,6 @@ export  class TableComponent implements OnInit {
   export(){
     alert('exporting...')
     let url = `${environment.apiUrl}/api/user/imports/table/${this.meta_data.component_name}/${this.get_filter_bar()}`
-    console.log(`url is ${url}`)
     this.http.get(url, {responseType: "blob"})
               .toPromise()
               .then(blob => {
@@ -193,7 +190,6 @@ export  class TableComponent implements OnInit {
     this.module_variables.filter_bar_values = Object.assign([], this.meta_data.filter_bar_array) 
     if (this.data == undefined || this.data == 'undefined') {
       this.crud.read(this.meta_data.component_name).subscribe(function(data){
-          console.log(data)
           this.module_variables['local_db'].set(this.meta_data.filter_bar_array.join("_"),data);
           this.module_variables['data_to_show'] = this.module_variables['local_db'].get(this.meta_data.filter_bar_array.join("_"));
         }.bind(this)

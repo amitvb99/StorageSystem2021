@@ -82,8 +82,6 @@ router.put("/:id", (req, res, next)=>{
     });
     Instrument.findOneAndUpdate({_id: req.params.id},instrument,{ returnOriginal: true }).then(result => {
       if(result["status"] !== instrument["status"]){
-
-        console.log(true);
         var datetime = new Date();
         const history_rec = new History({
           instrument: req.params.id,
@@ -94,7 +92,6 @@ router.put("/:id", (req, res, next)=>{
         });
         history_rec.save();
       }
-        console.log(instrument["status"]);
         if(instrument["status"]=="lost"){
           const notification = new Notification({
             data: "the status of intrument " + instrument["generalSerialNumber"] + " has been updated to lost",
@@ -103,7 +100,6 @@ router.put("/:id", (req, res, next)=>{
           notification.save();
         }
         else if(instrument["status"]=="stolen"){
-          console.log("faswee");
           const notification = new Notification({
             data: "the status of intrument" + instrument["generalSerialNumber"] + " has been updated to stolen",
             seenStatus: false

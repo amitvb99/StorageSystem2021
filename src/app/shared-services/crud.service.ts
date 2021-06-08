@@ -84,8 +84,7 @@ export class CrudService {
        loan.closing_user = loan['closeUser']['name']
     else {
 
-      console.log('dgfdfghfdgdfg')
-      console.log(loan['closeUser'])
+  
       loan.closing_user = ''
     }
 
@@ -95,8 +94,7 @@ export class CrudService {
   }
 
   fix_loan(loan){
-    console.log("loan is\n")
-    console.log(loan)
+
     loan.student_name = loan['student']['fName']
     loan.student_school = loan['student']['school']
     loan.student_class = loan['student']['class']
@@ -131,8 +129,7 @@ export class CrudService {
               this.fix_fix(res['data'][idx])            
             }
         }
-        return res['data'];
-        
+        return res['data']; 
   }))
     return res
   }
@@ -145,13 +142,13 @@ export class CrudService {
         console.log('crud service: filtered_read:')
         if (component == 'loans'){
           for (var idx in res['data']) {
-            this.fix_loan(res['data'][idx]) 
+            this.fix_loan(res['data'][idx])            
           }
         } else if (component == 'fixes'){
-          for (var idx in res['data']) {
-            this.fix_fix(res['data'][idx])            
-          }
-      }
+            for (var idx in res['data']) {
+              this.fix_fix(res['data'][idx])            
+            }
+        }
         return res['data'];
         
   }))
@@ -160,7 +157,6 @@ export class CrudService {
 
   loan_instrument(loan){
     var path = `${environment.apiUrl}/api/user/loans/loanInstrument`
-    console.log(`loan instrument: ${path}`)
     
 
     var res = this.http.post(path, loan, this.get_headers()).pipe(
@@ -178,7 +174,6 @@ export class CrudService {
 
   fix_instrument(loan){
     var path = `${environment.apiUrl}/api/user/fixes/fix`
-    console.log(`loan instrument: ${path}`)
     
 
     var res = this.http.post(path, loan, this.get_headers()).pipe(
@@ -196,10 +191,9 @@ export class CrudService {
 
   end_loan(loan_id){
     const path = `${environment.apiUrl}/api/user/loans/endLoan/${loan_id}`
-    console.log(`ending loan: ${path}`)
     var res = this.http.post(path, {}, this.get_headers()).pipe(
       map(res => {
-        console.log(res)
+     
         return res['data'];
   }))
     return res
@@ -230,7 +224,7 @@ export class CrudService {
     const path = `${environment.apiUrl}/api/user/manage/demoteAdmin/${user_id}`
     const observer = this.http.post(path, {}, this.get_headers()).pipe(
       map(res => {
-        console.log(res)
+        return res;
       })
     )
     return observer

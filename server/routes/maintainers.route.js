@@ -11,7 +11,6 @@ const { model } = require("../models/maintainer.model");
 const router = express.Router();
 
 router.post("/create", (req, res, next) => {
-    console.log(req.body.maintainerPhone)
     const maintainer = new Maintainer({
         maintainerName: req.body.maintainerName,
         maintainerPhone: req.body.maintainerPhone,
@@ -33,8 +32,6 @@ router.post("/create", (req, res, next) => {
 });
 
 router.get("", (req, res, next)=>{
-    // console.log(req.headers.user_id)
-    console.log("getting maintainers")
     Maintainer.find()
       .then(maintainers =>{
         if(!maintainers){

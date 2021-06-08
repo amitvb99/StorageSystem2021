@@ -201,12 +201,9 @@ export class InstrumentsTableComponent implements OnInit {
 }
   ngOnInit(): void {
     if (this.overrider != undefined) {
-      console.log('use custom values')
       var new_values = this.overrider(this.functions, this.instruments_meta_data)
       this.functions = new_values[0]
       this.instruments_meta_data = new_values[1]
-    } else {
-      console.log('use default values')
     }
   }
 

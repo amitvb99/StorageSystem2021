@@ -43,7 +43,6 @@ router.post("/loanInstrument", (req, res, next)=>{
                   history_rec.save();
                 Instrument.updateOne({_id: req.body.instrument}, instrument1, function(err, res) {
                     if(err) console.log(err);
-                    console.log("updated");
                 });
             })
             .catch(err => {
@@ -141,7 +140,6 @@ router.post("/endLoan/:id", (req, res, next)=>{
     history_rec.save();
     Instrument.updateOne({_id: result.instrument}, instrument1, function(err, res) {
         if(err) console.log(err);
-        console.log("updated");
     });
     })
   .catch(err=>{

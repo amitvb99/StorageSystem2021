@@ -67,7 +67,12 @@ export class LoansTableComponent implements OnInit {
       this.crud.end_loan(loan_id).subscribe(res => {
         if (res !== null){
           const index = data_to_show.indexOf(i, 0);
-          i.status = 'closed'
+          
+          this.crud.read('loans', loan_id).subscribe(loan => {
+            i.status = 'closed'
+            i.to = loan.to
+            i.closing_user = loan['closeUser']['name']
+          })
         } else {
           //output error
         }

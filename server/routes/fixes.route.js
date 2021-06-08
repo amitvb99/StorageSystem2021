@@ -44,7 +44,6 @@ router.post("/fix", (req, res, next)=>{
                   history_rec.save();
                 Instrument.updateOne({_id: req.body.instrument}, instrument1, function(err, res) {
                     if(err) console.log(err);
-                    console.log("updated");
                 });
             })
             .catch(err => {
@@ -78,8 +77,6 @@ router.get("", (req, res, next)=>{
           for (var fix of fixes) {
             if(fix.status == 'done' && fix.closeUser==null){
               fix['closeUser'] = {_id:'admin', name:'admin', username:'admin'}
-              console.log(JSON.stringify(fix))
-            }
           }
 
             res.status(200).json({
@@ -143,7 +140,6 @@ router.post("/endFix/:id", (req, res, next)=>{
     history_rec.save();
     Instrument.updateOne({_id: result.instrument}, instrument1, function(err, res) {
         if(err) console.log(err);
-        console.log("updated");
     });
     })
   .catch(err=>{
@@ -168,8 +164,6 @@ router.get("/filter/:params", (req, res, next)=>{
   status !== "status" ? map2['status'] = status:1;
   type !== "instrumentType" ? map['type'] = type:1;
   subtype !== "instrumentSubtype" ? map['subtype'] = subtype:1;
-  console.log(map);
-  console.log(map2);
   let from="1_1_1900".split('_');
   let to="31_12_2200".split('_');
   if(req.query.from && req.query.to){

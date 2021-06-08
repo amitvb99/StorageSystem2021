@@ -63,9 +63,10 @@ export class FixesTableComponent implements OnInit {
       this.crud.end_fix(fix_id).subscribe(res => {
         if (res !== null){
           const index = data_to_show.indexOf(i, 0);
-          i.status = 'done'
           this.crud.read('fixes', fix_id).subscribe(fix => {
+            i.status = 'done'
             i.to = fix.to
+            i.closing_user = fix['closeUser']['name']
           })
         } else {
           //output error

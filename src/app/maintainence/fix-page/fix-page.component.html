@@ -1,1 +1,161 @@
-<p>fix-page works!</p>
+<div class="container-of-rows">
+    <div class="row"> 
+        <div class="container">
+            <h1>Instrument: </h1>
+            <table class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Type</td>
+                    <td>{{instrument['type'] == undefined ? 'NA' : instrument['type']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Sub Type</td>
+                    <td>{{instrument['sub_type'] == undefined ? 'NA' : instrument['sub_type']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Style</td>
+                    <td>{{instrument['style'] == undefined ? 'NA' : instrument['style']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Status</td>
+                    <td>{{instrument['status'] == undefined ? 'NA' : instrument['status']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Company</td>
+                    <td>{{instrument['company'] == undefined ? 'NA' : instrument['company']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>OwnerShip</td>
+                    <td>{{instrument['ownership'] == undefined ? 'NA' : instrument['ownership']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>imprented Serial Number</td>
+                    <td>{{instrument['imprentedSerialNumber'] == undefined ? 'NA' : instrument['imprentedSerialNumber']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>general Serial Number</td>
+                    <td>{{instrument['generalSerialNumber'] == undefined ? 'NA' : instrument['generalSerialNumber']}}</td>
+                </tr>
+                
+            </table>
+        </div>
+
+        <div class="container">
+            <h1>Maintainer: </h1>
+            <table class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Name</td>
+                    <td>{{maintainer['maintainerName'] == undefined ? 'NA' : maintainer['maintainerName']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Phone Number</td>
+                    <td>{{maintainer['maintainerPhone'] == undefined ? 'NA' : maintainer['maintainerPhone']}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Address</td>
+                    <td>{{maintainer['maintainerAddress'] == undefined ? 'NA' : maintainer['maintainerAddress']}}</td>
+                </tr>
+                
+
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container">
+            <h1>Openning User: </h1>
+            <table class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Name</td>
+                    <td>{{openning_user['name'] == undefined ? 'NA' : openning_user['name']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>UserName</td>
+                    <td>{{openning_user['username'] == undefined ? 'NA' : openning_user['username']}}</td>
+                </tr>   
+            </table>
+        </div>
+
+        <div class="container">
+            <H1>Closing User</H1>
+            <table *ngIf="closing_user != undefined" class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{closing_user['_id'] == undefined ? 'NA' : closing_user['_id']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Name</td>
+                    <td>{{closing_user['name'] == undefined ? 'NA' : closing_user['name']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>UserName</td>
+                    <td>{{closing_user['username'] == undefined ? 'NA' : closing_user['username']}}</td>
+                </tr>  
+            </table>
+            <p *ngIf="closing_user != undefined"> The Loan Is not closed Yet</p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="container">
+            <h1>fix: </h1>
+            <table class="data-table">
+                <tr>
+                    <td>Id</td>
+                    <td>{{id}}</td>
+                </tr>
+    
+                <tr>
+                    <td>Starting Date: </td>
+                    <td>{{fix['from'] == undefined ? 'NA' : fix['from']}}</td>
+                </tr>
+    
+                <tr>
+                    <td>End Date:</td>
+                    <td>{{fix['to'] == undefined ? 'NA' : fix['to']}}</td>
+                </tr>   
+
+                <tr>
+                    <td>Status:</td>
+                    <td>{{fix['status'] == undefined ? 'NA' : fix['status']}}</td>
+                </tr>   
+
+                <tr>
+                    <td>Notes:</td>
+                    <td>{{fix['notes'] == undefined ? 'NA' : fix['notes']}}</td>
+                </tr>  
+
+            </table>
+            <button type="button" class="btn btn-primary" (click)="export()">Export loan</button>
+        </div>
+    </div>
+</div>
+
+

@@ -33,7 +33,6 @@ var upload = multer({storage: storage});
 
 let uploadFile = (compononet) => {
 	let upload_component_file = (req, res) => {
-		console.log(`+++++++++\n\timporting file for component \"${compononet}\"\n\tfile path is \"${req.file.filename}\"\n+++++++++`)
 		if(compononet== 'student'){
 		csv()
 		.fromFile("server/uploads/" + req.file.filename)         ////  server/files/excel3.csv
@@ -122,12 +121,11 @@ let uploadFile = (compononet) => {
 let download_table_file = (component) => {
 
 	let download_xxxxx_table_file = (req, res) => {
-    // if(component == 'maintainers')
+
 		let filter_bar = req.params.params != undefined ? req.params.params : ''
 		let filterString = req.params.params != undefined ? req.params.params.split('-') : []
 		let discreteFields = req.params.params != undefined ?  filterString[0].split('_') : ''
 
-		console.log(`exporting ${component} with filter bar: ${filter_bar}`)
 		let path="";
     if (component == 'student') {
       let Class = discreteFields[0];
@@ -160,8 +158,7 @@ let download_table_file = (component) => {
 
           csvWriter
             .writeRecords(students)
-            .then(()=>
-              console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
+            .then(()=>{}
            );
         }
       })
@@ -235,6 +232,7 @@ let download_table_file = (component) => {
       status !== "status" ? map2['status'] = status:1;
       type !== "instrumentType" ? map3['type'] = type:1;
       subtype !== "instrumentSubtype" ? map3['subtype'] = subtype:1;
+
       let from="1_1_1900".split('_');
       let to="31_12_2200".split('_');
       if(req.query.from && req.query.to){
@@ -254,16 +252,13 @@ let download_table_file = (component) => {
           const element = loans[index];
           let loan_date = element.from.split('-');
           loan_date = new Date(loan_date[0],loan_date[1]-1,loan_date[2]);
-          console.log(from_date);
-          console.log(to_date);
+
           if(from_date < loan_date &&  loan_date < to_date && element.student!=null && element.instrument!=null){
-            console.log(element);
             k[j] = element;
             j++;
           }
 
         }
-        console.log(k);
         return k;
       }).then(k=>{
         const csvWriter = createCsvWriter({
@@ -357,7 +352,6 @@ let download_table_file = (component) => {
     path= __dirname.slice(0,__dirname.length-6)+'files/fixes.csv';
     }
       setTimeout(function () {
-      console.log(path);
       res.download(path);
     }, 1000)
 
@@ -371,12 +365,10 @@ let download_file = (component) => {
 
 	let download_xxxxx_file = (req, res) => {
 		let id = req.params.id
-		console.log(`exporting ${component} with ID: ${id}`)
     let path="";
 		if (component == 'student') {
       Student.find({_id: id}).then(students=>{
         if(students){
-          console.log(students);
           const csvWriter = createCsvWriter({
             path: "server/files/student.csv",
             header: [
@@ -475,12 +467,12 @@ let download_file = (component) => {
 
       csvWriter
         .writeRecords(k)
-        .then(()=>
-          console.log("Write to bezkoder_mongodb_csvWriter.csv successfully!")
+        .then(()=>{}
       );
 
     })
     path= __dirname.slice(0,__dirname.length-6)+'files/loan.csv';
+<<<<<<< HEAD
 		} else if(component == 'fix'){
       Fix.find({_id:id}).populate({path: 'instrument',select:'generalSerialNumber type sub_type style imprentedSerialNumber ownership status company  -_id'})
       .populate({path: 'maintainer', select: 'maintainerName maintainerPhone maintainerAddress -_id'})
@@ -513,6 +505,11 @@ let download_file = (component) => {
     }
 		setTimeout(function () {
       console.log(path);
+=======
+		}
+
+    setTimeout(function () {
+>>>>>>> 20c47bb (fixes)
       res.download(path);
     }, 1000)
 	}

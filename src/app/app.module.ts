@@ -25,6 +25,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { ImportsModule } from './imports/imports.module';
 import { MaintainersModule } from './maintainers/maintainers.module';
 import { MaintainenceModule } from './maintainence/maintainence.module';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MaintainenceModule } from './maintainence/maintainence.module';
     NavBarComponent,
     HomePageComponent,
     TableExampleComponent,
+    NotificationsComponent,
     // LoginFormComponent
   ],
   imports: [

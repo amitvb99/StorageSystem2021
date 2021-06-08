@@ -24,18 +24,13 @@ export class UsersTableComponent implements OnInit {
       'username':'Username',
       'privilege':'Privilege',
     },
-    actions:['remove','show', 'promote', 'demote'],
+    actions:['remove', 'promote', 'demote'],
     actions_metadata:{
       'remove':{
         icon:'fas fa-trash-alt',
         condition:{
         }
       },
-      'show':{
-        icon:'fas fa-eye',
-        condition:{
-        }
-    },
       'promote':{
         icon:'fas fa-angle-double-up',
         condition:{
@@ -121,13 +116,13 @@ export class UsersTableComponent implements OnInit {
       })
       },
     'promote': (data_to_show,i) => {
-      console.log(i)
+
       this.crud.promote_user(i['_id']).subscribe(res => {
         i['privilege'] = 'admin'
       })
     },
     'demote': (data_to_show,i) => {
-      console.log(i)
+ 
       this.crud.demote_user(i['_id']).subscribe(res => {
         i['privilege'] = 'user'
       })

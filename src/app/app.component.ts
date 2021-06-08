@@ -21,6 +21,7 @@ import { ImportsPageComponent } from './imports/imports-page/imports-page.compon
 import { MaintainersTableComponent } from './maintainers/maintainers-table/maintainers-table.component';
 import { MaintainerPageComponent } from './maintainers/maintainer-page/maintainer-page.component';
 import { FixesPageComponent } from './maintainence/fixes-page/fixes-page.component';
+import { FixPageComponent } from './maintainence/fix-page/fix-page.component';
 
 
 const permission_system : permission_system_t = {
@@ -149,11 +150,18 @@ const meta_data  = {
       component:LoanPageComponent
     },
     {
-      name:'loans',
+      name:'maintainers',
       url:'#/maintainers/:id',
       permission:'user',
       not_apage:true,
       component:MaintainerPageComponent
+    },
+    {
+      name:'fixes',
+      url:'#/fixes/:id',
+      permission:'user',
+      not_apage:true,
+      component:FixPageComponent
     }
   ]}
 @Component({

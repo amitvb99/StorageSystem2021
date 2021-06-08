@@ -51,7 +51,7 @@ export class AccountsService {
   }
 
   register(user){
-    console.log(user)
+  
 
     return this.http.post(`${environment.apiUrl}/api/user/register`, user)
     .pipe(map(user => {
