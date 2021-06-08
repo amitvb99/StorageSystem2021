@@ -11,6 +11,8 @@ import { InstrumentsModule } from '../instruments/instruments.module';
     GenericElementsModule,
     InstrumentsModule,
     CommonModule
-  ]
+  ],
+  exports: [MaintainersTableComponent]
+
 })
 export class MaintainersModule { }

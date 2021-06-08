@@ -146,6 +146,24 @@ export class CrudService {
     return res
   }
 
+  fix_instrument(loan){
+    var path = `${environment.apiUrl}/api/user/maintainers/fix`
+    console.log(`loan instrument: ${path}`)
+    
+
+    var res = this.http.post(path, loan, this.get_headers()).pipe(
+      map(res => {
+        const loan_id =  res['data'];
+        path = `${environment.apiUrl}/api/user/maintainers/${loan_id}`
+        return this.http.get(path, this.get_headers()).pipe(map(
+          res => {
+            return res["data"]
+          }
+      ))
+  }))
+    return res
+  }
+
   end_loan(loan_id){
     const path = `${environment.apiUrl}/api/user/loans/endLoan/${loan_id}`
     console.log(`ending loan: ${path}`)

@@ -1,0 +1,8 @@
+<app-add-fix [global_cfg]="global_cfg"  [maintainer]="maintainer" [instrument]="instrument" [show_functions]="show_functions"></app-add-fix>
+<div *ngIf="(show_maintainers || show_instruments)"   class="back-container">
+    <i class="fas fa-chevron-circle-left back-button fa-4x" (click)="back_to_fixes_table()" ></i>
+</div>
+
+<app-fixes-table  [global_cfg]="global_cfg"  *ngIf="!(show_maintainers || show_instruments)"></app-fixes-table>
+<app-maintainers-table *ngIf="show_maintainers" [overrider]="maintainer_overrider"></app-maintainers-table>
+<app-instruments-table *ngIf="show_instruments" [overrider]="instrument_overrider"></app-instruments-table>
