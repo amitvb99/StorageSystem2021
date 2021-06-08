@@ -20,7 +20,7 @@ export class LoansTableComponent implements OnInit {
     add_button_enabled: false,
     export_button_enabled: false,
     columns_count:9,
-    columns:['instrument', 'student_name', 'student_school', 'student_class', 'openning_user', 'closing_user', 'notes', 'from', 'status', 'to'],
+    columns:['instrument', 'student_name', 'student_school', 'student_class', 'openning_user', 'closing_user', 'from', 'status', 'to'],
     headers:{
       'instrument':     'Instrument',
       'student_name':   'Student Name',
@@ -28,7 +28,6 @@ export class LoansTableComponent implements OnInit {
       'student_class':  'Class',
       'openning_user':  'Opening User',
       'closing_user':   'Closing User',
-      'notes':          'Notes',
       'from':           'Start Date',
       'status':         'Status',
       'to':             'End Date'

@@ -5,12 +5,10 @@ import { CrudService } from 'src/app/shared-services/crud.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-
-
 @Component({
-  selector: 'app-add-loan',
-  templateUrl: './add-loan.component.html',
-  styleUrls: ['./add-loan.component.css'],
+  selector: 'app-add-fix',
+  templateUrl: './add-fix.component.html',
+  styleUrls: ['./add-fix.component.css'],
   animations: [
     trigger('openClose',[
       state('opened', style({
@@ -26,45 +24,38 @@ import { saveAs } from 'file-saver';
       ]),
       transition("closed => opened",[
         animate('0.35s')
-      ]),
-        
+      ]), 
     ])
   ]
 })
+export class AddFixComponent implements OnInit {
 
-
-
-export class AddLoanComponent implements OnInit {
-
-  @Input() student: any; 
+  @Input() maintainer: any; 
   @Input() instrument: any; 
   @Input() show_functions: any;
   @Input() global_cfg: any = {};
-
-  add_loan_is_open = false
+  
+  add_fix_is_open = false
   constructor(private http: HttpClient, private accounts:AccountsService, private crud:CrudService) { }
   open(){
-    this.add_loan_is_open = ! this.add_loan_is_open
+    this.add_fix_is_open = ! this.add_fix_is_open
   }
 
-  loan(){
-    const loan = {
-      student:    this.student._id,
+  fix(){
+    const fix = {
+      maintainer:    this.maintainer._id,
       instrument: this.instrument._id,
       user:       this.accounts.get_user_id(),
       notes:      ''      
     }
-    this.crud.loan_instrument(loan).subscribe(
+    this.crud.fix_instrument(fix).subscribe(
       res => {
         res.subscribe( res => {
-          console.log(res)
-          res.student_name = res['student']['fName']
-          res.student_school = res['student']['school']
-          res.student_class = res['student']['class']
-          res.student_class = res['student']['class']
+          res.maintainer_name = res['maintainer']['maintainerName']
+          res.maintainer_phone = res['maintainer']['maintainerPhone']
+          res.maintainer_address = res['maintainer']['maintainerAddress']
           res.openning_user = res['openUser']['name']
           res.instrument = res['instrument']['generalSerialNumber']
-
           if (res['closeUser'] != undefined)
              res.closing_user = res['closeUser']['name']
           else {
@@ -81,13 +72,13 @@ export class AddLoanComponent implements OnInit {
         })
       }
     )
-    this.add_loan_is_open = ! this.add_loan_is_open
-    this.show_functions['loan']()
+    this.add_fix_is_open = ! this.add_fix_is_open
+    this.show_functions['fix']()
   }
 
   remove_field(field){
-    if (field == "student") {
-      this.student = undefined
+    if (field == "maintainer") {
+      this.maintainer = undefined
     } else {
       this.instrument = undefined
     }
@@ -95,35 +86,20 @@ export class AddLoanComponent implements OnInit {
 
   add_field(field){
     this.show_functions[field]()
-    // if (field == "student") {
-    //   this.student = {
-    //     'name': 'baraa',
-    //     'school': 'Ibn Sena',
-    //     'level': '3',
-    //     'class': '7',
-    //   }
-    // } else {
-    //   this.instrument = {
-    //     'type': 'A',
-    //     'subtype': 'A1',
-    //     'style': 's1',
-    //     'id': '0365982455'
-    //   }
-    // }
   }
 
   export(){
     alert('exporting...')
-    let url = `${environment.apiUrl}/api/user/imports/table/loans/${this.global_cfg['get_filter_bar']()}`
+    let url = `${environment.apiUrl}/api/user/imports/table/fixes/${this.global_cfg['get_filter_bar']()}`
     this.http.get(url, {responseType: "blob"})
               .toPromise()
               .then(blob => {
-                  saveAs(blob, `loans.csv`); 
+                  saveAs(blob, `maintainers.csv`); 
               })
               .catch(err => console.error("download error = ", err))
 
   }
-  
+
   ngOnInit(): void {
   }
 

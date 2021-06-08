@@ -75,6 +75,13 @@ router.get("", (req, res, next)=>{
     .populate('openUser')
     .populate('closeUser').then(fixes => {
         if(fixes) {
+          for (var fix of fixes) {
+            if(fix.status == 'done' && fix.closeUser==null){
+              fix['closeUser'] = {_id:'admin', name:'admin', username:'admin'}
+              console.log(JSON.stringify(fix))
+            }
+          }
+
             res.status(200).json({
                 message: "success",
                 data: fixes
@@ -94,9 +101,6 @@ router.get("/:id", (req, res, next)=>{
   .populate('instrument')
   .populate('openUser')
   .populate('closeUser').then(fix => {
-    if(fix.status == 'done' && fix.closeUser==null){
-      fix['closeUser'] = {_id:'admin', name:'admin', username:'admin'}
-    }
       if(fix) {
           res.status(200).json({
               message: "success",
@@ -112,7 +116,6 @@ router.get("/:id", (req, res, next)=>{
 });
 
 router.post("/endFix/:id", (req, res, next)=>{
-
   var datetime = new Date();
   const fix =  new Fix({
     _id: req.params.id,

@@ -24,6 +24,7 @@ import { UsersModule } from './users/users.module';
 import {MatRadioModule} from '@angular/material/radio';
 import { ImportsModule } from './imports/imports.module';
 import { MaintainersModule } from './maintainers/maintainers.module';
+import { MaintainenceModule } from './maintainence/maintainence.module';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MaintainersModule } from './maintainers/maintainers.module';
     MaintainersModule,
     TestsModule,
     LoansModule,
+    MaintainenceModule,
     UsersModule,
     BrowserModule,
     AppRoutingModule,

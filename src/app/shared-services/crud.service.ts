@@ -72,6 +72,27 @@ export class CrudService {
     }))
     return res
   }
+  fix_fix(loan){
+
+    loan.maintainer_name = loan['maintainer']['maintainerName']
+    loan.maintainer_phone = loan['maintainer']['maintainerPhone']
+    loan.maintainer_address = loan['maintainer']['maintainerAddress']
+    loan.openning_user = loan['openUser']['name']
+    loan.instrument = loan['instrument']['generalSerialNumber']
+    if (loan['closeUser'] != undefined)
+    
+       loan.closing_user = loan['closeUser']['name']
+    else {
+
+      console.log('dgfdfghfdgdfg')
+      console.log(loan['closeUser'])
+      loan.closing_user = ''
+    }
+
+    if (loan.closing_user == '') loan.closing_user = 'X'
+    if (loan.to == '') loan.to = 'X'
+    if (loan.notes == '') loan.notes = 'X'  
+  }
 
   fix_loan(loan){
     console.log("loan is\n")
@@ -94,6 +115,7 @@ export class CrudService {
     if (loan.to == '') loan.to = 'X'
     if (loan.notes == '') loan.notes = 'X'  
   }
+
   read(component:string,id:string = '',query_string:string = ''){
     const path = this.get_path(component,query_string,id)
     var res = this.http.get(path, this.get_headers()).pipe(
@@ -104,6 +126,10 @@ export class CrudService {
           for (var idx in res['data']) {
             this.fix_loan(res['data'][idx])            
           }
+        } else if (component == 'fixes' && id == ''){
+            for (var idx in res['data']) {
+              this.fix_fix(res['data'][idx])            
+            }
         }
         return res['data'];
         
@@ -121,7 +147,11 @@ export class CrudService {
           for (var idx in res['data']) {
             this.fix_loan(res['data'][idx]) 
           }
-        }
+        } else if (component == 'fixes'){
+          for (var idx in res['data']) {
+            this.fix_fix(res['data'][idx])            
+          }
+      }
         return res['data'];
         
   }))
@@ -146,12 +176,39 @@ export class CrudService {
     return res
   }
 
+  fix_instrument(loan){
+    var path = `${environment.apiUrl}/api/user/fixes/fix`
+    console.log(`loan instrument: ${path}`)
+    
+
+    var res = this.http.post(path, loan, this.get_headers()).pipe(
+      map(res => {
+        const loan_id =  res['data'];
+        path = `${environment.apiUrl}/api/user/fixes/${loan_id}`
+        return this.http.get(path, this.get_headers()).pipe(map(
+          res => {
+            return res["data"]
+          }
+      ))
+  }))
+    return res
+  }
+
   end_loan(loan_id){
     const path = `${environment.apiUrl}/api/user/loans/endLoan/${loan_id}`
     console.log(`ending loan: ${path}`)
     var res = this.http.post(path, {}, this.get_headers()).pipe(
       map(res => {
         console.log(res)
+        return res['data'];
+  }))
+    return res
+  }
+
+  end_fix(loan_id){
+    const path = `${environment.apiUrl}/api/user/fixes/endFix/${loan_id}`
+    var res = this.http.post(path, {}, this.get_headers()).pipe(
+      map(res => {
         return res['data'];
   }))
     return res

@@ -7,6 +7,8 @@ const csv = require('csvtojson');
 const Student = require("../models/student.model");
 const uploadFolder = __basedir + '/uploads/';
 const exports_folder = __basedir + '/downloads/';
+const files_folder = __basedir + '/files/';
+
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const Instrument = require("../models/instrument.model");
 const Maintainer = require("../models/maintainer.model");
@@ -262,6 +264,7 @@ let download_table_file = (component) => {
 let download_file = (component) => {
 
 	let download_xxxxx_file = (req, res) => {
+    console.log('istighfar')
 		let id = req.params.id
 		console.log(`exporting ${component} with ID: ${id}`)
     let path="";
@@ -294,7 +297,7 @@ let download_file = (component) => {
            );
         }
       })
-      path= __dirname.slice(0,__dirname.length-6)+'files\\student.csv';
+      path= __dirname.slice(0,__dirname.length-6)+'files/student.csv';
 		} else if (component == 'instrument') {
       Instrument.find({_id: id}).then(instruments=>{
         if(instruments){
@@ -396,6 +399,8 @@ router.get("/instruments/:id", download_file('instrument'));
 
 router.get("/maintainers/:id", download_file('maintainer'));
 
+router.get("/fixes/:id", download_file('fix'));
+
 router.get("/loans/:id", download_file('loan'));
 
 
@@ -404,6 +409,8 @@ router.get("/table/students/:params", download_table_file('student'));
 router.get("/table/instruments/:params", download_table_file('instrument'));
 
 router.get("/table/maintainers/", download_table_file('maintainer'));
+
+router.get("/table/fixes/:params", download_table_file('fix'));
 
 router.get("/table/loans/:params", download_table_file('loan'));
 

@@ -135,7 +135,6 @@ export class MaintainersTableComponent implements OnInit {
   },
   'show': (data_to_show,i) => {
     this.router.navigate(['/maintainers/', i['_id']]);
-    // alert(`${JSON.stringify(i)}`)
   },
 }
 
@@ -144,6 +143,13 @@ export class MaintainersTableComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (this.overrider != undefined) {
+      var new_values = this.overrider(this.functions, this.students_meta_data)
+      this.functions = new_values[0]
+      this.students_meta_data = new_values[1]
+    } else {
+      console.log('use default values')
+    }
   }
 
 }

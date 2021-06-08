@@ -1,50 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { InstrumentsTableComponent } from 'src/app/instruments/instruments-table/instruments-table.component';
-import { DeclareFunctionStmt } from '@angular/compiler';
 
 @Component({
-  selector: 'app-loans-page',
-  templateUrl: './loans-page.component.html',
-  styleUrls: ['./loans-page.component.css']
+  selector: 'app-fixes-page',
+  templateUrl: './fixes-page.component.html',
+  styleUrls: ['./fixes-page.component.css']
 })
-export class LoansPageComponent implements OnInit {
-
+export class FixesPageComponent implements OnInit {
   global_cfg: any = [];
-  student = undefined
+  maintainer = undefined
   instrument = undefined
   
   show_instruments = false
-  show_students = false
+  show_maintainers = false
 
   show_functions = {
-    'student': () => {
+    'maintainer': () => {
       this.show_instruments = false
-      this.show_students = true
+      this.show_maintainers = true
     },
     'instrument': () => {
       this.show_instruments = true
-      this.show_students = false
+      this.show_maintainers = false
     },
-    'loan': () => {
+    'fix': () => {
       this.show_instruments = false
-      this.show_students = false
+      this.show_maintainers = false
     }
   }
   choose_student(s) {
-    this.student = s
+    this.maintainer = s
   }
 
   choose_instrument(i) {
     this.instrument = i
   }
 
-  
-  student_overrider = (functions, table_metadata) => {
+  maintainer_overrider = (functions, table_metadata) => {
     var new_functions = {
       'choose': (data_to_show, i) =>
           {
             console.log(i)
-            this.student = i            
+            this.maintainer = i            
           }
         }
     table_metadata.actions = ['choose']
@@ -72,7 +68,7 @@ export class LoansPageComponent implements OnInit {
     table_metadata.actions = ['choose']
     table_metadata.add_button_enabled = false;
     table_metadata.export_button_enabled = false;
-    
+
     table_metadata.actions_metadata = {
       'choose':{
         icon:'fas fa-share-square',
@@ -83,15 +79,15 @@ export class LoansPageComponent implements OnInit {
     var res = [new_functions, table_metadata]
     return res
   }
+
   constructor() { }
 
   ngOnInit(): void {
-    
   }
 
-  back_to_leans_table() {
+  back_to_fixes_table() {
     this.show_instruments = false
-    this.show_students = false
+    this.show_maintainers = false
   }
 
 }

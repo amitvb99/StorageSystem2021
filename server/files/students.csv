@@ -1,4 +1,5 @@
 _id,first name,last name,school,level,class,parent1Name,parent2Name,parent1PhoneNumber,parent2PhoneNumber,parent1Email,parent2Email
+<<<<<<< HEAD
 60b0edef81024483947263fa,dasdas,dasd,dfg,2,12e,,,,,,
 60bc9b1318010435b87ad38e,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
 60bc9b1318010435b87ad38f,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
@@ -45,3 +46,6 @@ _id,first name,last name,school,level,class,parent1Name,parent2Name,parent1Phone
 60be181b2043f35650e421d7,mahmoud,saleh,hah,nan,na,nnn,nan,naan,nana,nan,na
 60be181b2043f35650e421d8,mahmoud1,saleh2,hah,asd,as,fas,asd,as,as,asas,as
 60be181b2043f35650e421d9,mahmoud3,saleh2,hah,asd,as,fas,asd,as,as,asas,as
+=======
+609a87ad353a84b827078c1d,Baraa,Natour,Amal,4,3,Baraa,Baraa,058058,058058,058058,058058
+>>>>>>> d84da9ca01229f856e22f0d9186ef2484a8a8ad1

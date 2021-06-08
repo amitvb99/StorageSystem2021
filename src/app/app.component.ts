@@ -20,6 +20,7 @@ import { LoanPageComponent } from './loans/loan-page/loan-page.component';
 import { ImportsPageComponent } from './imports/imports-page/imports-page.component';
 import { MaintainersTableComponent } from './maintainers/maintainers-table/maintainers-table.component';
 import { MaintainerPageComponent } from './maintainers/maintainer-page/maintainer-page.component';
+import { FixesPageComponent } from './maintainence/fixes-page/fixes-page.component';
 
 
 const permission_system : permission_system_t = {
@@ -55,6 +56,12 @@ const meta_data  = {
       url:'#/loans',
       permission:'user',
       component:LoansPageComponent
+    },
+    {
+      name:'Maintainence',
+      url:'#/maintainence',
+      permission:'user',
+      component:FixesPageComponent
     },
     {
       name:'Instruments',

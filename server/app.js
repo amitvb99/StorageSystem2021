@@ -26,23 +26,32 @@ var cors = require('cors')
 // mongoose.connect("mongodb://localhost:27017/myapp")
 // mongoose.connect("mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/test_database?retryWrites=true&w=majority")
 test_mode = false;
+local_host = false;
 for (let i in process.argv) {
 
-    if (process.argv[i] == '-test_mode') {
-        test_mode = true
-    }
+  if (process.argv[i] == '-test_mode') {
+    test_mode = true
+}
+
+if (process.argv[i] == '-local') {
+  local_host = true
+}
+
 }
 let url="";
 if (test_mode) {
     url="mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/test_database?retryWrites=true&w=majority";
     console.log('We Are In Test Mode.')
+} else if (local_host) {
+    url="mongodb://localhost:27017/myapp";
+    console.log('We Are In Mahmoud Mode.[جنن ابوي]')
 } else {
     url="mongodb+srv://mahmoud:egqL9abn@cluster0.uw98a.mongodb.net/database?retryWrites=true&w=majority";
     console.log('We Are In Production Mode.')
 }
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect("mongodb://localhost:27017/myapp", { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
 
   .then(()=>{
     console.log('Connected to database!')

@@ -172,10 +172,11 @@ export  class TableComponent implements OnInit {
   export(){
     alert('exporting...')
     let url = `${environment.apiUrl}/api/user/imports/table/${this.meta_data.component_name}/${this.get_filter_bar()}`
+    console.log(`url is ${url}`)
     this.http.get(url, {responseType: "blob"})
               .toPromise()
               .then(blob => {
-                  saveAs(blob, `${this.meta_data.component_name}.gz`); 
+                  saveAs(blob, `${this.meta_data.component_name}.csv`); 
               })
               .catch(err => console.error("download error = ", err))
 
