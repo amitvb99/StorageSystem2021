@@ -118,7 +118,7 @@ export class AddLoanComponent implements OnInit {
     this.http.get(url, {responseType: "blob"})
               .toPromise()
               .then(blob => {
-                  saveAs(blob, `loans.gz`); 
+                  saveAs(blob, `loans.csv`); 
               })
               .catch(err => console.error("download error = ", err))
 

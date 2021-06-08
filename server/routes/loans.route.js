@@ -75,6 +75,12 @@ router.get("", (req, res, next)=>{
     .populate('openUser')
     .populate('closeUser').then(loans => {
         if(loans) {
+          loans.forEach(loan => {
+            if(loan.status == 'closed' && loan.closeUser==null){
+              loan['closeUser'] = {_id:'admin', name:'admin', username:'admin'}
+            }
+          })
+          
             res.status(200).json({
                 message: "success",
                 data: loans

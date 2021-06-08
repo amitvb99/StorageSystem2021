@@ -43,7 +43,7 @@ export class AddFixComponent implements OnInit {
 
   fix(){
     const fix = {
-      student:    this.maintainer._id,
+      maintainer:    this.maintainer._id,
       instrument: this.instrument._id,
       user:       this.accounts.get_user_id(),
       notes:      ''      
@@ -51,13 +51,11 @@ export class AddFixComponent implements OnInit {
     this.crud.fix_instrument(fix).subscribe(
       res => {
         res.subscribe( res => {
-          console.log(res)
           res.maintainer_name = res['maintainer']['maintainerName']
           res.maintainer_phone = res['maintainer']['maintainerPhone']
           res.maintainer_address = res['maintainer']['maintainerAddress']
           res.openning_user = res['openUser']['name']
           res.instrument = res['instrument']['generalSerialNumber']
-
           if (res['closeUser'] != undefined)
              res.closing_user = res['closeUser']['name']
           else {
@@ -92,11 +90,11 @@ export class AddFixComponent implements OnInit {
 
   export(){
     alert('exporting...')
-    let url = `${environment.apiUrl}/api/user/imports/table/maintainers/${this.global_cfg['get_filter_bar']()}`
+    let url = `${environment.apiUrl}/api/user/imports/table/fixes/${this.global_cfg['get_filter_bar']()}`
     this.http.get(url, {responseType: "blob"})
               .toPromise()
               .then(blob => {
-                  saveAs(blob, `maintainers.gz`); 
+                  saveAs(blob, `maintainers.csv`); 
               })
               .catch(err => console.error("download error = ", err))
 

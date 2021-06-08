@@ -55,11 +55,11 @@ export class InstrumentPageComponent implements OnInit {
 
   export() {
     alert('exporting')
-    let url = `${environment.apiUrl}/api/user/imports/instruments/:${this.id}`
+    let url = `${environment.apiUrl}/api/user/imports/instruments/${this.id}`
     this.http.get(url, {responseType: "blob"})
               .toPromise()
               .then(blob => {
-                  saveAs(blob, `instrument_${this.id}.gz`); 
+                  saveAs(blob, `instrument_${this.id}.csv`); 
               })
               .catch(err => console.error("download error = ", err))
   }
