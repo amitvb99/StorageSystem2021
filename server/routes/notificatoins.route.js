@@ -40,20 +40,26 @@ router.delete("/:id",(req,res,next)=>{
   });
 });
 
-router.put("/markAsSeen",(req,res,next)=>{
-  let notifications = req.body.notifications;
-  for(var i=0; i<notifications.length ; i++){
+router.put("/markAsSeen/:id",(req,res,next)=>{
+  let id = req.params.id;
+  Notification.find({_id: id}).then(not =>{
+    if(not){
     const notification = new Notification({
-      _id: notifications[i]["_id"],
-      data: notifications[i]["data"],
+      _id: id,
+      data: not.data,
       seenStatus: true
     });
-    Notification.findOneAndUpdate({_id: notifications[i]["_id"]}, notification).then(result =>{
-      console.log(result);
+    Notification.findOneAndUpdate({_id: id}, notification).then(result =>{
+      res.status(200).json({
+        message: "success"
+      });
     });
   }
-  res.status(200).json({
-    message: "success"
+  else{
+    res.status(404).json({
+      message: "fail"
+    });
+  }
   });
 });
 
