@@ -472,7 +472,6 @@ let download_file = (component) => {
 
     })
     path= __dirname.slice(0,__dirname.length-6)+'files/loan.csv';
-<<<<<<< HEAD
 		} else if(component == 'fix'){
       Fix.find({_id:id}).populate({path: 'instrument',select:'generalSerialNumber type sub_type style imprentedSerialNumber ownership status company  -_id'})
       .populate({path: 'maintainer', select: 'maintainerName maintainerPhone maintainerAddress -_id'})
@@ -505,11 +504,6 @@ let download_file = (component) => {
     }
 		setTimeout(function () {
       console.log(path);
-=======
-		}
-
-    setTimeout(function () {
->>>>>>> 20c47bb (fixes)
       res.download(path);
     }, 1000)
 	}
