@@ -231,4 +231,41 @@ export class CrudService {
   }
 
 
+  read_notifications(){
+    const path = `${environment.apiUrl}/api/user/notifications`
+    const observer = this.http.get(path, this.get_headers()).pipe(
+      map(res => {
+        console.log('read_notifications:')
+        console.log(res)
+        return res;
+      })
+    )
+    return observer
+  }
+
+  delete_notification(notif_id){
+    const path = `${environment.apiUrl}/api/user/manage/notifications/${notif_id}`
+    const observer = this.http.delete(path, this.get_headers()).pipe(
+      map(res => {
+        console.log('delete_notification:')
+        console.log(res)
+        return res;
+      })
+    )
+    return observer
+  }
+
+  see_notification(notif_id){
+    const path = `${environment.apiUrl}/api/user/markAsSeen/${notif_id}`
+    const observer = this.http.put(path,this.get_headers()).pipe(
+      map(res => {
+        console.log('see_notification:')
+        console.log(res)
+        return res;
+      })
+    )
+    return observer
+  }
+
+
 }

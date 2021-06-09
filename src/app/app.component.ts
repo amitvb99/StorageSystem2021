@@ -22,6 +22,7 @@ import { MaintainersTableComponent } from './maintainers/maintainers-table/maint
 import { MaintainerPageComponent } from './maintainers/maintainer-page/maintainer-page.component';
 import { FixesPageComponent } from './maintainence/fixes-page/fixes-page.component';
 import { FixPageComponent } from './maintainence/fix-page/fix-page.component';
+import { NotificationPopupComponent } from './notifications/notification-popup/notification-popup.component';
 
 
 const permission_system : permission_system_t = {
@@ -88,6 +89,7 @@ const meta_data  = {
       permission:'user',
       component:ImportsPageComponent
     },
+
     // {
     //   name:'Orders',
     //   url:'#/orders',

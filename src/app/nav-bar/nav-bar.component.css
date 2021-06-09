@@ -27,7 +27,23 @@
     display:none;
 }
 
+@media only screen and (max-width: 575px){
+
+    .screen {
+        display: none;
+    }
+    .phone {
+        color: rgba(255,255,255,.75);
+    }
+}
 @media only screen and (min-width: 576px){
+
+    .screen {
+
+    }
+    .phone {
+        display: none;
+    }
 
     .loggedin_sign{
             width:100%;

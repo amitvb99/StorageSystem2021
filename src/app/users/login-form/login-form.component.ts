@@ -54,7 +54,7 @@ export class LoginFormComponent implements OnInit {
     // var user = {'username':form.value.username,'password':form.value.password}
     this.accounts.login(user,this.path)
     .subscribe(val =>{
-      this.router.navigateByUrl('users')
+      this.router.navigateByUrl('students')
     })
   }
 

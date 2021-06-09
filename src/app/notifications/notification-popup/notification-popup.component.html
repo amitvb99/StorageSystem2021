@@ -1,0 +1,23 @@
+ <div  class="config">
+  <i #anchor (click)="onToggle()" [ngClass]="{'fas':true, 'fa-bell':true, 'fa-2x':true, 'mybell':true}"></i>
+  <span class="nof_notifications" *ngIf="nof_notifications > 0" (click)="onToggle()">{{nof_notifications}}</span>
+
+  </div>
+  <kendo-popup
+    [anchor]="anchor"
+    (anchorViewportLeave)="show = false"
+    *ngIf="show"
+  >
+  <div class="content">
+    <div *ngFor="let notification of notifications; let i = index" [ngClass]="{'notification':true, 'seen':notification['seenStatus']}" (click)="see_notification(i, $event)"> 
+        <i class="fas fa-times close-sign" (click)="delete_notification(i, $event)"></i>
+        {{notification['data']}}
+    </div> 
+
+    <div *ngIf="nof_notifications == 0" [ngClass]="{'notification':true, 'seen':notification['seenStatus']}"> 
+      No Notifications
+  </div> 
+
+  </div>
+</kendo-popup> 
+  

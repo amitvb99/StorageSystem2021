@@ -12,7 +12,6 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HomePageComponent } from './home-page/home-page.component';
 import { TableExampleComponent } from './table-example/table-example.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginFormComponent } from './users/login-form/login-form.component'
 import { GenericElementsModule } from './generic-elements/generic-elements.module';
 import { StudentsModule } from './students/students.module';
 import { InstrumentsModule } from './instruments/instruments.module';
@@ -25,7 +24,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { ImportsModule } from './imports/imports.module';
 import { MaintainersModule } from './maintainers/maintainers.module';
 import { MaintainenceModule } from './maintainence/maintainence.module';
-import { NotificationsComponent } from './notifications/notifications.component';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,6 @@ import { NotificationsComponent } from './notifications/notifications.component'
     NavBarComponent,
     HomePageComponent,
     TableExampleComponent,
-    NotificationsComponent,
     // LoginFormComponent
   ],
   imports: [
@@ -55,7 +53,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     NgbModule,
     HttpClientModule,
     ImportsModule,
-    MatRadioModule
+    MatRadioModule,
+    NotificationsModule
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}],
   bootstrap: [AppComponent],

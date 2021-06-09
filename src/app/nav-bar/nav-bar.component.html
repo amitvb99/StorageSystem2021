@@ -2,6 +2,8 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-navbar " >
     <a class="navbar-brand" href="#">Logo</a>
 
+    <app-notification-popup *ngIf="isloggedin()" class="phone"></app-notification-popup>
+
     <button class="navbar-toggler" type="button" (click)="collapse()" [attr.aria-expanded]="!is_collapsed" data-toggle="collapse" aria-controls="collapsible_navbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,8 +23,11 @@
             </div>
             <!-- (page.dropdown != undefined) is a sufficient condition for dropdown list in nav bar -->
         </li>
-
+        <li  *ngIf="isloggedin()" class="nav-link screen">
+          <app-notification-popup></app-notification-popup>
+        </li>
     </ul>
+    
     <div [ngClass]="{'loggedin_sign': true , 'hidden':(nav_meta_data.user_loggedin_enabled != true)}"  >
       <i [ngClass]="{'fas':true, 'fa-user':true, 'loggedin-user-icon':isloggedin(), 'loggedout-user-icon':!isloggedin()}" ></i>
       <span class="nav-link "  style="display:inline-block;color:white;padding-left: 5px;" href="">{{get_user_firs_name()}}</span>
@@ -33,5 +38,6 @@
       
     </div>
 </div>
+
   </nav>
 

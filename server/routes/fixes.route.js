@@ -74,11 +74,6 @@ router.get("", (req, res, next)=>{
     .populate('openUser')
     .populate('closeUser').then(fixes => {
         if(fixes) {
-          for (var fix of fixes) {
-            if(fix.status == 'done' && fix.closeUser==null){
-              fix['closeUser'] = {_id:'admin', name:'admin', username:'admin'}
-          }
-
             res.status(200).json({
                 message: "success",
                 data: fixes

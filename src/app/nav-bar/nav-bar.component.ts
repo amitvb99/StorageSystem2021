@@ -48,8 +48,8 @@ export class NavBarComponent implements OnInit {
   log_in_out(){
     if (this.accounts.isloggedin()){
       this.accounts.logout();
-      this.router.navigateByUrl('students')
-      //refirect to home
+      this.router.navigateByUrl('login')
+      //redirect to home
     } else {
       this.router.navigateByUrl('login')
       //redirect to login page
