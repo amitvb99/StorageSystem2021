@@ -1,9 +1,9 @@
 const express = require("express");
 const Notification = require("../models/notifications.model");
-
+const checkAdminAuth = require("../middleware/check-admin-auth")
 const router = express.Router();
 
-router.get("", (req, res, next)=>{
+router.get("", checkAdminAuth,(req, res, next)=>{
   Notification.find()
       .then(notifications =>{
         if(!notifications){
@@ -26,7 +26,7 @@ router.get("", (req, res, next)=>{
 
 
 
-router.delete("/:id",(req,res,next)=>{
+router.delete("/:id",checkAdminAuth,(req,res,next)=>{
   Notification.deleteOne({ _id: req.params.id }).then(instrument => {
     res.status(200).json({
         message: "success",
@@ -40,7 +40,7 @@ router.delete("/:id",(req,res,next)=>{
   });
 });
 
-router.put("/markAsSeen/:id",(req,res,next)=>{
+router.put("/markAsSeen/:id",checkAdminAuth,(req,res,next)=>{
   let id = req.params.id;
   Notification.find({_id: id}).then(not =>{
     if(not){

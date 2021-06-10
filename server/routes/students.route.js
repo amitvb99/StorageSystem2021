@@ -33,7 +33,7 @@ filename:(req,file,cb)=>{
 
 const router = express.Router();
 
-router.post("/create", (req, res, next)=>{
+router.post("/create", checkAuth,(req, res, next)=>{
     const student = new Student({
       fName: req.body.fName,
       lName: req.body.lName,
@@ -84,7 +84,7 @@ router.post("/insertExcel",multer({ storage: storage }).single("excel"),(req, re
           });
 });
 
-router.get("", (req, res, next)=>{
+router.get("",checkAuth, (req, res, next)=>{
     Student.find()
       .then(students =>{
         if(!students){
@@ -107,7 +107,7 @@ router.get("", (req, res, next)=>{
 
 
 //update
-router.put("/:id", (req, res, next)=>{
+router.put("/:id", checkAuth,(req, res, next)=>{
   console.log(req.body.parent1Email)
 
   const student = new Student({
@@ -139,7 +139,7 @@ router.put("/:id", (req, res, next)=>{
     });
 });
 
-router.get("/:id", (req, res, next)=>{
+router.get("/:id", checkAuth,(req, res, next)=>{
   Student.findOne({_id: req.params.id}).then(student => {
     if (student) {
       Loan.find({student: req.params.id})
@@ -161,7 +161,7 @@ router.get("/:id", (req, res, next)=>{
   });
 });
 
-router.delete("/:id", (req, res, next)=>{
+router.delete("/:id",checkAuth, (req, res, next)=>{
   Student.deleteOne({ _id: req.params.id }).then(result => {
       res.status(200).json({
         message: "success",
@@ -176,7 +176,7 @@ router.delete("/:id", (req, res, next)=>{
 
 });
 
-router.get("/filter/:params", (req, res, next)=>{
+router.get("/filter/:params",checkAuth, (req, res, next)=>{
 
   let filterString=req.params.params.split('-');
   let discreteFields = filterString[0].split('_');
@@ -239,7 +239,7 @@ router.get("/stuentsHistory", (req, res, next)=>{
 
 });
 
-router.get("/export/ex", (req, res, next)=>{
+router.get("/export/ex", checkAuth,(req, res, next)=>{
   Student.find().then(students=>{
     if(students){
       const csvWriter = createCsvWriter({
@@ -272,7 +272,7 @@ router.get("/export/ex", (req, res, next)=>{
   })
 });
 
-router.post("/init", (req,res,next) =>{
+router.post("/init", checkAuth,(req,res,next) =>{
   const student1 = new Student({
     fName: 'mahmoud',
     lName: 'saleh',

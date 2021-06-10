@@ -2,12 +2,13 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
-const checkAuth= require("../middleware/check-admin-auth");
+const checkAdminAuth= require("../middleware/check-admin-auth");
+const checkAuth= require("../middleware/check-auth");
 
 
 const router = express.Router();
 
-router.post("/login", (req, res, next)=>{
+router.post("/login", checkAuth,(req, res, next)=>{
   if(req.body.username == 'admin'){
     if(req.body.password == '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'){
       token = jwt.sign({username: req.body.username, userId: 'admin'},
@@ -72,9 +73,8 @@ router.post("/logout", (req, res, next)=>{
 
 
 
-router.post("/register", (req, res, next)=>{
+router.post("/register", checkAdminAuth,(req, res, next)=>{
     const user = new User({name: req.body.name, username: req.body.username, password: req.body.password, privilege: req.body.privilege});
-
     user.save()
       .then(result => {
         res.status(201).json({
@@ -100,13 +100,13 @@ router.get("/importData", (req, res, next)=>{
 });
 
 
-router.delete("/:id", (req, res, next)=>{
+router.delete("/:id",checkAdminAuth, (req, res, next)=>{
   User.deleteOne({_id: req.params.id}).then(result => {
     res.status(200).json({message: "deleted"});
   });
 });
 
-router.get("/users", (req, res, next)=>{
+router.get("/users",checkAdminAuth, (req, res, next)=>{
 
   User.find()
     .then(users =>{

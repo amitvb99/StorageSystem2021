@@ -27,13 +27,14 @@ describe('Admin Tests', function() {
         .send({
             "name": "amit",
             "username": "amitvig",
-            "passowrd": "123444"
+            "password": "123444",
+            "privilege":"user"
         })
-        .end(function(res, err) {
+        .end(function(err, res) {
             res.should.have.status(201);
             res.should.be.json;
             res.body.should.have.property('message').eql("success");
-            var id = res.body.data;
+            let id = res.body.data;
 
             chai.request(server)
             .post('/api/user/login')
@@ -42,25 +43,24 @@ describe('Admin Tests', function() {
                 "password": "admin"
             });
             chai.request(server)
-            .post('/api/user/manage/promoteUser' + id)
+            .post('/api/user/manage/promoteUser/' + id)
             .send({
                 "id": id
             })
-            .end(function(res, err) {
-                res.should.have.status(201);
+            .end(function( err,res) {
+                res.should.have.status(200);
                 res.should.be.json;
                 res.body.should.have.property("message").eql("success");
 
                 chai.request(server)
-                .post('/api/user/manage/demoteAdmin' + id)
+                .post('/api/user/manage/demoteAdmin/' + id)
                 .send({
                     "id": id
                 })
-                .end(function(res, err) {
-                    res.should.have.status(201);
+                .end(function( err, res) {
+                    res.should.have.status(200);
                     res.should.be.json;
                     res.body.should.have.property("message").eql("success");
-                    console.log("asddddddddddddddddddddddddddddddddddddd");
                 });
             });
             done();

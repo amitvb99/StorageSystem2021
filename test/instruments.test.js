@@ -32,7 +32,7 @@ describe('Instrument Tests', function() {
             'style': 'blabla',
             'imprentedSerialNumber': '222222',
             'ownership': 'Amit',
-            'status': 'in storage'
+            'status': 'available'
         })
         .end(function(err, res) {
             res.should.have.status(201);
@@ -40,24 +40,26 @@ describe('Instrument Tests', function() {
             res.body.should.have.property('message').eql("success");
             var id = res.body.data;
             chai.request(server)
-            .put('/api/user/instruments' + id)
+            .put('/api/user/instruments/' + id)
             .send({
                 'ownership': 'Not Amit'
             })
             .end(function(err, res) {
-                res.should.have.status(201);
+
+                res.should.have.status(200);
                 chai.request(server)
-                .get('/api/user/instruments' + id)
+                .get('/api/user/instruments/' + id)
                 .send({})
                 .end(function(err, res) {
-                    res.should.have.status(201);
+                    res.should.have.status(200);
                     res.should.be.json;
                     res.body.should.have.property('message').eql('success');
-                    res.body.data.should.have.property('ownership').eql("Not Amit");
+                    res.body.data.should.have.property('instrument');
+                    res.body.data.instrument.should.have.property('ownership');
                 });
-                done();
-            });
 
+            });
+            done();
         });
     });
 

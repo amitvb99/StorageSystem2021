@@ -51,7 +51,7 @@ if (test_mode) {
 }
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect("mongodb://localhost:27017/myapptest", { useUnifiedTopology: true, useNewUrlParser: true })
 
   .then(()=>{
     console.log('Connected to database!')
@@ -75,37 +75,7 @@ app.use(bodyParser.json())
 
 app.use('/*',(req,res)=>
     res.sendFile(path.join(__dirname))
-    );
-
-
-    // app.post('/api/login',(req,res)=>{
-    //     console.log(req.body)
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //     res.setHeader(
-    //         "Access-Control-Allow-Headers",
-    //         "Origin, X-Requested-With, Content-Type, Accept");
-
-    //     res.setHeader("Access-Control-Allow-Methods",
-    //         "POST");
-
-    //     user = {'id':7,firstName:'Baraa',lastName:'Natour',username:'bnatour'}
-    //     res.json(user)
-    // })
-
-    // app.post('/api/logout',(req,res)=>{
-    //     console.log(req.body)
-    //     res.setHeader("Access-Control-Allow-Origin", "*");
-    //     res.setHeader(
-    //         "Access-Control-Allow-Headers",
-    //         "Origin, X-Requested-With, Content-Type, Accept");
-
-    //     res.setHeader("Access-Control-Allow-Methods",
-    //         "POST");
-
-    //     user = {}
-    //     res.json(user)
-    // })
-
+);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

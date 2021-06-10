@@ -22,13 +22,14 @@ describe('User Authintication', function() {
     done();
   });
 
-    it('Should register a new user in /api/user/register/ POST',function (done){
+    it('Should register a new user in /api/user/register/ GET',function (done){
       chai.request(server)
       .post('/api/user/register')
       .send({
         "name": "mahmoud",
-        "user": "salehma1",
-        "pass": "123444"
+        "username": "salehma1",
+        "password": "123444",
+        "privilege": "user"
       })
       .end(function(err,res){
         res.should.have.status(201);
@@ -43,8 +44,9 @@ describe('User Authintication', function() {
       .post('/api/user/register')
       .send({
         "name": "baraa",
-        "user": "baraana",
-        "pass": "123"
+        "username": "baraana",
+        "password": "123",
+        "privilege": "admin"
       })
       .end(function(err,res){
         res.should.have.status(201);
@@ -60,8 +62,9 @@ describe('User Authintication', function() {
       .post('/api/user/register')
       .send({
         "name": "mahmoud",
-        "username": "salehma",
-        "password": "123"
+        "username": "salehma1",
+        "password": "123",
+        "privilege": "admin"
       })
       .end(function(err,res){
         res.should.have.status(500);

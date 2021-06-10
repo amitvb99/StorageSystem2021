@@ -7,7 +7,7 @@ const Notification = require("../models/notifications.model");
 const router = express.Router();
 
 
-router.get("", (req, res, next)=>{
+router.get("", checkAuth,(req, res, next)=>{
 
     Instrument.find().then(instruments=>{
       if(!instruments){
@@ -31,7 +31,7 @@ router.get("", (req, res, next)=>{
 
 });
 
-router.post("/create", (req, res, next)=>{
+router.post("/create", checkAuth,(req, res, next)=>{
     const instrument = new Instrument({
       generalSerialNumber: req.body.generalSerialNumber,
       type: req.body.type,
@@ -59,7 +59,7 @@ router.post("/create", (req, res, next)=>{
 });
 
 //update
-router.put("/:id", (req, res, next)=>{
+router.put("/:id", checkAuth,(req, res, next)=>{
   Instrument.findOne({_id: req.params.id}).then(result=>{
     if(result.status == 'inFix' || result.status == 'loaned'){
       if(result.status !== req.body.status){
@@ -81,6 +81,7 @@ router.put("/:id", (req, res, next)=>{
       status: req.body.status
     });
     Instrument.findOneAndUpdate({_id: req.params.id},instrument,{ returnOriginal: true }).then(result => {
+      console.log(result);
       if(result["status"] !== instrument["status"]){
         var datetime = new Date();
         const history_rec = new History({
@@ -121,11 +122,11 @@ router.put("/:id", (req, res, next)=>{
     });
 });
 
-router.get("/type/:id", (req, res, next)=>{
+router.get("/type/:id",checkAuth, (req, res, next)=>{
 
 });
 
-router.get("/:id", (req, res, next)=>{
+router.get("/:id", checkAuth,(req, res, next)=>{
   Instrument.findOne({_id: req.params.id}).then(instrument => {
     History.find({instrument: instrument._id}).populate('user').then(history => {
       if (instrument) {
@@ -160,7 +161,7 @@ router.delete("/:id", checkAuth, (req, res, next)=>{
 });
 
 
-router.get("/filter/:params", (req, res, next)=>{
+router.get("/filter/:params", checkAuth,(req, res, next)=>{
   let filterString=req.params.params.split('-');
   let discreteFields = filterString[0].split('_');
   let freeText = filterString[1];
@@ -194,7 +195,8 @@ router.get("/filter/:params", (req, res, next)=>{
     });
   });
 });
-router.get("/filter/:params", (req, res, next)=>{
+
+router.get("/filter/:params", checkAuth,(req, res, next)=>{
 
   let filterString=req.params.params.split('-');
   let discreteFields = filterString[0].split('_');
@@ -373,12 +375,12 @@ router.get("/filter/:params", (req, res, next)=>{
 
 });
 
-router.delete("/type/:id", (req, res, next)=>{
+router.delete("/type/:id", checkAuth,(req, res, next)=>{
 
 });
 
 
-router.get("/history/:id", (req, res, next)=>{
+router.get("/history/:id", checkAuth,(req, res, next)=>{
   History.find({instrument: req.params.id}).then(history => {
     if (history) {
       res.status(200).json({
@@ -394,7 +396,7 @@ router.get("/history/:id", (req, res, next)=>{
 });
 
 
-router.post('/init' , (req,res,next)=>{
+router.post('/init' , checkAuth,(req,res,next)=>{
   const instrument1 = new Instrument({
     generalSerialNumber: '9991',
     type: 'type1',

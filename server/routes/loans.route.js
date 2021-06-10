@@ -9,9 +9,11 @@ const History = require("../models/history.model");
 
 const router = express.Router();
 
-router.post("/loanInstrument", (req, res, next)=>{
+router.post("/loanInstrument", checkAuth,(req, res, next)=>{
+
     Instrument.findOne({_id: req.body.instrument})
     .then(result => {
+      console.log(result);
         if(result.status === "available") {
             var datetime = new Date();
             const loan = new Loan({
@@ -66,7 +68,7 @@ router.post("/loanInstrument", (req, res, next)=>{
     })
 });
 
-router.get("", (req, res, next)=>{
+router.get("", checkAuth,(req, res, next)=>{
 
     Loan.find()
     .populate('student')
@@ -92,7 +94,7 @@ router.get("", (req, res, next)=>{
         }
     })
 });
-router.get("/:id", (req, res, next)=>{
+router.get("/:id", checkAuth,(req, res, next)=>{
   Loan.findOne({_id: req.params.id})
   .populate('student')
   .populate('instrument')
@@ -112,7 +114,7 @@ router.get("/:id", (req, res, next)=>{
   })
 });
 
-router.post("/endLoan/:id", (req, res, next)=>{
+router.post("/endLoan/:id", checkAuth,(req, res, next)=>{
   var datetime = new Date();
   const loan =  new Loan({
     _id: req.params.id,
@@ -151,7 +153,7 @@ router.post("/endLoan/:id", (req, res, next)=>{
 });
 
 
-router.get("/filter/:params", (req, res, next)=>{
+router.get("/filter/:params", checkAuth,(req, res, next)=>{
   let filterString=req.params.params.split('-');
   let discreteFields = filterString[0].split('_');
   let map1 = {}
@@ -185,7 +187,6 @@ router.get("/filter/:params", (req, res, next)=>{
     let j=0;
     for (let index = 0; index < loans.length; index++) {
       const element = loans[index];
-      console.log(element);
       let loan_date = element.from.split('-');
       loan_date = new Date(loan_date[0],loan_date[1]-1,loan_date[2]);
       if(from_date < loan_date &&  loan_date < to_date && element.student!=null && element.instrument!=null){

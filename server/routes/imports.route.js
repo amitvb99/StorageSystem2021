@@ -9,6 +9,7 @@ const Fix = require("../models/fixes.model");
 const uploadFolder = __basedir + '/uploads/';
 const exports_folder = __basedir + '/downloads/';
 const files_folder = __basedir + '/files/';
+const checkAuth = require("../middleware/check-auth");
 
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const Instrument = require("../models/instrument.model");
@@ -511,33 +512,33 @@ let download_file = (component) => {
 	return download_xxxxx_file
 }
 
-router.post("/students", upload.single("file"), uploadFile("student"));
+router.post("/students", checkAuth,upload.single("file"), uploadFile("student"));
 
-router.post("/instruments", upload.single("file"), uploadFile("instrument"));
+router.post("/instruments", checkAuth,upload.single("file"), uploadFile("instrument"));
 
-router.post("/maintainers", upload.single("file"), uploadFile("maintainer"));
-
-
-router.get("/students/:id", download_file('student'));
-
-router.get("/instruments/:id", download_file('instrument'));
-
-router.get("/maintainers/:id", download_file('maintainer'));
-
-router.get("/fixes/:id", download_file('fix'));
-
-router.get("/loans/:id", download_file('loan'));
+router.post("/maintainers", checkAuth,upload.single("file"), uploadFile("maintainer"));
 
 
-router.get("/table/students/:params", download_table_file('student'));
+router.get("/students/:id", checkAuth,download_file('student'));
 
-router.get("/table/instruments/:params", download_table_file('instrument'));
+router.get("/instruments/:id", checkAuth,download_file('instrument'));
 
-router.get("/table/maintainers/", download_table_file('maintainer'));
+router.get("/maintainers/:id", checkAuth,download_file('maintainer'));
 
-router.get("/table/fixes/:params", download_table_file('fix'));
+router.get("/fixes/:id", checkAuth,download_file('fix'));
 
-router.get("/table/loans/:params", download_table_file('loan'));
+router.get("/loans/:id", checkAuth,download_file('loan'));
+
+
+router.get("/table/students/:params",checkAuth, download_table_file('student'));
+
+router.get("/table/instruments/:params", checkAuth,download_table_file('instrument'));
+
+router.get("/table/maintainers/", checkAuth,download_table_file('maintainer'));
+
+router.get("/table/fixes/:params", checkAuth,download_table_file('fix'));
+
+router.get("/table/loans/:params", checkAuth,download_table_file('loan'));
 
 
 module.exports = router;

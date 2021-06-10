@@ -10,10 +10,9 @@ const History = require("../models/history.model");
 
 const router = express.Router();
 
-router.post("/fix", (req, res, next)=>{
+router.post("/fix", checkAuth,(req, res, next)=>{
     Instrument.findOne({_id: req.body.instrument})
     .then(result => {
-        if(result.status === "available") {
             var datetime = new Date();
             const fix = new Fix({
                 maintainer: req.body.maintainer,
@@ -52,12 +51,6 @@ router.post("/fix", (req, res, next)=>{
                   message: "failed"
                 });
             });
-        }
-        else {
-            res.status(400).json({
-              message: "failed"
-            })
-        }
     })
     .catch(err => {
         console.log(err);
@@ -67,7 +60,7 @@ router.post("/fix", (req, res, next)=>{
     })
 });
 
-router.get("", (req, res, next)=>{
+router.get("", checkAuth,(req, res, next)=>{
     Fix.find()
     .populate('maintainer')
     .populate('instrument')
@@ -87,7 +80,7 @@ router.get("", (req, res, next)=>{
     })
 });
 
-router.get("/:id", (req, res, next)=>{
+router.get("/:id", checkAuth,(req, res, next)=>{
   Fix.findOne({_id: req.params.id})
   .populate('maintainer')
   .populate('instrument')
@@ -107,7 +100,7 @@ router.get("/:id", (req, res, next)=>{
   })
 });
 
-router.post("/endFix/:id", (req, res, next)=>{
+router.post("/endFix/:id", checkAuth,(req, res, next)=>{
   var datetime = new Date();
   const fix =  new Fix({
     _id: req.params.id,
@@ -146,7 +139,7 @@ router.post("/endFix/:id", (req, res, next)=>{
 });
 
 
-router.get("/filter/:params", (req, res, next)=>{
+router.get("/filter/:params", checkAuth,(req, res, next)=>{
   let filterString=req.params.params.split('-');
   let discreteFields = filterString[0].split('_');
   let map = {}

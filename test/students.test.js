@@ -55,17 +55,18 @@ describe('Student Tests', function() {
                 .get('/api/user/students/' + id)
                 .send({})
                 .end(function(err, res){
-                    res.should.have.status(201);
+                    res.should.have.status(200);
                     res.should.be.json;
                     res.body.should.have.property('message').eql("success");
-                    res.body.data.should.have.property('school').eql("Tel Aviv University");
+                    res.body.data.should.have.property('student');
+                    res.body.data.student.should.have.property('school').eql('Tel Aviv University');
                 });
             });
             done();
         });
     });
 
-    it('Should retrieve all students in /api/students/ POST', function(done) {
+    it('Should retrieve all students in /api/students/ GET', function(done) {
         chai.request(server)
         .get('/api/user/students')
         .send({})
@@ -73,7 +74,7 @@ describe('Student Tests', function() {
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.have.property('message').eql('success');
-            // done();
+            done();
         });
     });
 

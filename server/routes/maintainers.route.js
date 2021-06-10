@@ -10,7 +10,7 @@ const { model } = require("../models/maintainer.model");
 
 const router = express.Router();
 
-router.post("/create", (req, res, next) => {
+router.post("/create", checkAuth,(req, res, next) => {
     const maintainer = new Maintainer({
         maintainerName: req.body.maintainerName,
         maintainerPhone: req.body.maintainerPhone,
@@ -31,7 +31,7 @@ router.post("/create", (req, res, next) => {
     });
 });
 
-router.get("", (req, res, next)=>{
+router.get("", checkAuth,(req, res, next)=>{
     Maintainer.find()
       .then(maintainers =>{
         if(!maintainers){
@@ -52,7 +52,7 @@ router.get("", (req, res, next)=>{
       });
 });
 
-router.put("/:id", (req, res, next)=>{
+router.put("/:id", checkAuth,(req, res, next)=>{
     console.log(req.body.maintainerName)
 
     const maintainer = new Maintainer({
@@ -75,7 +75,7 @@ router.put("/:id", (req, res, next)=>{
       });
   });
 
-  router.get("/:id", (req, res, next)=>{
+  router.get("/:id", checkAuth,(req, res, next)=>{
     Maintainer.findOne({_id: req.params.id}).then(maintainer => {
       if (maintainer) {
           // if you want, add previous maintainance to maintainer
@@ -89,7 +89,7 @@ router.put("/:id", (req, res, next)=>{
     });
   });
 
-router.delete("/:id", (req, res, next)=>{
+router.delete("/:id", checkAuth,(req, res, next)=>{
   Maintainer.deleteOne({ _id: req.params.id }).then(result => {
       res.status(200).json({
           message: "success",

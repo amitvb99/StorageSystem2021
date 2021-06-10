@@ -1,10 +1,11 @@
 const express = require("express");
 const User = require("../models/user.model");
+const checkAdminAuth= require("../middleware/check-admin-auth");
 
 const router = express.Router();
 
 
-router.post("/demoteAdmin/:id", (req, res, next)=>{
+router.post("/demoteAdmin/:id",checkAdminAuth,(req, res, next)=>{
   const user = new User({
     _id: req.params.id,
     privilege: 'user'
@@ -22,7 +23,7 @@ router.post("/demoteAdmin/:id", (req, res, next)=>{
     });
 });
 
-router.post("/promoteUser/:id", (req, res, next)=>{
+router.post("/promoteUser/:id",checkAdminAuth ,(req, res, next)=>{
   const user = new User({
     _id: req.params.id,
     privilege: 'admin'
