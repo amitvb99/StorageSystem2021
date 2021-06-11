@@ -93,9 +93,9 @@ router.put("/:id", checkAuth,(req, res, next)=>{
         });
         history_rec.save();
       }
-        if(instrument["status"]=="lost"){
+        if(instrument["status"]=="missing"){
           const notification = new Notification({
-            data: "the status of intrument " + instrument["generalSerialNumber"] + " has been updated to lost",
+            data: "the status of intrument " + instrument["generalSerialNumber"] + " has been updated to missing",
             seenStatus: false
           });
           notification.save();
