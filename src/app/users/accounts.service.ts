@@ -29,7 +29,7 @@ export class AccountsService {
       if (this.isloggedin()){
         return JSON.parse(localStorage.getItem('user')).name;
       } else {
-        return 'Guest';
+        return '';
       }
     }
 

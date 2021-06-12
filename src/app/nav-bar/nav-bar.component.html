@@ -1,7 +1,7 @@
 <!-- A grey horizontal navbar that becomes vertical on small screens -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-navbar " >
-    <a class="navbar-brand" href="#">Logo</a>
-
+    <!-- <a class="navbar-brand" href="#">Logo</a> -->
+    <img style="width:40px" src="assets/logo.jpg" alt="logo" />
     <app-notification-popup *ngIf="isloggedin()" class="phone"></app-notification-popup>
 
     <button class="navbar-toggler" type="button" (click)="collapse()" [attr.aria-expanded]="!is_collapsed" data-toggle="collapse" aria-controls="collapsible_navbar">
