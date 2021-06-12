@@ -43,7 +43,7 @@ export class NavBarComponent implements OnInit {
   }
 
   get_button_text(){
-    return this.accounts.get_user_firs_name() == 'Guest'?'Login':'Logout';
+    return this.accounts.get_user_firs_name() == ''?'Login':'Logout';
   }
   log_in_out(){
     if (this.accounts.isloggedin()){

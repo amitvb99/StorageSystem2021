@@ -60,7 +60,7 @@ export class InstrumentsTableComponent implements OnInit {
     filter_by:{
       'type':["A","B","C"],
       'subtype':{'type':{'A':['A1', 'A2', 'A3'], 'B':['B1', 'B2', 'B3'], 'C':['C1', 'C2', 'C3']} },
-      'status':["loaned","missing","available"]
+      'status':['new','loaned','available','fixed','inFix','broken','stolen','missing']
     }
   }
 
@@ -87,7 +87,7 @@ export class InstrumentsTableComponent implements OnInit {
           id: 'status',
           name:'Status',
           type:'drop_down',
-          possible_values:['new','loaned','available','broken','maintained','back from maintainance','unusable','deleted','missing'],
+          possible_values:['new','loaned','available','fixed','inFix','broken','stolen','missing'],
           can_edit:true
         },
         {
