@@ -24,6 +24,7 @@ describe('Admin Tests', function() {
     it('Should promote a user to admin, and then demote it back to regular user', function(done) {
         chai.request(server)
         .post('/api/user/register')
+        .set("access", "yes")
         .send({
             "name": "amit",
             "username": "amitvig",
@@ -37,13 +38,18 @@ describe('Admin Tests', function() {
             let id = res.body.data;
 
             chai.request(server)
+
             .post('/api/user/login')
+            .set("access", "yes")
             .send({
                 "username": "admin",
                 "password": "admin"
             });
+
             chai.request(server)
+
             .post('/api/user/manage/promoteUser/' + id)
+            .set("access", "yes")
             .send({
                 "id": id
             })
@@ -53,7 +59,9 @@ describe('Admin Tests', function() {
                 res.body.should.have.property("message").eql("success");
 
                 chai.request(server)
+
                 .post('/api/user/manage/demoteAdmin/' + id)
+                .set("access", "yes")
                 .send({
                     "id": id
                 })

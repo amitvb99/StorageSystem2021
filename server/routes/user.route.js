@@ -73,7 +73,7 @@ router.post("/logout", (req, res, next)=>{
 
 
 
-router.post("/register", checkAdminAuth,(req, res, next)=>{
+router.post("/register",checkAdminAuth,(req, res, next)=>{
     const user = new User({name: req.body.name, username: req.body.username, password: req.body.password, privilege: req.body.privilege});
     user.save()
       .then(result => {

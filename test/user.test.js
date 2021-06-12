@@ -22,9 +22,10 @@ describe('User Authintication', function() {
     done();
   });
 
-    it('Should register a new user in /api/user/register/ GET',function (done){
+    it('Should register a new user in /api/user/register/ POST',function (done){
       chai.request(server)
       .post('/api/user/register')
+      .set("access", "yes")
       .send({
         "name": "mahmoud",
         "username": "salehma1",
@@ -42,6 +43,7 @@ describe('User Authintication', function() {
     it('Should register a new user in /api/user/register/ POST',function (done){
       chai.request(server)
       .post('/api/user/register')
+      .set("access", "yes")
       .send({
         "name": "baraa",
         "username": "baraana",
@@ -60,6 +62,7 @@ describe('User Authintication', function() {
     it('Should not register a new user in /api/user/register/ POST',function (done){
       chai.request(server)
       .post('/api/user/register')
+      .set("access", "yes")
       .send({
         "name": "mahmoud",
         "username": "salehma1",
@@ -75,6 +78,7 @@ describe('User Authintication', function() {
     it('Should login a user in /api/user/login/ POST',function (done){
       chai.request(server)
       .post('/api/user/login')
+      .set("access", "yes")
       .send({
         "username": "salehma1",
         "password": "123444"
@@ -91,6 +95,7 @@ describe('User Authintication', function() {
     it('Should get all the users in /api/user/users GET',function (done){
       chai.request(server)
       .get('/api/user/users')
+      .set("access", "yes")
       .send({})
       .end(function(err,res){
         res.should.have.status(200);
@@ -115,6 +120,7 @@ describe('User Authintication', function() {
     it('Should not login a user in /api/user/login/ POST',function (done){
       chai.request(server)
       .post('/api/user/login')
+      .set("access", "yes")
       .send({
         "username": "salehma1",
         "password": "1234445"
@@ -130,6 +136,7 @@ describe('User Authintication', function() {
     it('Should not login a user in /api/user/login/ POST',function (done){
       chai.request(server)
       .post('/api/user/login')
+      .set("access", "yes")
       .send({
         "username": "saleh1",
         "password": "1234445"

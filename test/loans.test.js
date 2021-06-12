@@ -70,7 +70,9 @@ describe('Loans Tests', function() {
     it('Should get loans', function(done) {
       console.log(ids);
       chai.request(server)
+
       .get('/api/user/loans')
+      .set("access", "yes")
       .end(function(err, res) {
           res.should.have.status(200);
           done();
@@ -81,7 +83,9 @@ describe('Loans Tests', function() {
     it('Should loan Instrument', function(done) {
         console.log(ids);
         chai.request(server)
+
         .post('/api/user/loans/loanInstrument')
+        .set("access", "yes")
         .send({
             "student": ids[0],
             "instrument": ids[1],
@@ -95,7 +99,9 @@ describe('Loans Tests', function() {
             let id = res.body.data;
             loanid=id;
             chai.request(server)
+
             .get('/api/user/instruments/'+ids[1])
+            .set("access", "yes")
             .send({})
             .end(function(err, res){
               res.should.have.status(200);
@@ -112,7 +118,9 @@ describe('Loans Tests', function() {
 
     it('Should not loan Instrument because the instrument is already loaned', function(done) {
       chai.request(server)
+
       .post('/api/user/loans/loanInstrument')
+      .set("access", "yes")
       .send({
           "student": ids[0],
           "instrument": ids[1],
@@ -130,7 +138,9 @@ describe('Loans Tests', function() {
   it('Should end loan of an Instrument', function(done) {
     console.log(ids);
       chai.request(server)
+
       .post('/api/user/loans/endLoan/'+loanid)
+      .set("access", "yes")
       .set('user_id',ids[2])
       .end(function(err, res) {
           res.should.have.status(200);
@@ -138,7 +148,9 @@ describe('Loans Tests', function() {
           res.body.should.have.property('message').eql("success");
           let id = res.body.data;
           chai.request(server)
+
           .get('/api/user/instruments/'+ids[1])
+          .set("access", "yes")
           .send({})
           .end(function(err, res){
             res.should.have.status(200);
@@ -155,7 +167,9 @@ describe('Loans Tests', function() {
 
   it('Should filter loana of an Instrument', function(done) {
       chai.request(server)
+
       .get('/api/user/loans/filter/studentLevel_studentClass_closed_instrumentType_instrumentSubtype')
+      .set("access", "yes")
       .set('user_id',ids[2])
       .end(function(err, res) {
           res.should.have.status(200);

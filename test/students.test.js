@@ -26,6 +26,7 @@ describe('Student Tests', function() {
     it('Sould create a new student in /api/user/students/create/ POST', function(done) {
         chai.request(server)
         .post('/api/user/students/create')
+        .set("access", "yes")
         .send({
             'fName': 'Amit',
             'lName': 'Vigdor Bart',
@@ -46,13 +47,16 @@ describe('Student Tests', function() {
             var id = res.body.data;
             chai.request(server)
             .put('/api/user/students/' + id)
+            .set("access", "yes")
             .send({
                 'school': 'Tel Aviv University'
             })
             .end(function(err, res){
                 res.should.have.status(200);
                 chai.request(server)
+
                 .get('/api/user/students/' + id)
+                .set("access", "yes")
                 .send({})
                 .end(function(err, res){
                     res.should.have.status(200);
@@ -69,6 +73,7 @@ describe('Student Tests', function() {
     it('Should retrieve all students in /api/students/ GET', function(done) {
         chai.request(server)
         .get('/api/user/students')
+        .set("access", "yes")
         .send({})
         .end(function(err, res) {
             res.should.have.status(200);
@@ -81,6 +86,7 @@ describe('Student Tests', function() {
     it('should filter students only in 7th level', function(done) {
         chai.request(server)
         .post('/api/user/students/create')
+        .set("access", "yes")
         .send({
             'fName': 'Lionel',
             'lName': 'Messi',
@@ -96,6 +102,7 @@ describe('Student Tests', function() {
         });
         chai.request(server)
         .post('/api/user/students/create')
+        .set("access", "yes")
         .send({
             'fName': 'Cristiano',
             'lName': 'Ronaldo',
@@ -111,6 +118,7 @@ describe('Student Tests', function() {
         });
         chai.request(server)
         .get('/api/user/students/filter/class_7th')
+        .set("access", "yes")
         .send({})
         .end(function(err, res) {
             res.should.have.status(200);
@@ -125,6 +133,7 @@ describe('Student Tests', function() {
     it('should filter students only in class 2', function(done) {
         chai.request(server)
         .get('/api/user/students/filter/2_level')
+        .set("access", "yes")
         .send({})
         .end(function(err, res) {
             res.should.have.status(200);
@@ -139,6 +148,7 @@ describe('Student Tests', function() {
     it('should filter students only in class 2 and 7th level', function(done) {
         chai.request(server)
         .get('/api/user/students/filter/2_7th')
+        .set("access", "yes")
         .send({})
         .end(function(err, res) {
             res.should.have.status(200);

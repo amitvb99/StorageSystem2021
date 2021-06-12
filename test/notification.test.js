@@ -60,7 +60,9 @@ describe('Notifications Tests', function() {
     it('Should get instrumnets', function(done) {
       console.log(ids);
       chai.request(server)
+
       .get('/api/user/instruments')
+      .set("access", "yes")
       .end(function(err, res) {
           res.should.have.status(200);
           done();
@@ -70,7 +72,9 @@ describe('Notifications Tests', function() {
     it('Sould add notification to the stack', function(done) {
         console.log(ids);
         chai.request(server)
+
         .put('/api/user/instruments/'+ids[1])
+        .set("access", "yes")
         .send({
           "generalSerialNumber": '99912',
           'type': 'type1',
@@ -87,7 +91,9 @@ describe('Notifications Tests', function() {
             res.body.should.have.property('message').eql("success");
             var id = res.body.data;
             chai.request(server)
+
             .get('/api/user/notifications')
+            .set("access", "yes")
             .end(function(err, res){
                 res.should.have.status(200);
                 res.should.be.json;

@@ -62,6 +62,7 @@ describe('Fixes Tests', function() {
       console.log(ids);
         chai.request(server)
         .post('/api/user/fixes/fix')
+        .set("access", "yes")
         .send({
             "maintainer": ids[0],
             "instrument": ids[1],
@@ -75,7 +76,9 @@ describe('Fixes Tests', function() {
             let id = res.body.data;
             fixid=id;
             chai.request(server)
+
             .get('/api/user/instruments/'+ids[1])
+            .set("access", "yes")
             .send({})
             .end(function(err, res){
               res.should.have.status(200);
@@ -93,7 +96,9 @@ describe('Fixes Tests', function() {
   it('Should get intrument fixed', function(done) {
     console.log(ids);
       chai.request(server)
+
       .post('/api/user/fixes/endFix/'+fixid)
+      .set("access", "yes")
       .set('user_id',ids[2])
       .end(function(err, res) {
           res.should.have.status(200);
@@ -101,7 +106,9 @@ describe('Fixes Tests', function() {
           res.body.should.have.property('message').eql("success");
           let id = res.body.data;
           chai.request(server)
+
           .get('/api/user/instruments/'+ids[1])
+          .set("access", "yes")
           .send({})
           .end(function(err, res){
             res.should.have.status(200);
@@ -118,7 +125,9 @@ describe('Fixes Tests', function() {
 
   it('Should filter fix of an Instrument', function(done) {
       chai.request(server)
+
       .get('/api/user/fixes/filter/done_instrumentType_instrumentSubtype')
+      .set("access", "yes")
       .set('user_id',ids[2])
       .end(function(err, res) {
           res.should.have.status(200);

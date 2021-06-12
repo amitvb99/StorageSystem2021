@@ -23,7 +23,9 @@ describe('Instrument Tests', function() {
 
     it('Should create a new instrument in /api/user/instrument/create/ POST', function(done) {
         chai.request(server)
+
         .post('/api/user/instruments/create')
+        .set("access", "yes")
         .send({
             'generalSerialNumber':  '111111',
             'type':  'Saxophone',
@@ -40,7 +42,9 @@ describe('Instrument Tests', function() {
             res.body.should.have.property('message').eql("success");
             var id = res.body.data;
             chai.request(server)
+
             .put('/api/user/instruments/' + id)
+            .set("access", "yes")
             .send({
                 'ownership': 'Not Amit'
             })
@@ -48,7 +52,9 @@ describe('Instrument Tests', function() {
 
                 res.should.have.status(200);
                 chai.request(server)
+
                 .get('/api/user/instruments/' + id)
+                .set("access", "yes")
                 .send({})
                 .end(function(err, res) {
                     res.should.have.status(200);
@@ -65,7 +71,9 @@ describe('Instrument Tests', function() {
 
     it('Should filter instruments only in type saxophone', function(done) {
         chai.request(server)
+
         .post('/api/user/instruments/create')
+        .set("access", "yes")
         .send({
             'generalSerialNumber':  '111111',
             'type':  'Saxophone',
@@ -77,7 +85,9 @@ describe('Instrument Tests', function() {
             'status': 'storage'
         });
         chai.request(server)
+
         .post('/api/user/instruments/create')
+        .set("access", "yes")
         .send({
             'generalSerialNumber':  '111111',
             'type':  'Saxophone',
@@ -89,7 +99,9 @@ describe('Instrument Tests', function() {
             'status': 'storage'
         });
         chai.request(server)
+
         .post('/api/user/instruments/create')
+        .set("access", "yes")
         .send({
             'generalSerialNumber':  '111111',
             'type':  'Saxophone',
@@ -101,7 +113,9 @@ describe('Instrument Tests', function() {
             'status': 'loaned'
         });
         chai.request(server)
+
         .get('/api/user/instruments/filter/Saxophone_subtype_status')
+        .set("access", "yes")
         .send({})
         .end(function(err, res) {
             res.should.have.status(200);
@@ -115,7 +129,9 @@ describe('Instrument Tests', function() {
 
     it('Should filter instruments only in subtype Tenor and type Saxophone', function(done) {
         chai.request(server)
+
         .get('/api/user/instruments/filter/Saxophone_Tenor_status')
+        .set("access", "yes")
         .send({})
         .end(function(err, res) {
             res.should.have.status(200);
@@ -130,7 +146,9 @@ describe('Instrument Tests', function() {
 
     it('Should filter instruments only in loaned status', function(done) {
         chai.request(server)
+
         .get('/api/user/instruments/filter/type_subtype_storage')
+        .set("access", "yes")
         .send({})
         .end(function(err, res) {
             res.should.have.status(200);
