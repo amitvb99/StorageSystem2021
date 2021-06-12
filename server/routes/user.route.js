@@ -8,7 +8,7 @@ const checkAuth= require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.post("/login", checkAuth,(req, res, next)=>{
+router.post("/login",(req, res, next)=>{
   if(req.body.username == 'admin'){
     if(req.body.password == '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'){
       token = jwt.sign({username: req.body.username, userId: 'admin'},
