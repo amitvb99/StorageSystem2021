@@ -158,7 +158,9 @@ export class InstrumentsTableComponent implements OnInit {
 
   },
   'remove': (data_to_show,i) => {
-    this.crud.delete(this.component_name,i['generalSerialNumber']).subscribe(res => {
+      console.log('i is:')
+      console.log(i)
+    this.crud.delete(this.component_name,i['_id']).subscribe(res => {
       if (res !== null){
         const index = data_to_show.indexOf(i, 0);
         if (index > -1) {

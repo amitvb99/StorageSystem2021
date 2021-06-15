@@ -148,7 +148,7 @@ export class InstrumentPageComponent implements OnInit {
   }
 
   delete(){
-    this.crud.delete("instruments", this.instrument['generalSerialNumber']).subscribe(res => {
+    this.crud.delete("instruments", this.id).subscribe(res => {
         this.router.navigate(['/instruments']);
     })
     }
