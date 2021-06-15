@@ -40,7 +40,7 @@ router.delete("/:id",checkAdminAuth,(req,res,next)=>{
   });
 });
 
-router.put("/markAsSeen/:id",checkAdminAuth,(req,res,next)=>{
+router.put("/markAsSeen/:id",(req,res,next)=>{
   let id = req.params.id;
   Notification.find({_id: id}).then(not =>{
     if(not){

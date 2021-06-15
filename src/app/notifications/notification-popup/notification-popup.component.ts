@@ -11,15 +11,19 @@ export class NotificationPopupComponent implements OnInit {
   toggleText = "Hide";
   show = false;
   nof_notifications = 0;
+  nof_new_notifications = 0;
+  
 
   notifications:any = [ ]
 
   update_nof_new_notifications(){
     var x = 0;
     this.notifications.forEach(element => {
-      x += element.seenStatus ? 1 : 0;
+      x += element.seenStatus ? 0 : 1;
     });
-    this.nof_notifications = x;
+    this.nof_new_notifications = x;
+    this.nof_notifications = this.notifications.length;
+    
   }
   see_notification(i, event){
     if(event.target instanceof HTMLDivElement) {
@@ -54,11 +58,13 @@ export class NotificationPopupComponent implements OnInit {
  
   ngOnInit(): void {
     this.crud.read_notifications().subscribe(res => {
+        console.log(this.notifications)
       this.notifications = res['data'];
       this.update_nof_new_notifications()
 
     })
     this.update_nof_new_notifications()
+
   }
 
 }

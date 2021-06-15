@@ -249,7 +249,7 @@ export class CrudService {
   }
 
   delete_notification(notif_id){
-    const path = `${environment.apiUrl}/api/user/manage/notifications/${notif_id}`
+    const path = `${environment.apiUrl}/api/user/notifications/${notif_id}`
     const observer = this.http.delete(path, this.get_headers()).pipe(
       map(res => {
         console.log('delete_notification:')
@@ -261,7 +261,7 @@ export class CrudService {
   }
 
   see_notification(notif_id){
-    const path = `${environment.apiUrl}/api/user/markAsSeen/${notif_id}`
+    const path = `${environment.apiUrl}/api/user/notifications/markAsSeen/${notif_id}`
     const observer = this.http.put(path,this.get_headers()).pipe(
       map(res => {
         console.log('see_notification:')
