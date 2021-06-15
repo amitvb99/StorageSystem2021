@@ -5,6 +5,7 @@ import { CrudService } from 'src/app/shared-services/crud.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class AddLoanComponent implements OnInit {
   @Input() global_cfg: any = {};
 
   add_loan_is_open = false
-  constructor(private http: HttpClient, private accounts:AccountsService, private crud:CrudService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private accounts:AccountsService, private crud:CrudService) { }
   open(){
     this.add_loan_is_open = ! this.add_loan_is_open
   }
@@ -115,7 +116,9 @@ export class AddLoanComponent implements OnInit {
   export(){
     alert('exporting...')
     let url = `${environment.apiUrl}/api/user/imports/table/loans/${this.global_cfg['get_filter_bar']()}`
-    this.http.get(url, {responseType: "blob"})
+    let headers = this.crud.get_headers()
+    headers['responseType'] = "blob"
+    this.http.get(url, headers)
               .toPromise()
               .then(blob => {
                   saveAs(blob, `loans.csv`); 
@@ -125,6 +128,32 @@ export class AddLoanComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+        if (params['student_id'] != undefined) {
+            console.log(`student id is ${params['student_id']}`);
+            this.crud.read('students', params['student_id']).subscribe(
+                res => {
+                  this.student = res['student'];
+                  if (! this.add_loan_is_open) {
+                    this.open()
+                  }
+               }
+              )
+        }
+
+        if (params['instrument_id'] != undefined) {
+            console.log(`instrument id is ${params['instrument_id']}`);
+            this.crud.read('instruments', params['instrument_id']).subscribe(
+                res => {
+                  this.instrument = res['instrument'];
+                  if (! this.add_loan_is_open) {
+                    this.open()
+                  }
+               }
+              )
+        }
+        
+      });
   }
 
 }

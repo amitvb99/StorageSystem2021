@@ -170,7 +170,9 @@ export  class TableComponent implements OnInit {
   export(){
     alert('exporting...')
     let url = `${environment.apiUrl}/api/user/imports/table/${this.meta_data.component_name}/${this.get_filter_bar()}`
-    this.http.get(url, {responseType: "blob"})
+    let headers = this.crud.get_headers()
+    headers['responseType'] = "blob"
+    this.http.get(url, headers)
               .toPromise()
               .then(blob => {
                   saveAs(blob, `${this.meta_data.component_name}.csv`); 

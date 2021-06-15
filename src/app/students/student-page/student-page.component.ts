@@ -5,6 +5,9 @@ import { CrudService } from 'src/app/shared-services/crud.service';
 import { environment } from 'src/environments/environment';
 import { saveAs } from 'file-saver';
 import {HttpHeaders} from "@angular/common/http";
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { GenericFormComponent } from 'src/app/generic-elements/generic-form/generic-form.component';
+import { generic_form_meta_data_t } from 'src/app/app-interfaes';
 
 @Component({
   selector: 'app-student-page',
@@ -81,7 +84,93 @@ export class StudentPageComponent implements OnInit {
     
   
   }
-  constructor(private http: HttpClient, private route: ActivatedRoute, private crud: CrudService, private router: Router) { }
+
+
+  /************************COPY******************************/
+  form_meta_data : generic_form_meta_data_t = [
+    { 
+      name:'Student Info',
+      fields:[
+        {
+          id: 'fName',
+          name:'First Name',
+          type:'text',
+          can_edit:false
+        },
+        {
+          id: 'lName',
+          name:'Last Name',
+          type:'text',
+          can_edit:true
+        },
+        {
+          id: 'school',
+          name:'School',
+          type:'text',
+          can_edit:true
+        },
+        {
+          id: 'level',
+          name:'Level',
+          type:'drop_down',
+          possible_values:["4","5","6","7","8","9"],
+          can_edit:true
+        },
+        {
+          id: 'class',
+          name:'Class',
+          type:'drop_down',
+          possible_values:["1","2","3","4","5","6"],
+          can_edit:true
+        },
+
+  ]
+    },
+    { 
+      name:'Parents Info',
+      fields:[
+        {
+          id: 'parent1Name',
+          name:'Parent 1 Name',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent2Name',
+          name:'Parent 2 Name',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent1PhoneNumber',
+          name:'Parent 1 Number',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent2PhoneNumber',
+          name:'Parent 2 Number',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent1Email',
+          name:'Parent 1 Email',
+          type:'text',
+          can_edit:false,
+        },
+        {
+          id: 'parent2Email',
+          name:'Parent 2 Email',
+          type:'text',
+          can_edit:false,
+        },
+      ]
+    }  ]
+    
+/************************COPY******************************/
+
+  constructor(private dialog: MatDialog, private http: HttpClient, private route: ActivatedRoute, private crud: CrudService, private router: Router) { }
 
   instrument_overrider = (functions, table_metadata) => {
     table_metadata.actions = []
@@ -95,10 +184,41 @@ export class StudentPageComponent implements OnInit {
     return res
   }
 
+  loan(){
+    this.router.navigate(['/loans'], { queryParams: { student_id: this.id } });
+  }
+
+  edit(){
+      const config = new MatDialogConfig()
+      config.autoFocus = true
+      let dialog_ref = this.dialog.open(GenericFormComponent,config)
+      let instance = dialog_ref.componentInstance;
+      instance.meta_data =  this.form_meta_data;
+      instance.data = this.student
+      instance.is_add =  false;
+      dialog_ref.afterClosed().subscribe(dialog_res => {
+        this.crud.update("students",dialog_res,this.id).subscribe(res =>{
+          if (res !== null){
+            for (let key in dialog_res) {
+              //update ui
+              this.student[key] = dialog_res[key];
+            }
+          } else {
+            // output error
+          }})});}
+
+  delete(){
+    this.crud.delete("students", this.id).subscribe(res => {
+        this.router.navigate(['/students']);
+    })
+    }
+
   export() {
     alert('exporting')
     let url = `${environment.apiUrl}/api/user/imports/students/${this.id}`
-    this.http.get(url, {responseType: "blob"})
+    let headers = this.crud.get_headers()
+    headers['responseType'] = "blob"
+    this.http.get(url, headers)
               .toPromise()
               .then(blob => {
                   saveAs(blob, `student_${this.id}.csv`); 

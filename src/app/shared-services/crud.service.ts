@@ -12,7 +12,7 @@ export class CrudService {
 
 
 
- private get_headers(){
+ public get_headers(){
   const headerDict = {
     'Accept': 'application/json, text/plain, */*',
     'authorization': localStorage.getItem('token'),
@@ -43,6 +43,7 @@ export class CrudService {
     const path = `${environment.apiUrl}/api/user/${component}${ex}${qs}`
     return path
   }
+
   create(component:string, object_to_create, query_string:string = ''){
     const path = this.get_path(component,query_string,'create')
     var res = this.http.post(path,object_to_create, this.get_headers()).pipe(map(res => {
@@ -94,14 +95,18 @@ export class CrudService {
   }
 
   fix_loan(loan){
+    if (loan['student'] != null) {
+        loan.student_name = loan['student']['fName']
+        loan.student_school = loan['student']['school']
+        loan.student_class = loan['student']['class']
+    } else {
+        loan.student_name = "Student Deleted"
+        loan.student_school = 'X'
+        loan.student_class = 'X'
+    }
 
-    loan.student_name = loan['student']['fName']
-    loan.student_school = loan['student']['school']
-    loan.student_class = loan['student']['class']
-    loan.student_class = loan['student']['class']
     loan.openning_user = loan['openUser']['name']
     loan.instrument = loan['instrument']['generalSerialNumber']
-
 
     if (loan['closeUser'] != undefined)
        loan.closing_user = loan['closeUser']['name']

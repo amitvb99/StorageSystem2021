@@ -12,6 +12,19 @@ export class AccountsService {
   constructor(private http:HttpClient) { 
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
   }
+  public get_headers(){
+    const headerDict = {
+      'Accept': 'application/json, text/plain, */*',
+      'authorization': localStorage.getItem('token'),
+      'user_id': localStorage.getItem('user_id')
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: headerDict, 
+    };
+    return requestOptions
+   }
+
   private userSubject: BehaviorSubject<User>;
     login(user,path){//user should be json object
 

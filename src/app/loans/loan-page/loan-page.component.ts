@@ -23,7 +23,9 @@ export class LoanPageComponent implements OnInit {
   export() {
     alert('exporting')
     let url = `${environment.apiUrl}/api/user/imports/loans/${this.id}`
-    this.http.get(url, {responseType: "blob"})
+    let headers = this.crud.get_headers()
+    headers['responseType'] = "blob"
+    this.http.get(url, headers)
               .toPromise()
               .then(blob => {
                   saveAs(blob, `loan_${this.id}.csv`); 

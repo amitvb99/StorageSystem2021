@@ -5,6 +5,7 @@ import { CrudService } from 'src/app/shared-services/crud.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-add-fix',
   templateUrl: './add-fix.component.html',
@@ -36,7 +37,7 @@ export class AddFixComponent implements OnInit {
   @Input() global_cfg: any = {};
   
   add_fix_is_open = false
-  constructor(private http: HttpClient, private accounts:AccountsService, private crud:CrudService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private accounts:AccountsService, private crud:CrudService) { }
   open(){
     this.add_fix_is_open = ! this.add_fix_is_open
   }
@@ -91,7 +92,9 @@ export class AddFixComponent implements OnInit {
   export(){
     alert('exporting...')
     let url = `${environment.apiUrl}/api/user/imports/table/fixes/${this.global_cfg['get_filter_bar']()}`
-    this.http.get(url, {responseType: "blob"})
+    let headers = this.crud.get_headers()
+    headers['responseType'] = "blob"
+    this.http.get(url, headers)
               .toPromise()
               .then(blob => {
                   saveAs(blob, `maintainers.csv`); 
@@ -101,6 +104,32 @@ export class AddFixComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+        if (params['maintainer_id'] != undefined) {
+            console.log(`maintainer id is ${params['maintainer_id']}`);
+            this.crud.read('maintainers', params['maintainer_id']).subscribe(
+                res => {
+                  this.maintainer = res['maintainer'];
+                  if (! this.add_fix_is_open) {
+                    this.open()
+                  }
+               }
+              )
+        }
+
+        if (params['instrument_id'] != undefined) {
+            console.log(`instrument id is ${params['instrument_id']}`);
+            this.crud.read('instruments', params['instrument_id']).subscribe(
+                res => {
+                  this.instrument = res['instrument'];
+                  if (! this.add_fix_is_open) {
+                    this.open()
+                  }
+               }
+              )
+        }
+        
+      });
   }
 
 }
