@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 export interface user_t{
     id?: string,
@@ -52,7 +53,7 @@ export interface loan_t{
   providedIn: 'root'
 })
 export class BackendApiService {
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router:Router) { }
 
   private get_headers(){
       const headerDict = {
@@ -280,6 +281,15 @@ export class BackendApiService {
         data[field_name] = d
         continuation[next_step_idx-1].status = 2
         continuation[next_step_idx].step(data, continuation, next_step_idx+1) 
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
     }
 

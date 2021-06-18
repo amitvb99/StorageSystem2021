@@ -135,6 +135,15 @@ export class InstrumentPageComponent implements OnInit {
         }
       }
       )
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     });
     
   }
@@ -150,6 +159,15 @@ export class InstrumentPageComponent implements OnInit {
   delete(){
     this.crud.delete("instruments", this.id).subscribe(res => {
         this.router.navigate(['/instruments']);
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     })
     }
   
@@ -181,7 +199,25 @@ export class InstrumentPageComponent implements OnInit {
           }
           return
        }
-      )
+       ,
+       res => {
+           if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
+       })
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     }) 
   }
 

@@ -67,11 +67,29 @@ export class FixesTableComponent implements OnInit {
             i.status = 'done'
             i.to = fix.to
             i.closing_user = fix['closeUser']['name']
+          },
+          res => {
+              if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
           })
         } else {
           //output error
         }
   
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
       }
     

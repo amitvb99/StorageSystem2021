@@ -108,6 +108,15 @@ export class MaintainersTableComponent implements OnInit {
         //output error
       }
 
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     })
     },
   'edit': (data_to_show,i) => {
@@ -127,6 +136,15 @@ export class MaintainersTableComponent implements OnInit {
           }
         } else {
           // output error
+        }
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
         }
       }
       )

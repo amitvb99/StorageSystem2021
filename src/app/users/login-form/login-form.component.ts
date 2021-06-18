@@ -32,6 +32,15 @@ export class LoginFormComponent implements OnInit {
       if(val = 1){
         abc.unsubscribe()
       }
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     });
   }
   login (form: NgForm){
@@ -55,6 +64,15 @@ export class LoginFormComponent implements OnInit {
     this.accounts.login(user,this.path)
     .subscribe(val =>{
       this.router.navigateByUrl('students')
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     })
   }
 

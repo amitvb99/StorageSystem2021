@@ -5,6 +5,7 @@ import { CrudService } from 'src/app/shared-services/crud.service';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { saveAs } from 'file-saver';
+import { Router } from '@angular/router';
 
 // import { ConsoleReporter } from 'jasmine';
 
@@ -73,7 +74,7 @@ export  class TableComponent implements OnInit {
 }
 
   index = 0
-  constructor(private http: HttpClient, private crud:CrudService) { }
+  constructor(private http: HttpClient, private crud:CrudService, private router:Router) { }
 
 
 
@@ -159,6 +160,15 @@ export  class TableComponent implements OnInit {
     if (this.module_variables['local_db'].get(filter_bar) === undefined){
       this.crud.filtered_read(this.meta_data.component_name, filter_bar).subscribe(res => {
         this.module_variables['data_to_show'] = res
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
       
     } else {
@@ -194,8 +204,16 @@ export  class TableComponent implements OnInit {
       this.crud.read(this.meta_data.component_name).subscribe(function(data){
           this.module_variables['local_db'].set(this.meta_data.filter_bar_array.join("_"),data);
           this.module_variables['data_to_show'] = this.module_variables['local_db'].get(this.meta_data.filter_bar_array.join("_"));
-        }.bind(this)
-      )
+        }.bind(this),
+        res => {
+            if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
+        })
 
 
     } else {

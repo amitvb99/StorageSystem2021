@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from 'src/app/shared-services/crud.service';
 import { environment } from 'src/environments/environment';
 import { saveAs } from 'file-saver';
@@ -19,7 +19,7 @@ export class FixPageComponent implements OnInit {
   openning_user: any = {};
   closing_user: any = {};
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private crud: CrudService) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private crud: CrudService, private router:Router) { }
   export() {
     alert('exporting')
     let url = `${environment.apiUrl}/api/user/imports/fixes/${this.id}`
@@ -44,6 +44,15 @@ export class FixPageComponent implements OnInit {
         this.closing_user = res['closeUser']
         
       })
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     })
   }
 

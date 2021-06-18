@@ -72,11 +72,29 @@ export class LoansTableComponent implements OnInit {
             i.status = 'closed'
             i.to = loan.to
             i.closing_user = loan['closeUser']['name']
+          },
+          res => {
+              if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
           })
         } else {
           //output error
         }
   
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
       }
     

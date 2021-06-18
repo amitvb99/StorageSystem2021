@@ -79,6 +79,15 @@ export class StudentPageComponent implements OnInit {
           //output error
         }
   
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
       }
     
@@ -205,11 +214,29 @@ export class StudentPageComponent implements OnInit {
             }
           } else {
             // output error
-          }})});}
+          }},
+          res => {
+              if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
+          })});}
 
   delete(){
     this.crud.delete("students", this.id).subscribe(res => {
         this.router.navigate(['/students']);
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     })
     }
 
@@ -239,6 +266,15 @@ export class StudentPageComponent implements OnInit {
           }
         }
       )
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     }) 
   }
 }

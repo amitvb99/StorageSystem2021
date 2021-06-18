@@ -5,6 +5,7 @@ import { GenericFormComponent } from 'src/app/generic-elements/generic-form/gene
 import { CrudService } from 'src/app/shared-services/crud.service';
 import { AccountsService } from '../accounts.service';
 import {sha256} from 'js-sha256';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-table',
@@ -97,7 +98,25 @@ export class UsersTableComponent implements OnInit {
             } else {
               // output error
             }
+          },
+          res => {
+              if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
           })
+        }
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
         }
       });
   
@@ -113,18 +132,45 @@ export class UsersTableComponent implements OnInit {
           //output error
         }
   
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
       },
     'promote': (data_to_show,i) => {
 
       this.crud.promote_user(i['_id']).subscribe(res => {
         i['privilege'] = 'admin'
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
     },
     'demote': (data_to_show,i) => {
  
       this.crud.demote_user(i['_id']).subscribe(res => {
         i['privilege'] = 'user'
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
     },
       
@@ -132,7 +178,7 @@ export class UsersTableComponent implements OnInit {
       alert(`${JSON.stringify(i)}`)
     },
   }
-  constructor(private dialog: MatDialog,private crud:CrudService, private accounts:AccountsService) { }
+  constructor(private dialog: MatDialog,private crud:CrudService, private accounts:AccountsService, private router:Router) { }
 
   ngOnInit(): void {
   }

@@ -46,6 +46,15 @@ export class MaintainerPageComponent implements OnInit {
     delete(){
         this.crud.delete("maintainers",this.id).subscribe(res => {
             this.router.navigate(['/maintainers']);
+        },
+        res => {
+            if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
         })
         }
 
@@ -100,8 +109,26 @@ export class MaintainerPageComponent implements OnInit {
         res => {
           this.maintainer = res['maintainer'];
 
+        },
+        res => {
+            if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
         }
       )
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     })
   }
 

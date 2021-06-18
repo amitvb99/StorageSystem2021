@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CrudService } from 'src/app/shared-services/crud.service';
 
 @Component({
@@ -31,7 +32,25 @@ export class NotificationPopupComponent implements OnInit {
         this.crud.read_notifications().subscribe(res => {
           this.notifications = res['data'];
           this.update_nof_new_notifications()
+        },
+        res => {
+            if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
         })
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
     }
     
@@ -44,7 +63,25 @@ export class NotificationPopupComponent implements OnInit {
         this.crud.read_notifications().subscribe(res => {
           this.notifications = res['data'];
           this.update_nof_new_notifications()
+        },
+        res => {
+            if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
         })
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       })
     }
   }
@@ -54,7 +91,7 @@ export class NotificationPopupComponent implements OnInit {
     this.toggleText = this.show ? "Hidе" : "Show";
   }
 
-  constructor(private crud: CrudService) { }
+  constructor(private crud: CrudService, private router:Router) { }
  
   ngOnInit(): void {
     this.crud.read_notifications().subscribe(res => {
@@ -62,6 +99,15 @@ export class NotificationPopupComponent implements OnInit {
       this.notifications = res['data'];
       this.update_nof_new_notifications()
 
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     })
     this.update_nof_new_notifications()
 

@@ -5,7 +5,7 @@ import { CrudService } from 'src/app/shared-services/crud.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -43,7 +43,7 @@ export class AddLoanComponent implements OnInit {
   @Input() global_cfg: any = {};
 
   add_loan_is_open = false
-  constructor(private route: ActivatedRoute, private http: HttpClient, private accounts:AccountsService, private crud:CrudService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private accounts:AccountsService, private crud:CrudService, private router:Router) { }
   open(){
     this.add_loan_is_open = ! this.add_loan_is_open
   }
@@ -79,9 +79,27 @@ export class AddLoanComponent implements OnInit {
           if (this.global_cfg['genericTable.add_to_table'] != undefined) {
             this.global_cfg['genericTable.add_to_table'](res)
           }
+        },
+        res => {
+            if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
         })
       }
-    )
+      ,
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
+      })
     this.add_loan_is_open = ! this.add_loan_is_open
     this.show_functions['loan']()
   }
@@ -149,10 +167,28 @@ export class AddLoanComponent implements OnInit {
                   if (! this.add_loan_is_open) {
                     this.open()
                   }
+               },
+               res => {
+                   if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
                }
               )
         }
         
+      },
+      res => {
+          if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
       });
   }
 

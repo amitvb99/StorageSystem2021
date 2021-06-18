@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UploadServiceService } from 'src/app/shared-services/upload-service.service';
 import { environment } from 'src/environments/environment';
 import { HttpResponse, HttpEventType } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-imports-page',
@@ -15,7 +16,7 @@ export class ImportsPageComponent implements OnInit {
   instruments = `${environment.apiUrl}/api/user/imports/instruments`
   students = `${environment.apiUrl}/api/user/imports/students`
 
-  constructor(private uploadService:UploadServiceService) { }
+  constructor(private uploadService:UploadServiceService, private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -44,6 +45,15 @@ export class ImportsPageComponent implements OnInit {
       } else if (event instanceof HttpResponse) {
         console.log(event)
       }
+    },
+    res => {
+        if (res.error != undefined && res.error.message != undefined){
+            alert(JSON.stringify(res.error.message))  
+        }
+
+        if (res.status == 401){
+            this.router.navigateByUrl('login')
+        }
     });
  
     this.selectedFiles = undefined;
